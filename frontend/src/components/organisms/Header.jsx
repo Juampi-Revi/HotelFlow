@@ -21,15 +21,17 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-md transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Left side - Logo */}
+          {/* Left side - Logo and Brand */}
           <div 
             className="flex items-center cursor-pointer"
             onClick={handleLogoClick}
           >
-            <Logo size="lg" />
-            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400 hidden sm:block">
-              {t('brand.tagline')}
-            </span>
+            <div className="flex flex-col">
+              <Logo size="lg" />
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden sm:block">
+                {t('brand.tagline')}
+              </div>
+            </div>
           </div>
 
           {/* Right side - Controls and Navigation */}

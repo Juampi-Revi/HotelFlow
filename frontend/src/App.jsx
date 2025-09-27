@@ -1,8 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CategoriesSection, Header, RecommendationsSection, SearchSection } from './components';
 import { ThemeProvider } from './contexts';
+import Admin from './pages/Admin/Admin';
+import AdminRooms from './pages/AdminRooms/AdminRooms';
 
-function AppContent() {
+function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
       <Header />
@@ -19,9 +22,15 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/rooms" element={<AdminRooms />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }
 
-export default App
+export default App;
