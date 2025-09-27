@@ -222,3 +222,168 @@ spring.jpa.hibernate.ddl-auto=create-drop
 - 📋 **Decisión técnica importante**: Se optó por actualizar Java a versión 17 en lugar de degradar Spring Boot, manteniendo las mejores prácticas y compatibilidad futura
 - 📋 **Base de datos**: H2 en memoria configurada para desarrollo rápido, migración a MySQL/PostgreSQL planificada para producción
 - 📋 **Hot reload**: Ambos proyectos tienen recarga automática habilitada para desarrollo eficiente
+
+---
+
+## 🌐 Sesión de Internacionalización y Refactorización
+
+### ✅ Implementación de Sistema de Internacionalización (i18n)
+
+#### 📦 Dependencias Instaladas
+**Fecha**: Enero 2025
+**Acción**: Instalación de librerías para internacionalización
+**Comandos ejecutados**:
+```bash
+npm install i18next react-i18next i18next-browser-languagedetector
+```
+
+**Dependencias agregadas**:
+- ✅ `i18next@^25.5.2` - Core de internacionalización
+- ✅ `react-i18next@^16.0.0` - Integración con React
+- ✅ `i18next-browser-languagedetector@^8.2.0` - Detección automática de idioma
+
+#### 🔧 Configuración del Sistema i18n
+
+**Archivos creados**:
+- ✅ `src/i18n/index.js` - Configuración principal de i18next
+- ✅ `src/i18n/locales/es.json` - Traducciones en español
+- ✅ `src/i18n/locales/en.json` - Traducciones en inglés
+
+**Características implementadas**:
+- ✅ **Detección automática** del idioma del navegador
+- ✅ **Fallback** a español como idioma por defecto
+- ✅ **Persistencia** del idioma seleccionado en localStorage
+- ✅ **Interpolación** para contenido dinámico
+- ✅ **Namespaces** organizados por secciones
+
+#### 🎯 Integración en la Aplicación
+
+**Modificaciones realizadas**:
+- ✅ `src/main.jsx` - Importación de configuración i18n
+- ✅ `src/App.jsx` - Integración del hook `useTranslation`
+- ✅ Componentes actualizados para usar traducciones
+
+**Estructura de traducciones**:
+```json
+{
+  "common": { "expand": "Expandir", "collapse": "Contraer" },
+  "admin": {
+    "dashboard": { "items": { "bookings": "Reservas", "users": "Usuarios" } },
+    "room": {
+      "title": "Gestión de Habitaciones",
+      "roomNumber": "Número de Habitación",
+      "available": "Disponible",
+      "unavailable": "No Disponible",
+      "capacity": "Capacidad",
+      "perNight": "por noche",
+      "types": { "SINGLE": "Individual", "DOUBLE": "Doble", "SUITE": "Suite", "FAMILY": "Familiar", "DELUXE": "Deluxe" },
+      "actions": { "enable": "Habilitar", "disable": "Deshabilitar" }
+    }
+  }
+}
+```
+
+### 🏗️ Mejoras en la Arquitectura del Sidebar
+
+#### 🔧 Funcionalidad de Persistencia
+**Problema**: El estado colapsado del sidebar se perdía al recargar la página
+**Solución**: Implementación de localStorage para persistir el estado
+
+**Modificaciones en `AdminLayout.jsx`**:
+- ✅ **Inicialización** desde localStorage: `useState(() => localStorage.getItem('sidebarCollapsed') === 'true')`
+- ✅ **Persistencia automática** con useEffect que guarda cambios en localStorage
+- ✅ **Importación correcta** de hooks: `useEffect`, `useState`, `useTranslation`, `useLocation`
+
+#### 🌐 Traducciones del Sidebar
+**Problema**: Faltaba traducción para `admin.room.title` en el sidebar
+**Solución**: Agregada traducción completa en ambos idiomas
+
+**Traducciones agregadas**:
+- ✅ **Español**: `"admin.room.title": "Gestión de Habitaciones"`
+- ✅ **Inglés**: `"admin.room.title": "Room Management"`
+
+### 🧹 Refactorización del Componente RoomForm
+
+#### 📁 Creación de Hook Personalizado
+**Problema**: `RoomForm.jsx` tenía 202 líneas con lógica mezclada
+**Solución**: Extracción de lógica a hook personalizado `useRoomForm`
+
+**Archivos creados**:
+- ✅ `src/hooks/useRoomForm.js` - Hook personalizado con toda la lógica
+- ✅ `src/hooks/index.js` - Archivo de exportación centralizada
+
+#### 🎯 Separación de Responsabilidades
+
+**Hook `useRoomForm` incluye**:
+- ✅ **Estado del formulario**: `formData`, `errors`
+- ✅ **Opciones de tipos**: `roomTypeOptions` con traducciones
+- ✅ **Validación**: `validateForm()` con reglas de negocio
+- ✅ **Manejadores de eventos**: 
+  - `handleInputChange` - Para campos de texto y select
+  - `handleImagesChange` - Para carga de imágenes
+  - `handleSubmit` - Para envío del formulario
+- ✅ **Utilidades**: `resetForm()` para limpiar el formulario
+
+**Componente `RoomForm.jsx` refactorizado**:
+- ✅ **Reducido significativamente** en líneas de código
+- ✅ **Solo responsabilidad de UI** - Renderizado y presentación
+- ✅ **Uso del hook**: Importa y utiliza `useRoomForm`
+- ✅ **Mantenimiento simplificado** - Lógica separada de la presentación
+
+#### 🎨 Beneficios de la Refactorización
+
+**Mejoras obtenidas**:
+- ✅ **📖 Legibilidad mejorada** - Código más fácil de leer y entender
+- ✅ **🔧 Mantenibilidad** - Lógica organizada y separada
+- ✅ **🧪 Testabilidad** - Hook puede ser testeado independientemente
+- ✅ **♻️ Reutilización** - Patrón aplicable a otros formularios
+- ✅ **🏗️ Arquitectura limpia** - Separación clara entre lógica y presentación
+
+### 📊 Resumen de Archivos Modificados/Creados
+
+#### 🆕 Archivos Nuevos
+1. `src/i18n/index.js` - Configuración de internacionalización
+2. `src/i18n/locales/es.json` - Traducciones en español
+3. `src/i18n/locales/en.json` - Traducciones en inglés
+4. `src/hooks/useRoomForm.js` - Hook personalizado para formularios
+5. `src/hooks/index.js` - Exportaciones centralizadas de hooks
+
+#### 🔄 Archivos Modificados
+1. `src/main.jsx` - Integración de i18n
+2. `src/App.jsx` - Uso de traducciones
+3. `src/components/layouts/AdminLayout.jsx` - Persistencia del sidebar y traducciones
+4. `src/components/organisms/RoomForm/RoomForm.jsx` - Refactorización con hook
+5. `package.json` - Nuevas dependencias de i18n
+
+#### 📦 Dependencias Agregadas
+```json
+{
+  "i18next": "^25.5.2",
+  "i18next-browser-languagedetector": "^8.2.0", 
+  "react-i18next": "^16.0.0"
+}
+```
+
+### 🎯 Impacto en la Experiencia de Usuario
+
+**Mejoras implementadas**:
+- ✅ **🌐 Soporte multiidioma** - Español e inglés completamente funcional
+- ✅ **🔄 Persistencia de preferencias** - El sidebar mantiene su estado
+- ✅ **📱 Mejor UX** - Interfaz más intuitiva y profesional
+- ✅ **🏗️ Código más limpio** - Mejor organización y mantenibilidad
+- ✅ **⚡ Rendimiento optimizado** - Separación de responsabilidades
+
+### 🚀 Estado Actual del Proyecto
+
+**Funcionalidades completamente operativas**:
+- ✅ **Sistema de internacionalización** funcionando en producción
+- ✅ **Sidebar persistente** con estado guardado en localStorage
+- ✅ **Formulario de habitaciones** refactorizado y optimizado
+- ✅ **Traducciones completas** para la sección de administración
+- ✅ **Arquitectura mejorada** con hooks personalizados
+
+**Próximos pasos sugeridos**:
+- 🔄 **Pull Request** - Subir cambios al repositorio
+- 📋 **Siguiente historia de usuario** - Continuar con el desarrollo
+- 🧪 **Testing** - Implementar pruebas para los nuevos componentes
+- 📚 **Documentación** - Expandir guías de uso del sistema i18n

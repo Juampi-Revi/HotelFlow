@@ -466,6 +466,247 @@ Implementar el cuerpo principal del sitio con identidad de marca y las tres secc
 - **Desktop**: Grid 3 columnas para categorías y recomendaciones
 - **Breakpoints**: Tailwind CSS responsive utilities
 
+## 🏗️ Arquitectura de Dominio - Sistema Hotelero
+
+### 🎯 Análisis del Dominio de Negocio
+
+El sistema HotelFlow maneja reservas de hoteles, por lo que nuestras entidades principales deben reflejar esta realidad de negocio, no un genérico "producto".
+
+### 📊 Entidades Principales
+
+#### 🏨 **Hotel**
+```java
+@Entity
+public class Hotel {
+    private Long id;
+    private String name;
+    private String description;
+    private String address;
+    private String city;
+    private String country;
+    private Double rating;
+    private List<String> amenities;
+    private List<String> images;
+    private String contactEmail;
+    private String contactPhone;
+    private String policies;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+```
+
+#### 🛏️ **Room** (El verdadero "producto")
+```java
+@Entity
+public class Room {
+    private Long id;
+    private Long hotelId;
+    private String roomNumber;
+    private RoomType roomType; // SINGLE, DOUBLE, SUITE, etc.
+    private Integer capacity;
+    private BigDecimal pricePerNight;
+    private String description;
+    private List<String> amenities;
+    private List<String> images;
+    private Boolean isAvailable;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+```
+
+#### 👤 **User** (Con sistema de roles)
+```java
+@Entity
+public class User {
+    private Long id;
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private UserRole role; // ADMIN, CUSTOMER, HOTEL_MANAGER
+    private String phone;
+    private String preferences;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+```
+
+#### 📅 **Booking** (Reserva)
+```java
+@Entity
+public class Booking {
+    private Long id;
+    private Long userId;
+    private Long roomId;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+    private BigDecimal totalPrice;
+    private BookingStatus status; // PENDING, CONFIRMED, CANCELLED
+    private Integer guestCount;
+    private String specialRequests;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+```
+
+### 🔄 Relaciones Entre Entidades
+
+```
+Hotel (1) ←→ (N) Room
+User (1) ←→ (N) Booking  
+Room (1) ←→ (N) Booking
+Hotel (N) ←→ (1) User (Manager)
+```
+
+### 👥 Sistema de Roles
+
+#### **ADMIN** (Super Administrador)
+- ✅ Gestiona todos los hoteles
+- ✅ Gestiona todos los usuarios
+- ✅ Ve todas las reservas y estadísticas globales
+- ✅ Configuración del sistema
+
+#### **HOTEL_MANAGER** (Administrador de Hotel)
+- ✅ Gestiona SU hotel específico
+- ✅ Gestiona habitaciones de su hotel
+- ✅ Ve reservas de su hotel únicamente
+- ❌ No puede ver otros hoteles
+
+#### **CUSTOMER** (Cliente)
+- ✅ Busca y reserva habitaciones
+- ✅ Ve sus propias reservas
+- ✅ Gestiona su perfil
+- ❌ No acceso administrativo
+
+### 🎯 Reinterpretación de Historias de Usuario
+
+#### **Historia #3 Original**: "Registrar producto"
+**Nueva interpretación**: "Registrar Habitación"
+
+```
+Como administrador de hotel, quiero poder agregar nuevas habitaciones 
+para mantener actualizado el inventario de mi hotel.
+
+Criterios de aceptación:
+- La habitación debe visualizarse en el listado de habitaciones
+- El panel de administración debe contener un botón "Agregar habitación"
+- La página debe incluir campos: número, tipo, capacidad, precio, descripción
+- Se debe poder subir imágenes de la habitación
+- Se debe guardar en la base de datos correctamente
+- Validar que no exista otra habitación con el mismo número en el hotel
+```
+
+#### **Historia #4 Anticipada**: "Listar habitaciones"
+```
+Como cliente, quiero ver el listado de habitaciones disponibles 
+para poder elegir la que mejor se adapte a mis necesidades.
+```
+
+### 🏗️ Estructura de Directorios Backend
+
+```
+📁 backend/src/main/java/com/digitalhouse/hotelbooking/
+├── 📁 model/
+│   ├── Hotel.java
+│   ├── Room.java
+│   ├── User.java
+│   ├── Booking.java
+│   └── 📁 enums/
+│       ├── RoomType.java
+│       ├── UserRole.java
+│       └── BookingStatus.java
+├── 📁 repository/
+│   ├── HotelRepository.java
+│   ├── RoomRepository.java
+│   ├── UserRepository.java
+│   └── BookingRepository.java
+├── 📁 service/
+│   ├── HotelService.java
+│   ├── RoomService.java
+│   ├── UserService.java
+│   └── BookingService.java
+├── 📁 controller/
+│   ├── HotelController.java
+│   ├── RoomController.java
+│   ├── UserController.java
+│   └── BookingController.java
+├── 📁 dto/
+│   ├── 📁 request/
+│   │   ├── RoomRequestDTO.java
+│   │   ├── HotelRequestDTO.java
+│   │   └── BookingRequestDTO.java
+│   └── 📁 response/
+│       ├── RoomResponseDTO.java
+│       ├── HotelResponseDTO.java
+│       └── BookingResponseDTO.java
+├── 📁 config/
+│   ├── SecurityConfig.java
+│   └── CorsConfig.java
+└── 📁 exception/
+    ├── GlobalExceptionHandler.java
+    ├── RoomNotFoundException.java
+    └── DuplicateRoomException.java
+```
+
+### 🎨 Estructura Frontend Anticipada
+
+```
+📁 frontend/src/
+├── 📁 pages/
+│   ├── HomePage.jsx
+│   ├── HotelListPage.jsx
+│   ├── RoomDetailsPage.jsx
+│   ├── BookingPage.jsx
+│   └── 📁 admin/
+│       ├── AdminDashboard.jsx
+│       ├── HotelManagement.jsx
+│       └── RoomManagement.jsx
+├── 📁 components/
+│   ├── 📁 organisms/
+│   │   ├── RoomForm.jsx
+│   │   ├── RoomList.jsx
+│   │   ├── HotelCard.jsx
+│   │   └── BookingForm.jsx
+│   ├── 📁 molecules/
+│   │   ├── ImageUpload.jsx
+│   │   ├── RoomCard.jsx
+│   │   └── DatePicker.jsx
+│   └── 📁 atoms/
+│       ├── PriceDisplay.jsx
+│       └── RatingStars.jsx
+├── 📁 hooks/
+│   ├── useAuth.js
+│   ├── useRooms.js
+│   └── useBookings.js
+├── 📁 services/
+│   ├── api.js
+│   ├── roomService.js
+│   ├── hotelService.js
+│   └── authService.js
+└── 📁 contexts/
+    ├── AuthContext.jsx
+    └── BookingContext.jsx
+```
+
+### 🚀 Plan de Implementación por Fases
+
+#### **Fase 1: Historia #3 - Registrar Habitación**
+1. Backend: Room entity + CRUD APIs
+2. Frontend: Formulario de registro de habitación
+3. Validaciones y manejo de errores
+
+#### **Fase 2: Historia #4 - Listar Habitaciones**
+1. Backend: Endpoints de consulta
+2. Frontend: Lista y filtros de habitaciones
+
+#### **Fase 3: Sistema de Autenticación**
+1. Backend: JWT + Roles
+2. Frontend: Login/Register + Guards
+
+#### **Fase 4: Reservas**
+1. Backend: Booking entity + lógica de disponibilidad
+2. Frontend: Proceso de reserva
+
 ## Dependencias Principales
 
 ### Producción
