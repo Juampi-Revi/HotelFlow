@@ -25,5 +25,28 @@
     "darkMode": "Modo Oscuro",
     "english": "Inglés",
     "spanish": "Español"
+  },
+  "search": {
+    "title": "Encuentra Tu Hotel Perfecto",
+    "placeholder": "Placeholder del Componente de Búsqueda"
+  },
+  "categories": {
+    "title": "Categorías de Hoteles",
+    "placeholder": "Descripción de categoría",
+    "item1": "Hoteles de Lujo",
+    "item2": "Hoteles de Negocios",
+    "item3": "Resorts de Playa",
+    "item4": "Hoteles Urbanos",
+    "item5": "Hoteles Boutique",
+    "item6": "Hoteles Económicos"
+  },
+  "recommendations": {
+    "title": "Hoteles Recomendados",
+    "imagePlaceholder": "Imagen del Hotel",
+    "description": "Descubre hoteles increíbles con servicio excepcional y comodidad",
+    "price": "$99/noche",
+    "hotel1": "Hotel Grand Plaza",
+    "hotel2": "Resort Vista al Océano",
+    "hotel3": "Posada Centro Ciudad"
   }
 }

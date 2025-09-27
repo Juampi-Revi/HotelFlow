@@ -389,11 +389,12 @@ src/components/
 ## Estado Actual
 
 ### ✅ Completado
+- [x] **Sprint 1 - Historia 1**: Header con navegación completa y responsive
+- [x] **Sprint 1 - Historia 2**: Main body con identidad de marca y tres secciones
 - [x] Configuración ESLint con reglas específicas
 - [x] Sistema de traducciones i18n (EN/ES) con detección automática
 - [x] Modo oscuro con persistencia y detección del sistema
 - [x] Estructura Atomic Design completa
-- [x] Header con navegación completa y responsive
 - [x] Componentes base (Logo, Button, Toggles) con traducciones
 - [x] Configuración Tailwind CSS v3 con colores de marca
 - [x] Resolución de problemas de compatibilidad CSS
@@ -425,6 +426,45 @@ npm run build
 # Preview
 npm run preview
 ```
+
+## Sprint 1 - Historia de Usuario 2: Main Body
+
+### 🎯 Objetivo
+Implementar el cuerpo principal del sitio con identidad de marca y las tres secciones requeridas.
+
+### ✅ Criterios de Aceptación Cumplidos
+- [x] **Background de marca**: Gradiente con colores primary/secondary
+- [x] **100% altura**: Main con `min-h-screen`
+- [x] **Responsive**: Grid adaptativo para diferentes dispositivos
+- [x] **Tres secciones**: SearchSection, CategoriesSection, RecommendationsSection
+
+### 🏗️ Componentes Implementados
+
+#### SearchSection (`frontend/src/components/organisms/SearchSection.jsx`)
+- Sección hero con título prominente
+- Placeholder para futuro componente de búsqueda
+- Diseño centrado y responsive
+
+#### CategoriesSection (`frontend/src/components/organisms/CategoriesSection.jsx`)
+- Grid de 6 categorías (2x3 mobile, 3x2 desktop)
+- Cards con iconos circulares numerados
+- Background alternativo para contraste visual
+
+#### RecommendationsSection (`frontend/src/components/organisms/RecommendationsSection.jsx`)
+- Grid de 3 hoteles recomendados
+- Cards con imagen placeholder, título, descripción y precio
+- Estrellas de rating visual
+
+### 🎨 Diseño Visual
+- **Background principal**: `bg-gradient-to-br from-primary-50 to-secondary-50`
+- **Modo oscuro**: `dark:from-gray-900 dark:to-gray-800`
+- **Transiciones**: Smooth color transitions (200ms)
+- **Espaciado**: Padding consistente de 16 unidades
+
+### 📱 Responsive Design
+- **Mobile**: Layout vertical, grid 2 columnas para categorías
+- **Desktop**: Grid 3 columnas para categorías y recomendaciones
+- **Breakpoints**: Tailwind CSS responsive utilities
 
 ## Dependencias Principales
 

@@ -25,5 +25,28 @@
     "darkMode": "Dark Mode",
     "english": "English",
     "spanish": "Spanish"
+  },
+  "search": {
+    "title": "Find Your Perfect Hotel",
+    "placeholder": "Search Component Placeholder"
+  },
+  "categories": {
+    "title": "Hotel Categories",
+    "placeholder": "Category description",
+    "item1": "Luxury Hotels",
+    "item2": "Business Hotels",
+    "item3": "Beach Resorts",
+    "item4": "City Hotels",
+    "item5": "Boutique Hotels",
+    "item6": "Budget Hotels"
+  },
+  "recommendations": {
+    "title": "Recommended Hotels",
+    "imagePlaceholder": "Hotel Image",
+    "description": "Discover amazing hotels with exceptional service and comfort",
+    "price": "$99/night",
+    "hotel1": "Grand Plaza Hotel",
+    "hotel2": "Ocean View Resort",
+    "hotel3": "City Center Inn"
   }
 }
