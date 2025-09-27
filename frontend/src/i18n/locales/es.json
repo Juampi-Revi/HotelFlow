@@ -224,5 +224,68 @@
     "loading": "Cargando habitaciones...",
     "noRoomsFound": "No se encontraron habitaciones",
     "addFirstRoomHint": "Comienza agregando tu primera habitación al sistema."
+  },
+  "hero": {
+    "title": "Descubre Habitaciones",
+    "subtitle": "Excepcionales",
+    "description": "Encuentra las mejores habitaciones con comodidad excepcional y precios competitivos. Tu estadía perfecta te espera.",
+    "cta": {
+      "primary": "Explorar Habitaciones",
+      "secondary": "Ver Tipos"
+    },
+    "stats": {
+      "products": "Habitaciones",
+      "brands": "Hoteles",
+      "support": "Soporte"
+    },
+    "badge": {
+      "quality": "Calidad Premium",
+      "rating": "Valoración"
+    },
+    "imageAlt": "Habitaciones de calidad premium"
+  },
+  "home": {
+    "featuredRooms": "Habitaciones Destacadas"
+  },
+  "room": {
+    "available": "Disponible",
+    "unavailable": "No Disponible",
+    "roomNumber": "Habitación {{number}}",
+    "capacity": "{{capacity}} huéspedes",
+    "guests": "huéspedes",
+    "perNight": "por noche",
+    "moreAmenities": "más servicios",
+    "noRooms": "No hay habitaciones disponibles",
+    "noRoomsDescription": "Actualmente no hay habitaciones para mostrar.",
+    "showingRooms": "Mostrando {{showing}} de {{total}} habitaciones",
+    "types": {
+      "single": "Individual",
+      "double": "Doble",
+      "suite": "Suite",
+      "family": "Familiar",
+      "deluxe": "Deluxe"
+    }
+  },
+  "product": {
+    "available": "Disponible",
+    "unavailable": "No Disponible",
+    "reviews": "reseñas",
+    "inStock": "{{count}} en stock",
+    "outOfStock": "Sin stock",
+    "noProducts": "No hay productos disponibles",
+    "noProductsDescription": "Actualmente no hay productos para mostrar.",
+    "showingProducts": "Mostrando {{showing}} de {{total}} productos",
+    "category": {
+      "electronics": "Electrónicos",
+      "clothing": "Ropa",
+      "home": "Hogar",
+      "sports": "Deportes",
+      "books": "Libros",
+      "beauty": "Belleza",
+      "toys": "Juguetes",
+      "automotive": "Automotriz",
+      "health": "Salud",
+      "food": "Alimentación"
+    }
   }
 }

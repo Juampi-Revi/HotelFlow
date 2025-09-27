@@ -724,6 +724,137 @@ para poder elegir la que mejor se adapte a mis necesidades.
 - `tailwindcss` ^3.4.17
 - `vite` ^6.0.1
 
+## Modernización del Panel de Administración y Unificación de Paleta de Colores
+
+### Fecha: Enero 2025
+
+#### **Resumen de Cambios**
+Se realizó una modernización completa del panel de administración con efectos glassmorphism, gradientes y una nueva paleta de colores unificada azul-índigo, reemplazando el branding naranja/amarillo anterior.
+
+#### **1. Modernización del AdminLayout**
+**Archivo:** `src/components/templates/AdminLayout/AdminLayout.jsx`
+
+**Cambios realizados:**
+- **Fondo principal**: Gradientes dinámicos para modo claro y oscuro
+  - Modo claro: `from-blue-50 via-indigo-50 to-purple-50`
+  - Modo oscuro: `from-gray-900 via-blue-900 to-indigo-900`
+- **Sidebar**: Efectos glassmorphism con `backdrop-blur-xl` y transparencias
+- **Navegación**: Mejores contrastes y efectos hover suaves
+- **Responsive**: Menú móvil optimizado con animaciones
+
+#### **2. Dashboard Principal (Admin.jsx)**
+**Archivo:** `src/pages/Admin/Admin.jsx`
+
+**Mejoras implementadas:**
+- **Tarjetas de dashboard**: Fondos glassmorphism con gradientes sutiles
+- **Iconos**: Efectos de gradiente en los iconos de las tarjetas
+- **Sección "Recent Activity"**: Fondo semi-transparente con bordes definidos
+- **Quick Stats**: Diseño modernizado con efectos visuales mejorados
+- **Hover effects**: Transiciones suaves en todas las interacciones
+
+#### **3. Página AdminRooms**
+**Archivo:** `src/pages/Admin/AdminRooms.jsx`
+
+**Actualizaciones:**
+- **Formulario**: Contenedor glassmorphism con mejor contraste
+- **Botones**: Estilos unificados con la nueva paleta
+- **Mensajes de error**: Mejor visibilidad y contraste
+- **Estados vacíos**: Diseño mejorado para "No rooms found"
+
+#### **4. Componente RoomCard**
+**Archivo:** `src/components/molecules/RoomCard/RoomCard.jsx`
+
+**Mejoras visuales:**
+- **Tarjetas**: Efectos glassmorphism con bordes definidos
+- **Badges**: Mejor contraste para contadores de imágenes
+- **Estados de disponibilidad**: Colores más visibles
+- **Amenities**: Tags rediseñados con la nueva paleta
+
+#### **5. Unificación de Paleta de Colores**
+
+**Configuración Tailwind actualizada:**
+```javascript
+// tailwind.config.js
+primary: {
+  50: '#eff6ff',   // Azul muy claro
+  100: '#dbeafe',  // Azul claro
+  200: '#bfdbfe',  // Azul suave
+  300: '#93c5fd',  // Azul medio-claro
+  400: '#60a5fa',  // Azul medio
+  500: '#3b82f6',  // Azul principal
+  600: '#2563eb',  // Azul intenso
+  700: '#1d4ed8',  // Azul oscuro
+  800: '#1e40af',  // Azul muy oscuro
+  900: '#1e3a8a',  // Azul profundo
+},
+secondary: {
+  50: '#eef2ff',   // Índigo muy claro
+  100: '#e0e7ff',  // Índigo claro
+  200: '#c7d2fe',  // Índigo suave
+  300: '#a5b4fc',  // Índigo medio-claro
+  400: '#818cf8',  // Índigo medio
+  500: '#6366f1',  // Índigo principal
+  600: '#4f46e5',  // Índigo intenso
+  700: '#4338ca',  // Índigo oscuro
+  800: '#3730a3',  // Índigo muy oscuro
+  900: '#312e81',  // Índigo profundo
+}
+```
+
+**Elementos específicos actualizados:**
+- **Hero.jsx**: Estrella de rating `text-yellow-500` → `text-blue-500`
+- **RecommendationsSection.jsx**: Estrellas `text-yellow-500` → `text-blue-500`
+- **ThemeToggle.jsx**: Ícono del sol `text-yellow-500` → `text-blue-500`
+- **Admin.jsx**: Tarjeta analytics `bg-orange-500` → `bg-blue-500`
+
+#### **6. Mejoras de Accesibilidad**
+
+**Modo claro optimizado:**
+- Aumentada opacidad de fondos para mejor contraste
+- Bordes más definidos en elementos interactivos
+- Colores de texto optimizados para legibilidad
+- Efectos hover más visibles
+
+**Modo oscuro mejorado:**
+- Gradientes suaves que no fatigan la vista
+- Contrastes apropiados para elementos de navegación
+- Transparencias balanceadas para efectos glassmorphism
+
+#### **7. Impacto en la Experiencia de Usuario**
+
+**Beneficios logrados:**
+- **Consistencia visual**: Paleta unificada en toda la aplicación
+- **Modernidad**: Efectos glassmorphism y gradientes contemporáneos
+- **Usabilidad**: Mejor contraste y legibilidad en ambos modos
+- **Profesionalismo**: Identidad visual cohesiva y elegante
+- **Responsive**: Experiencia optimizada en todos los dispositivos
+
+#### **8. Archivos Modificados**
+
+```
+src/
+├── components/
+│   ├── templates/AdminLayout/AdminLayout.jsx ✓
+│   ├── molecules/RoomCard/RoomCard.jsx ✓
+│   ├── organisms/Hero.jsx ✓
+│   ├── organisms/RecommendationsSection.jsx ✓
+│   └── atoms/ThemeToggle.jsx ✓
+├── pages/
+│   └── Admin/
+│       ├── Admin.jsx ✓
+│       └── AdminRooms.jsx ✓
+└── tailwind.config.js ✓
+```
+
+#### **9. Tecnologías y Técnicas Utilizadas**
+
+- **Glassmorphism**: `backdrop-blur-xl`, `bg-opacity-*`
+- **Gradientes CSS**: `bg-gradient-to-*`, múltiples stops de color
+- **Transiciones**: `transition-all`, `duration-*`, `ease-*`
+- **Responsive Design**: Breakpoints Tailwind optimizados
+- **Dark Mode**: Clases `dark:*` para soporte completo
+- **Accessibility**: Contrastes WCAG AA compliant
+
 ---
 
-*Última actualización: $(date)*
+*Última actualización: Enero 2025*

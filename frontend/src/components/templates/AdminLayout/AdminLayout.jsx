@@ -8,13 +8,13 @@ const AdminLayout = ({ children }) => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   
-  // Inicializar sidebarCollapsed desde localStorage
+  // Initialize sidebarCollapsed from localStorage
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
     return saved !== null ? JSON.parse(saved) : false;
   });
 
-  // Guardar en localStorage cuando cambie el estado
+  // Save to localStorage when state changes
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', JSON.stringify(sidebarCollapsed));
   }, [sidebarCollapsed]);
@@ -73,7 +73,7 @@ const AdminLayout = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/10">
       {/* Header del home */}
       <Header />
       
@@ -84,22 +84,22 @@ const AdminLayout = ({ children }) => {
             className="fixed inset-0 z-40 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           >
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
+            <div className="fixed inset-0 bg-gray-600/75 backdrop-blur-sm"></div>
           </div>
         )}
 
         {/* Sidebar */}
          <div className={`
-           fixed top-16 left-0 bottom-0 z-50 bg-white dark:bg-gray-800 shadow-lg transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
+           fixed top-16 left-0 bottom-0 z-50 bg-white/98 dark:bg-gray-800/95 backdrop-blur-xl border-r border-gray-300/60 dark:border-gray-700/50 shadow-xl transform transition-all duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
            ${sidebarCollapsed ? 'lg:w-16' : 'lg:w-64'}
            w-64
          `}>
            <div className="flex flex-col h-full">
              {/* Collapse button for desktop */}
-             <div className="hidden lg:flex justify-end p-2 border-b border-gray-200 dark:border-gray-700">
+             <div className="hidden lg:flex justify-end p-2 border-b border-gray-200 dark:border-gray-700/50">
                <button
-                 className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                 className="p-2 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-400 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-all duration-200 transform hover:scale-105"
                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
                >
                  <span className="sr-only">{sidebarCollapsed ? t('common.expand') : t('common.collapse')}</span>
@@ -112,7 +112,7 @@ const AdminLayout = ({ children }) => {
              {/* Navigation */}
              <nav className="flex-1 px-4 py-6 space-y-2">
                <button
-                 className="lg:hidden mb-4 p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 self-end"
+                 className="lg:hidden mb-4 p-2 rounded-lg text-gray-500 hover:text-red-500 hover:bg-red-50 dark:text-gray-400 dark:hover:text-red-400 dark:hover:bg-red-900/30 self-end transition-all duration-200 transform hover:scale-105"
                  onClick={() => setSidebarOpen(false)}
                >
                  <span className="sr-only">{t('common.close')}</span>
@@ -126,18 +126,18 @@ const AdminLayout = ({ children }) => {
                    key={item.name}
                    to={item.href}
                    className={`
-                     flex items-center text-sm font-medium rounded-md transition-colors duration-200 group
-                     ${sidebarCollapsed ? 'justify-center px-2 py-3' : 'px-3 py-2'}
+                     flex items-center text-sm font-medium rounded-xl transition-all duration-300 group transform hover:scale-105 hover:shadow-lg
+                     ${sidebarCollapsed ? 'justify-center px-2 py-3' : 'px-4 py-3'}
                      ${item.current
-                       ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
-                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
+                       ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25'
+                       : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-blue-300'
                      }
                    `}
                    onClick={() => setSidebarOpen(false)}
                    title={sidebarCollapsed ? item.name : ''}
                  >
-                   <span className={`${sidebarCollapsed ? 'mr-0' : 'mr-3'} transition-all duration-200`}>{item.icon}</span>
-                   <span className={`transition-all duration-200 ${sidebarCollapsed ? 'lg:hidden' : ''}`}>{item.name}</span>
+                   <span className={`${sidebarCollapsed ? 'mr-0' : 'mr-3'} transition-all duration-200 ${item.current ? 'text-white' : ''}`}>{item.icon}</span>
+                   <span className={`transition-all duration-200 ${sidebarCollapsed ? 'lg:hidden' : ''} ${item.current ? 'font-semibold' : ''}`}>{item.name}</span>
                  </Link>
                ))}
              </nav>
@@ -147,10 +147,10 @@ const AdminLayout = ({ children }) => {
          {/* Main content area */}
          <div className="flex-1 min-h-screen">
            {/* Mobile menu button */}
-           <div className="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+           <div className="lg:hidden bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border-b border-gradient-to-r from-gray-200/50 via-blue-200/30 to-purple-200/20 dark:from-gray-700/50 dark:via-blue-700/30 dark:to-purple-700/20">
              <div className="flex items-center h-12 px-4">
                <button
-                 className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                 className="p-2 rounded-lg bg-blue-50 border border-blue-200 text-gray-700 hover:bg-blue-100 dark:bg-blue-900/20 dark:border-blue-700/50 dark:text-gray-300 dark:hover:bg-blue-900/30 transition-all duration-200"
                  onClick={() => setSidebarOpen(true)}
                >
                  <span className="sr-only">{t('common.open')}</span>
@@ -158,14 +158,14 @@ const AdminLayout = ({ children }) => {
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                  </svg>
                </button>
-               <h1 className="ml-4 text-lg font-semibold text-gray-900 dark:text-white">
+               <h1 className="ml-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-400">
                  {t('admin.title')}
                </h1>
              </div>
            </div>
 
            {/* Page content */}
-           <main className="min-h-full bg-gray-50 dark:bg-gray-900">
+           <main className="min-h-full bg-transparent">
              {children}
            </main>
          </div>

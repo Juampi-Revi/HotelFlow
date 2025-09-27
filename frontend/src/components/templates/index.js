@@ -1,1 +1,1 @@
-// Template components will be added here
+// This file will export template components when they are created
