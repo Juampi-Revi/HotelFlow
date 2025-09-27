@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "name": "HotelFlow",
+    "tagline": "Estadías perfectas, posibilidades infinitas"
+  },
+  "header": {
+    "home": "Inicio",
+    "hotels": "Hoteles",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse"
+  },
+  "common": {
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "welcome": "Bienvenido a HotelFlow",
+    "comingSoon": "Próximamente",
+    "description": "Estamos construyendo una experiencia increíble de reserva de hoteles. ¡La navegación del header ya está lista para tu viaje!",
+    "language": "Idioma",
+    "theme": "Tema",
+    "lightMode": "Modo Claro",
+    "darkMode": "Modo Oscuro",
+    "english": "Inglés",
+    "spanish": "Español"
+  }
+}

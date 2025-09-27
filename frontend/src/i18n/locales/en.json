@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "name": "HotelFlow",
+    "tagline": "Seamless stays, endless possibilities"
+  },
+  "header": {
+    "home": "Home",
+    "hotels": "Hotels",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "common": {
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "welcome": "Welcome to HotelFlow",
+    "comingSoon": "Coming Soon",
+    "description": "We're building an amazing hotel booking experience. The header navigation is now ready for your journey!",
+    "language": "Language",
+    "theme": "Theme",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "english": "English",
+    "spanish": "Spanish"
+  }
+}
