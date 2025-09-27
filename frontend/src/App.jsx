@@ -1,19 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { CategoriesSection, Header, RecommendationsSection, SearchSection } from './components';
+import { useTranslation } from 'react-i18next';
+import { Header, Hero } from './components';
+import RoomGrid from './components/organisms/RoomGrid';
 import { ThemeProvider } from './contexts';
+import { roomService } from './services/roomService';
 import Admin from './pages/Admin/Admin';
 import AdminRooms from './pages/AdminRooms/AdminRooms';
 
 function HomePage() {
+  const { t } = useTranslation();
+  const [rooms, setRooms] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        setIsLoading(true);
+        const data = await roomService.getRoomsForHome();
+        setRooms(data);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRooms();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
       <Header />
       
-      <main className="pt-16 min-h-screen">
-        <SearchSection />
-        <CategoriesSection />
-        <RecommendationsSection />
+      <main className="pt-16">
+        <Hero />
+        <RoomGrid 
+          rooms={rooms}
+          title={t('home.featuredRooms')}
+          isLoading={isLoading}
+        />
       </main>
     </div>
   );

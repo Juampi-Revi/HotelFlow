@@ -32,7 +32,7 @@ export const RecommendationsSection = () => {
                   <span className="text-primary-600 dark:text-primary-400 font-bold">
                     {t('recommendations.price', '$99/night')}
                   </span>
-                  <span className="text-yellow-500">
+                  <span className="text-blue-500">
                     ★★★★☆
                   </span>
                 </div>

@@ -12,18 +12,12 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
   };
 
   const cardClasses = `
-    bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 
-    overflow-hidden transition-all duration-200 hover:shadow-lg
-    ${!room.isAvailable ? 'opacity-75' : ''}
+    group relative bg-white/98 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-2
   `;
 
-  const statusClasses = `
-    px-2 py-1 rounded-full text-xs font-medium
-    ${room.isAvailable 
-      ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
-      : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-    }
-  `;
+  const statusClasses = room.isAvailable
+    ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-700/50 px-2 py-1 rounded-full text-xs font-medium'
+    : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-700/50 px-2 py-1 rounded-full text-xs font-medium';
 
   return (
     <div className={cardClasses}>
@@ -44,9 +38,9 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
             className="w-full h-48 object-cover"
           />
           {room.images.length > 1 && (
-            <span className="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full">
-              +{room.images.length - 1}
-            </span>
+            <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs font-medium border border-white/30">
+              {room.images.length} {t('rooms.images')}
+            </div>
           )}
         </div>
       )}
@@ -68,6 +62,25 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
             {room.description}
           </p>
+        )}
+
+        {/* Amenities */}
+        {room.amenities && room.amenities.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {room.amenities.slice(0, 3).map((amenity, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-700/50"
+              >
+                {amenity}
+              </span>
+            ))}
+            {room.amenities.length > 3 && (
+              <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-600/50">
+                +{room.amenities.length - 3}
+              </span>
+            )}
+          </div>
         )}
 
         <div className="flex gap-2 flex-wrap">

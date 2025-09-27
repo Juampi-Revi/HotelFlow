@@ -213,5 +213,68 @@
     "dropText": "Drop images here or click to select",
     "formatHint": "Maximum {{maxImages}} images, JPG/PNG format",
     "removeImage": "Remove image"
+  },
+  "hero": {
+    "title": "Discover Amazing",
+    "subtitle": "Rooms",
+    "description": "Find the best rooms with exceptional comfort and competitive prices. Your perfect stay awaits.",
+    "cta": {
+      "primary": "Explore Rooms",
+      "secondary": "View Types"
+    },
+    "stats": {
+      "products": "Rooms",
+      "brands": "Hotels",
+      "support": "Support"
+    },
+    "badge": {
+      "quality": "Premium Quality",
+      "rating": "Rating"
+    },
+    "imageAlt": "Premium quality rooms"
+  },
+  "home": {
+    "featuredRooms": "Featured Rooms"
+  },
+  "room": {
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "roomNumber": "Room {{number}}",
+    "capacity": "{{capacity}} guests",
+    "guests": "guests",
+    "perNight": "per night",
+    "moreAmenities": "more amenities",
+    "noRooms": "No rooms available",
+    "noRoomsDescription": "There are currently no rooms to display.",
+    "showingRooms": "Showing {{showing}} of {{total}} rooms",
+    "types": {
+      "single": "Single",
+      "double": "Double",
+      "suite": "Suite",
+      "family": "Family",
+      "deluxe": "Deluxe"
+    }
+  },
+  "product": {
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "reviews": "reviews",
+    "inStock": "{{count}} in stock",
+    "outOfStock": "Out of stock",
+    "noProducts": "No products available",
+    "noProductsDescription": "There are currently no products to display.",
+    "showingProducts": "Showing {{showing}} of {{total}} products",
+    "category": {
+      "electronics": "Electronics",
+      "clothing": "Clothing",
+      "home": "Home",
+      "sports": "Sports",
+      "books": "Books",
+      "beauty": "Beauty",
+      "toys": "Toys",
+      "automotive": "Automotive",
+      "health": "Health",
+      "food": "Food"
+    }
   }
 }

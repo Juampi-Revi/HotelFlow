@@ -87,5 +87,15 @@ export const roomService = {
       throw new Error('Failed to fetch rooms by type');
     }
     return response.json();
+  },
+
+  async getRoomsForHome() {
+    // Get available rooms for the home page (limited to 10)
+    const response = await fetch(`${API_BASE_URL}/rooms/available`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch rooms for home');
+    }
+    const rooms = await response.json();
+    return rooms.slice(0, 10); // Limit to 10 rooms for home page
   }
 };
