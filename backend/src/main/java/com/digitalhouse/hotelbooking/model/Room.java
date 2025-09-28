@@ -41,6 +41,60 @@ public class Room {
     @Column(name = "image_url", columnDefinition = "TEXT")
     private List<String> images;
     
+    @NotBlank(message = "Hotel name is required")
+    @Column(name = "hotel_name", nullable = false)
+    private String hotelName;
+    
+    @Column(name = "hotel_chain")
+    private String hotelChain;
+    
+    @DecimalMin(value = "1.0", message = "Hotel rating must be at least 1.0")
+    @DecimalMax(value = "5.0", message = "Hotel rating cannot exceed 5.0")
+    @Column(name = "hotel_rating", precision = 2, scale = 1)
+    private BigDecimal hotelRating;
+    
+    @NotBlank(message = "City is required")
+    @Column(name = "city", nullable = false)
+    private String city;
+    
+    @NotBlank(message = "Country is required")
+    @Column(name = "country", nullable = false)
+    private String country;
+    
+    @Column(name = "address")
+    private String address;
+    
+    @Column(name = "latitude", precision = 10, scale = 8)
+    private BigDecimal latitude;
+    
+    @Column(name = "longitude", precision = 11, scale = 8)
+    private BigDecimal longitude;
+    
+    @ElementCollection
+    @CollectionTable(name = "room_amenities", joinColumns = @JoinColumn(name = "room_id"))
+    @Column(name = "amenity")
+    private List<String> amenities;
+    
+    @Column(name = "view_type")
+    private String viewType;
+    
+    @Min(value = 1, message = "Floor must be at least 1")
+    @Column(name = "floor")
+    private Integer floor;
+    
+    @DecimalMin(value = "10.0", message = "Room size must be at least 10 square meters")
+    @Column(name = "size_sqm", precision = 5, scale = 2)
+    private BigDecimal sizeSqm;
+    
+    @Column(name = "has_balcony")
+    private Boolean hasBalcony = false;
+    
+    @Column(name = "has_wifi")
+    private Boolean hasWifi = true;
+    
+    @Column(name = "has_air_conditioning")
+    private Boolean hasAirConditioning = true;
+    
     @Column(name = "is_available", nullable = false)
     private Boolean isAvailable = true;
     
@@ -52,13 +106,20 @@ public class Room {
     
     public Room() {}
     
-    public Room(String roomNumber, RoomType roomType, Integer capacity, BigDecimal pricePerNight, String description) {
+    public Room(String roomNumber, RoomType roomType, Integer capacity, BigDecimal pricePerNight, 
+                String description, String hotelName, String city, String country) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.capacity = capacity;
         this.pricePerNight = pricePerNight;
         this.description = description;
+        this.hotelName = hotelName;
+        this.city = city;
+        this.country = country;
         this.isAvailable = true;
+        this.hasWifi = true;
+        this.hasAirConditioning = true;
+        this.hasBalcony = false;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -152,5 +213,125 @@ public class Room {
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public String getHotelName() {
+        return hotelName;
+    }
+    
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+    
+    public String getHotelChain() {
+        return hotelChain;
+    }
+    
+    public void setHotelChain(String hotelChain) {
+        this.hotelChain = hotelChain;
+    }
+    
+    public BigDecimal getHotelRating() {
+        return hotelRating;
+    }
+    
+    public void setHotelRating(BigDecimal hotelRating) {
+        this.hotelRating = hotelRating;
+    }
+    
+    public String getCity() {
+        return city;
+    }
+    
+    public void setCity(String city) {
+        this.city = city;
+    }
+    
+    public String getCountry() {
+        return country;
+    }
+    
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    
+    public String getAddress() {
+        return address;
+    }
+    
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+    
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+    
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+    
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+    
+    public List<String> getAmenities() {
+        return amenities;
+    }
+    
+    public void setAmenities(List<String> amenities) {
+        this.amenities = amenities;
+    }
+    
+    public String getViewType() {
+        return viewType;
+    }
+    
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
+    }
+    
+    public Integer getFloor() {
+        return floor;
+    }
+    
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+    
+    public BigDecimal getSizeSqm() {
+        return sizeSqm;
+    }
+    
+    public void setSizeSqm(BigDecimal sizeSqm) {
+        this.sizeSqm = sizeSqm;
+    }
+    
+    public Boolean getHasBalcony() {
+        return hasBalcony;
+    }
+    
+    public void setHasBalcony(Boolean hasBalcony) {
+        this.hasBalcony = hasBalcony;
+    }
+    
+    public Boolean getHasWifi() {
+        return hasWifi;
+    }
+    
+    public void setHasWifi(Boolean hasWifi) {
+        this.hasWifi = hasWifi;
+    }
+    
+    public Boolean getHasAirConditioning() {
+        return hasAirConditioning;
+    }
+    
+    public void setHasAirConditioning(Boolean hasAirConditioning) {
+        this.hasAirConditioning = hasAirConditioning;
     }
 }

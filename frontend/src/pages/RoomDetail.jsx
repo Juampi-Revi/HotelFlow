@@ -1,88 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { roomService } from '../services/roomService';
+import { useRoomDetail } from '../hooks/useRoomDetail';
 import { ImageGallery } from '../components/molecules';
 import { Header, Footer } from '../components/organisms';
+import LoadingState from '../components/atoms/LoadingState';
+import ErrorState from '../components/atoms/ErrorState';
+import RoomInfo from '../components/molecules/RoomInfo';
+import HotelLocationInfo from '../components/molecules/HotelLocationInfo';
+import RoomAmenities from '../components/molecules/RoomAmenities';
+import BookingSection from '../components/molecules/BookingSection';
 
 const RoomDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const [room, setRoom] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchRoom = async () => {
-      try {
-        setLoading(true);
-        const roomData = await roomService.getRoomById(id);
-        setRoom(roomData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchRoom();
-    }
-  }, [id]);
-
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(price);
-  };
-
-  const handleBackClick = () => {
-    navigate('/');
-  };
+  const { room, loading, error, handleBackClick, handleBooking } = useRoomDetail(id);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 p-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="text-gray-600 dark:text-gray-300 mt-4 text-center">{t('loading')}</p>
-        </div>
-      </div>
-    );
+    return <LoadingState />;
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 p-8 text-center">
-          <p className="text-red-600 dark:text-red-400 mb-4">{t('error')}: {error}</p>
-          <button
-            onClick={handleBackClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
-          >
-            {t('goBack')}
-          </button>
-        </div>
-      </div>
-    );
+    return <ErrorState error={error} onBack={handleBackClick} />;
   }
 
   if (!room) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 p-8 text-center">
-          <p className="text-gray-600 dark:text-gray-300 mb-4">{t('roomNotFound')}</p>
-          <button
-            onClick={handleBackClick}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
-          >
-            {t('goBack')}
-          </button>
-        </div>
-      </div>
-    );
+    return <ErrorState error={t('roomNotFound')} onBack={handleBackClick} />;
   }
 
   return (
@@ -129,33 +72,11 @@ const RoomDetail = () => {
                   </span>
                 </div>
 
-                {/* Room Info Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
-                    <div className="text-center">
-                      <span className="text-gray-600 dark:text-gray-300 font-medium text-sm">{t('common.roomType')}</span>
-                      <div className="font-bold text-gray-900 dark:text-white text-lg mt-1">{room.roomType}</div>
-                    </div>
-                  </div>
+                <RoomInfo room={room} />
 
-                  <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
-                    <div className="text-center">
-                      <span className="text-gray-600 dark:text-gray-300 font-medium text-sm">{t('common.capacity')}</span>
-                      <div className="font-bold text-gray-900 dark:text-white text-lg mt-1">
-                        {room.capacity} {room.capacity === 1 ? t('common.guest') : t('common.guests')}
-                      </div>
-                    </div>
-                  </div>
+                <HotelLocationInfo room={room} />
 
-                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-lg p-4 border border-blue-200/50 dark:border-blue-700/50">
-                    <div className="text-center">
-                      <span className="text-gray-700 dark:text-gray-200 font-semibold text-sm">{t('common.pricePerNight')}</span>
-                      <div className="font-bold text-2xl text-blue-600 dark:text-blue-400 mt-1">
-                        {formatPrice(room.pricePerNight)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <RoomAmenities room={room} />
 
                 {/* Description */}
                 {room.description && (
@@ -169,28 +90,7 @@ const RoomDetail = () => {
                   </div>
                 )}
 
-                {/* Booking Section */}
-                {room.isAvailable && (
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
-                    <div className="text-center">
-                      <h3 className="text-lg font-bold mb-2">
-                        {t('common.bookNow')}
-                      </h3>
-                      <p className="text-blue-100 mb-4 text-sm">
-                        {t('common.reserve')} {t('common.room')} {room.roomNumber}
-                      </p>
-                      <button
-                        onClick={() => {
-                          // TODO: Implementar lógica de reserva
-                          alert(`Reservando ${t('common.room')} ${room.roomNumber}`);
-                        }}
-                        className="bg-white text-blue-600 font-bold py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-base"
-                      >
-                        {t('common.reserve')} - {formatPrice(room.pricePerNight)}
-                      </button>
-                    </div>
-                  </div>
-                )}
+                <BookingSection room={room} onBooking={handleBooking} />
               </div>
             </div>
           </div>

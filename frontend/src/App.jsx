@@ -8,6 +8,7 @@ import { roomService } from './services/roomService';
 import Admin from './pages/Admin/Admin';
 import AdminRooms from './pages/AdminRooms/AdminRooms';
 import RoomDetail from './pages/RoomDetail';
+import ProductsPage from './pages/ProductsPage/ProductsPage';
 
 function HomePage() {
   const { t } = useTranslation();
@@ -54,6 +55,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/rooms" element={<ProductsPage />} />
           <Route path="/room/:id" element={<RoomDetail />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/rooms" element={<AdminRooms />} />

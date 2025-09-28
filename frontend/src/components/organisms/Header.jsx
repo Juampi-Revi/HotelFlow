@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, LanguageToggle, Logo, ThemeToggle } from '../atoms';
 
@@ -26,13 +27,29 @@ const Header = () => {
             className="flex items-center cursor-pointer"
             onClick={handleLogoClick}
           >
-            <div className="flex flex-col">
+            <Link to="/" className="flex flex-col">
               <Logo size="lg" />
               <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 hidden sm:block">
                 {t('brand.tagline')}
               </div>
-            </div>
+            </Link>
           </div>
+
+          {/* Center - Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link 
+              to="/" 
+              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+            >
+              {t('nav.home')}
+            </Link>
+            <Link 
+              to="/rooms" 
+              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+            >
+              {t('nav.rooms')}
+            </Link>
+          </nav>
 
           {/* Right side - Controls and Navigation */}
           <div className="flex items-center space-x-2 sm:space-x-4">

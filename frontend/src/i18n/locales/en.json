@@ -12,6 +12,10 @@
     "signup": "Sign Up",
     "createAccount": "Create Account"
   },
+  "nav": {
+    "home": "Home",
+    "rooms": "Rooms"
+  },
   "hero": {
     "title": "Find Your Perfect Stay",
     "subtitle": "Discover Amazing Hotels",

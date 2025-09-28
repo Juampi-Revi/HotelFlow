@@ -12,6 +12,10 @@
     "signup": "Registrarse",
     "createAccount": "Crear Cuenta"
   },
+  "nav": {
+    "home": "Inicio",
+    "rooms": "Habitaciones"
+  },
   "hero": {
     "title": "Encuentra Tu Estadía Perfecta",
     "subtitle": "Descubre Hoteles Increíbles",
@@ -66,7 +70,38 @@
     "darkMode": "Modo Oscuro",
     "english": "Inglés",
     "spanish": "Español",
-    "noImages": "No hay imágenes disponibles"
+    "noImages": "No hay imágenes disponibles",
+    "hotelInformation": "Información del Hotel",
+    "hotelChain": "Cadena Hotelera",
+    "rating": "Calificación",
+    "location": "Ubicación",
+    "address": "Dirección",
+    "roomDetails": "Detalles de la Habitación",
+    "size": "Tamaño",
+    "floor": "Piso",
+    "view": "Vista",
+    "roomNumber": "Número de Habitación",
+    "amenities": "Amenidades",
+    "included": "Incluido",
+    "additional": "Adicional",
+    "airConditioning": "Aire Acondicionado",
+    "balcony": "Balcón",
+    "allRooms": "Todas las Habitaciones",
+    "discoverCollection": "Descubre nuestra colección de {{count}} hermosas habitaciones de hoteles alrededor del mundo",
+    "searchPlaceholder": "Buscar por hotel, ciudad o descripción...",
+    "sortById": "Ordenar por ID",
+    "sortByPrice": "Ordenar por Precio",
+    "sortByHotel": "Ordenar por Hotel",
+    "sortByCity": "Ordenar por Ciudad",
+    "sortByRating": "Ordenar por Calificación",
+    "perPage": "por página",
+    "showing": "Mostrando {{start}}-{{end}} de {{total}} habitaciones",
+    "page": "Página {{current}} de {{total}}",
+    "night": "noche",
+    "unavailable": "No disponible",
+    "viewDetails": "Ver detalles",
+    "more": "más",
+    "viewType": "vista"
   },
   "gallery": {
     "viewMore": "Ver más"

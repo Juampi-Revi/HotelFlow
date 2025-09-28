@@ -1245,4 +1245,187 @@ src/
 
 ---
 
-*Última actualización: Enero 2025 - Footer Component Implementation*
+## 🏗️ Refactorización de Componentes - Principios Técnicos Aplicados
+
+### 📅 Enero 2025 - Modularización de ProductsPage, ImageGallery y RoomDetail
+
+Durante esta fase de refactorización, se aplicaron principios sólidos de arquitectura de software para mejorar la mantenibilidad, reutilización y escalabilidad del código.
+
+### **🎯 Objetivos de la Refactorización**
+
+1. **Separación de Responsabilidades**: Dividir componentes monolíticos en módulos especializados
+2. **Reutilización de Código**: Crear componentes atómicos y moleculares reutilizables
+3. **Mantenibilidad**: Facilitar el mantenimiento y testing de cada componente
+4. **Escalabilidad**: Preparar la arquitectura para futuras funcionalidades
+
+### **🏛️ Principios SOLID Aplicados**
+
+#### **Single Responsibility Principle (SRP)**
+- **useImageGallery Hook**: Responsabilidad única de manejar el estado de la galería
+- **useRoomDetail Hook**: Responsabilidad única de manejar datos y estado de habitaciones
+- **MainImage Component**: Solo se encarga de mostrar la imagen principal
+- **ThumbnailGrid Component**: Solo maneja la visualización de thumbnails
+- **ImageModal Component**: Solo gestiona la funcionalidad del modal
+
+#### **Open/Closed Principle (OCP)**
+- **Componentes extensibles**: Todos los componentes aceptan props para personalización
+- **Hooks configurables**: Los hooks pueden extenderse sin modificar su código base
+- **Internacionalización**: Soporte multiidioma sin modificar la lógica core
+
+#### **Liskov Substitution Principle (LSP)**
+- **Interfaces consistentes**: Todos los componentes pueden sustituirse por implementaciones compatibles
+- **Props tipadas**: Uso consistente de PropTypes o TypeScript para garantizar compatibilidad
+
+#### **Interface Segregation Principle (ISP)**
+- **Props específicas**: Cada componente recibe solo las props que necesita
+- **Hooks especializados**: Cada hook expone solo la funcionalidad relevante
+
+#### **Dependency Inversion Principle (DIP)**
+- **Abstracción de servicios**: Los hooks dependen de abstracciones (servicios)
+- **Inyección de dependencias**: Los componentes reciben datos via props, no los obtienen directamente
+
+### **🧩 Atomic Design Implementation**
+
+#### **Átomos Creados**
+- `MainImage`: Componente básico para mostrar imagen principal
+- `LoadingState`: Estado de carga reutilizable
+- `ErrorState`: Estado de error reutilizable
+- `ThumbnailColumn`: Columna de thumbnails para desktop
+
+#### **Moléculas Creadas**
+- `ThumbnailGrid`: Grid de thumbnails con lógica responsive
+- `ImageModal`: Modal completo con navegación y controles
+- `RoomInfo`: Información básica de habitación
+- `HotelLocationInfo`: Información de hotel y ubicación
+- `RoomAmenities`: Sección de amenidades
+- `BookingSection`: Sección de reserva
+
+#### **Organismos Refactorizados**
+- `ImageGallery`: Ahora compuesto por átomos y moléculas
+- `ProductsPage`: Modularizado con componentes especializados
+- `RoomDetail`: Dividido en secciones modulares
+
+### **🎣 Custom Hooks Implementados**
+
+#### **useImageGallery Hook**
+```javascript
+// Responsabilidades:
+- Manejo de estado de imágenes seleccionadas
+- Control de modal (abrir/cerrar)
+- Navegación entre imágenes
+- Lógica de thumbnails responsive
+```
+
+#### **useRoomDetail Hook**
+```javascript
+// Responsabilidades:
+- Fetch de datos de habitación
+- Manejo de estados (loading, error, data)
+- Navegación (goBack)
+- Lógica de reserva (placeholder)
+```
+
+### **📱 Responsive Design Patterns**
+
+#### **Mobile-First Approach**
+- Diseño base para móviles, extensiones para desktop
+- Breakpoints Tailwind CSS (`md:`, `lg:`, `xl:`)
+- Grid adaptativo según dispositivo
+
+#### **Progressive Enhancement**
+- Funcionalidad básica en todos los dispositivos
+- Mejoras progresivas para pantallas más grandes
+- Touch-friendly en móviles, hover effects en desktop
+
+### **🌐 Internacionalización (i18n)**
+
+#### **Implementación Consistente**
+- Uso de `useTranslation` hook en todos los componentes
+- Claves de traducción organizadas por contexto
+- Soporte completo EN/ES en todos los nuevos componentes
+
+#### **Estructura de Traducciones**
+```javascript
+// Organización jerárquica:
+common: { loading, error, success, ... }
+rooms: { details, amenities, booking, ... }
+gallery: { viewMore, imageCounter, ... }
+```
+
+### **🎨 Styling Consistency**
+
+#### **Design System**
+- Colores consistentes usando variables CSS
+- Espaciado uniforme con clases Tailwind
+- Tipografía coherente en todos los componentes
+
+#### **Dark Mode Support**
+- Soporte completo para modo oscuro
+- Transiciones suaves entre temas
+- Contraste adecuado en ambos modos
+
+### **🧪 Testing Readiness**
+
+#### **Componentes Testeable**
+- Lógica separada en hooks (fácil de testear)
+- Componentes puros sin efectos secundarios
+- Props bien definidas para testing
+
+#### **Mocking Friendly**
+- Servicios abstraídos para fácil mocking
+- Hooks independientes testeable por separado
+- Estado predecible y controlable
+
+### **📊 Métricas de Mejora**
+
+#### **Antes de la Refactorización**
+- Componentes monolíticos de 200+ líneas
+- Lógica mezclada con presentación
+- Difícil reutilización de código
+- Testing complejo
+
+#### **Después de la Refactorización**
+- Componentes especializados de 50-100 líneas
+- Separación clara de responsabilidades
+- Alta reutilización de componentes
+- Testing granular y específico
+
+### **🔄 Beneficios Obtenidos**
+
+1. **Mantenibilidad**: Cada componente tiene una responsabilidad clara
+2. **Reutilización**: Componentes atómicos reutilizables en múltiples contextos
+3. **Testing**: Componentes y hooks testeable independientemente
+4. **Performance**: Componentes más pequeños y optimizados
+5. **Developer Experience**: Código más legible y fácil de entender
+6. **Escalabilidad**: Arquitectura preparada para nuevas funcionalidades
+
+### **📁 Estructura de Archivos Resultante**
+
+```
+src/
+├── components/
+│   ├── atoms/
+│   │   ├── MainImage/
+│   │   ├── LoadingState/
+│   │   ├── ErrorState/
+│   │   └── ThumbnailColumn/
+│   ├── molecules/
+│   │   ├── ThumbnailGrid/
+│   │   ├── ImageModal/
+│   │   ├── RoomInfo/
+│   │   ├── HotelLocationInfo/
+│   │   ├── RoomAmenities/
+│   │   └── BookingSection/
+│   └── organisms/
+│       └── ImageGallery/
+├── hooks/
+│   ├── useImageGallery.js
+│   └── useRoomDetail.js
+└── pages/
+    ├── ProductsPage.jsx
+    └── RoomDetail.jsx
+```
+
+---
+
+*Última actualización: Enero 2025 - Component Refactoring & Technical Principles Implementation*

@@ -2,6 +2,7 @@ package com.digitalhouse.hotelbooking.controller;
 
 import com.digitalhouse.hotelbooking.dto.request.RoomRequestDTO;
 import com.digitalhouse.hotelbooking.dto.response.RoomResponseDTO;
+import com.digitalhouse.hotelbooking.dto.response.PagedRoomResponseDTO;
 import com.digitalhouse.hotelbooking.model.enums.RoomType;
 import com.digitalhouse.hotelbooking.service.RoomService;
 import jakarta.validation.Valid;
@@ -52,6 +53,16 @@ public class RoomController {
     public ResponseEntity<List<RoomResponseDTO>> getAvailableRooms() {
         List<RoomResponseDTO> rooms = roomService.getAvailableRooms();
         return ResponseEntity.ok(rooms);
+    }
+    
+    @GetMapping("/paginated")
+    public ResponseEntity<PagedRoomResponseDTO> getPaginatedRooms(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        PagedRoomResponseDTO pagedRooms = roomService.getPaginatedRooms(page, size, sortBy, sortDirection);
+        return ResponseEntity.ok(pagedRooms);
     }
     
     @PutMapping("/{id}")
