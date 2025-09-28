@@ -1,112 +1,43 @@
 {
   "brand": {
-    "name": "HotelFlow",
-    "tagline": "Estadías perfectas, posibilidades infinitas"
+    "name": "Digital House Hotel",
+    "tagline": "Tu estadía perfecta te espera"
   },
   "header": {
     "home": "Inicio",
-    "hotels": "Hoteles",
+    "rooms": "Habitaciones",
     "about": "Acerca de",
     "contact": "Contacto",
     "login": "Iniciar Sesión",
     "signup": "Registrarse",
-    "backToSite": "Volver al Sitio"
+    "createAccount": "Crear Cuenta"
+  },
+  "hero": {
+    "title": "Encuentra Tu Estadía Perfecta",
+    "subtitle": "Descubre Hoteles Increíbles",
+    "description": "Experimenta lujo y comodidad en nuestros alojamientos cuidadosamente seleccionados. Desde habitaciones acogedoras hasta suites premium, tenemos el espacio perfecto para tu próxima aventura.",
+    "cta": {
+      "primary": "Reservar Ahora",
+      "secondary": "Explorar Habitaciones"
+    },
+    "stats": {
+      "products": "500+ Habitaciones",
+      "brands": "50+ Ubicaciones",
+      "support": "Soporte 24/7"
+    },
+    "badge": {
+      "quality": "Calidad Premium",
+      "rating": "Calificación"
+    },
+    "imageAlt": "Habitación de hotel de lujo"
   },
   "common": {
-    "loading": "Cargando...",
-    "error": "Ocurrió un error",
-    "success": "Éxito",
-    "cancel": "Cancelar",
-    "save": "Guardar",
-    "delete": "Eliminar",
-    "edit": "Editar",
-    "add": "Agregar",
     "search": "Buscar",
-    "filter": "Filtrar",
-    "clear": "Limpiar",
-    "close": "Cerrar",
-    "open": "Abrir",
-    "yes": "Sí",
-    "no": "No",
-    "dismiss": "Descartar",
-    "welcome": "Bienvenido a HotelFlow",
-    "comingSoon": "Próximamente",
-    "description": "Estamos construyendo una experiencia increíble de reserva de hoteles. ¡La navegación del header ya está lista para tu viaje!",
+    "loading": "Cargando...",
+    "error": "Error",
+    "welcome": "Bienvenido",
     "language": "Idioma",
     "theme": "Tema",
-    "lightMode": "Modo Claro",
-    "darkMode": "Modo Oscuro",
-    "english": "Inglés",
-    "spanish": "Español"
-  },
-  "search": {
-    "title": "Encuentra Tu Hotel Perfecto",
-    "placeholder": "Placeholder del Componente de Búsqueda"
-  },
-  "categories": {
-    "title": "Categorías de Hoteles",
-    "placeholder": "Descripción de categoría",
-    "item1": "Hoteles de Lujo",
-    "item2": "Hoteles de Negocios",
-    "item3": "Resorts de Playa",
-    "item4": "Hoteles Urbanos",
-    "item5": "Hoteles Boutique",
-    "item6": "Hoteles Económicos"
-  },
-  "recommendations": {
-    "title": "Hoteles Recomendados",
-    "imagePlaceholder": "Imagen del Hotel",
-    "description": "Descubre hoteles increíbles con servicio excepcional y comodidad",
-    "price": "$99/noche",
-    "hotel1": "Hotel Grand Plaza",
-    "hotel2": "Resort Vista al Océano",
-    "hotel3": "Posada Centro Ciudad"
-  },
-  "admin": {
-    "title": "Administración",
-    "dashboard": {
-      "title": "Panel de Administración",
-      "welcome": "Bienvenido al panel de administración del hotel",
-      "recentActivity": "Actividad Reciente",
-      "quickStats": "Estadísticas Rápidas",
-      "items": {
-        "rooms": "Gestión de Habitaciones",
-        "bookings": "Reservas",
-        "bookingsDesc": "Gestionar reservas y reservaciones del hotel",
-        "users": "Usuarios",
-        "usersDesc": "Gestionar cuentas de usuario y permisos",
-        "analytics": "Analíticas",
-        "analyticsDesc": "Ver reportes y métricas de rendimiento"
-      },
-      "stats": {
-        "totalRooms": "Total de Habitaciones",
-        "occupancyRate": "Tasa de Ocupación",
-        "totalBookings": "Reservas Activas",
-        "revenue": "Ingresos Mensuales"
-      }
-    },
-    "rooms": {
-      "title": "Gestión de Habitaciones",
-      "description": "Administra habitaciones del hotel, disponibilidad y precios",
-      "loading": "Cargando habitaciones...",
-      "noRoomsFound": "No se encontraron habitaciones",
-      "addFirstRoomHint": "Comienza agregando tu primera habitación al sistema.",
-      "actions": {
-        "addNew": "Agregar Nueva Habitación",
-        "addFirst": "Agregar Primera Habitación"
-      }
-    },
-    "newRoom": "Nueva Habitación",
-    "roomManagement": "Gestión de Habitaciones",
-    "roomsDescription": "Administra habitaciones del hotel, disponibilidad y precios",
-    "noRooms": "No se encontraron habitaciones",
-    "noRoomsDescription": "Comienza creando tu primera habitación",
-    "createFirstRoom": "Crear Primera Habitación",
-    "roomCreated": "Habitación creada exitosamente",
-    "roomUpdated": "Habitación actualizada exitosamente",
-    "roomDeleted": "Habitación eliminada exitosamente",
-    "availabilityToggled": "Disponibilidad de habitación actualizada",
-    "confirmDelete": "¿Estás seguro de que quieres eliminar esta habitación?",
     "cancel": "Cancelar",
     "delete": "Eliminar",
     "edit": "Editar",
@@ -114,8 +45,98 @@
     "create": "Crear",
     "back": "Volver",
     "close": "Cerrar",
+    "open": "Abrir",
+    "expand": "Expandir",
+    "collapse": "Contraer",
+    "goBack": "Volver",
+    "roomNotFound": "Habitación no encontrada",
+    "roomDetails": "Detalles de la Habitación",
+    "guest": "huésped",
+    "guests": "huéspedes",
+    "room": "Habitación",
+    "roomType": "Tipo de Habitación",
+    "capacity": "Capacidad",
+    "pricePerNight": "Precio por Noche",
+    "description": "Descripción",
+    "available": "Disponible",
+    "notAvailable": "No Disponible",
+    "bookNow": "Reservar Ahora",
+    "reserve": "Reservar",
+    "lightMode": "Modo Claro",
+    "darkMode": "Modo Oscuro",
+    "english": "Inglés",
+    "spanish": "Español"
+  },
+  "room": {
+    "available": "Disponible",
+    "unavailable": "No disponible",
+    "roomNumber": "Habitación {{number}}",
+    "capacity": "{{capacity}} huéspedes",
+    "guests": "huéspedes",
+    "moreAmenities": "más amenidades",
+    "perNight": "por noche",
+    "noRooms": "No hay habitaciones disponibles",
+    "noRoomsDescription": "Por favor intenta más tarde o ajusta tus criterios de búsqueda",
+    "types": {
+      "single": "Habitación Individual",
+      "double": "Habitación Doble",
+      "suite": "Suite",
+      "family": "Habitación Familiar",
+      "deluxe": "Habitación Deluxe"
+    }
+  },
+  "search": {
+    "placeholder": "Buscar habitaciones...",
+    "filters": "Filtros",
+    "checkIn": "Entrada",
+    "checkOut": "Salida",
+    "guests": "Huéspedes",
+    "roomType": "Tipo de Habitación",
+    "priceRange": "Rango de Precio",
+    "amenities": "Amenidades",
+    "apply": "Aplicar Filtros",
+    "clear": "Limpiar Filtros",
+    "results": "{{count}} habitaciones encontradas",
+    "noResults": "No se encontraron habitaciones",
+    "noResultsDescription": "Intenta ajustar tus criterios de búsqueda"
+  },
+  "categories": {
+    "all": "Todas las Habitaciones",
+    "single": "Individual",
+    "double": "Doble",
+    "suite": "Suite",
+    "family": "Familiar",
+    "deluxe": "Deluxe"
+  },
+  "recommendations": {
+    "title": "Recomendado para Ti",
+    "subtitle": "Habitaciones seleccionadas basadas en tus preferencias",
+    "viewAll": "Ver Todas las Habitaciones",
+    "featured": "Habitaciones Destacadas",
+    "popular": "Opciones Populares",
+    "newArrivals": "Nuevas Llegadas"
+  },
+  "admin": {
+    "title": "Administración",
+    "dashboard": {
+      "title": "Panel de Control",
+      "stats": {
+        "occupancyRate": "Tasa de Ocupación",
+        "totalBookings": "Reservas Totales",
+        "revenue": "Ingresos"
+      },
+      "items": {
+        "bookings": "Reservas",
+        "users": "Usuarios",
+        "analytics": "Analíticas"
+      }
+    },
     "room": {
       "title": "Gestión de Habitaciones",
+      "available": "Disponible",
+      "unavailable": "No disponible",
+      "roomNumber": "Habitación {{number}}",
+      "perNight": "por noche",
       "addTitle": "Agregar Nueva Habitación",
       "editTitle": "Editar Habitación",
       "fields": {
@@ -127,165 +148,37 @@
         "images": "Imágenes"
       },
       "placeholders": {
-        "roomNumber": "Ej: 101, 201A, Suite Premium",
+        "roomNumber": "Ingresa el número de habitación",
         "roomType": "Selecciona el tipo de habitación",
         "capacity": "Número de huéspedes",
-        "price": "Precio en USD por noche",
-        "description": "Describe las características de la habitación"
+        "price": "Precio en USD",
+        "description": "Descripción de la habitación"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "create": "Crear Habitación",
+        "update": "Actualizar Habitación",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "enable": "Habilitar",
+        "disable": "Deshabilitar"
       },
       "types": {
         "single": "Individual",
         "double": "Doble",
         "suite": "Suite",
         "family": "Familiar",
-        "deluxe": "Deluxe",
-        "SINGLE": "Individual",
-        "DOUBLE": "Doble",
-        "SUITE": "Suite",
-        "FAMILY": "Familiar",
-        "DELUXE": "Deluxe"
+        "deluxe": "Deluxe"
       },
       "imageUpload": {
-        "dropText": "Arrastra imágenes aquí o haz clic para seleccionar",
-        "formatHint": "Máximo 5 imágenes, formato JPG/PNG",
+        "dropText": "Arrastra imágenes aquí o haz clic para subir",
         "removeImage": "Eliminar imagen"
-      },
-      "validation": {
-        "roomNumberRequired": "El número de habitación es obligatorio",
-        "roomTypeRequired": "El tipo de habitación es obligatorio",
-        "capacityMinimum": "La capacidad debe ser al menos 1",
-        "priceRequired": "El precio es obligatorio y debe ser mayor a 0",
-        "descriptionRequired": "La descripción es obligatoria",
-        "imagesRequired": "Debe agregar al menos una imagen"
-      },
-      "actions": {
-        "save": "Guardar Habitación",
-        "cancel": "Cancelar",
-        "edit": "Editar",
-        "delete": "Eliminar",
-        "create": "Crear Habitación",
-        "update": "Actualizar Habitación",
-        "saving": "Guardando...",
-        "addNew": "Agregar Nueva Habitación",
-        "addFirst": "Agregar Primera Habitación",
-        "enable": "Habilitar",
-        "disable": "Deshabilitar"
-      },
-      "roomNumber": "Habitación {{number}}",
-      "available": "Disponible",
-      "unavailable": "No Disponible",
-      "capacity": "Capacidad: {{capacity}} huéspedes",
-      "perNight": "noche"
+      }
     }
   },
-  "room": {
-    "number": "Número de Habitación",
-    "type": "Tipo de Habitación",
-    "capacity": "Capacidad",
-    "pricePerNight": "Precio por Noche",
-    "description": "Descripción",
-    "images": "Imágenes",
-    "imageUpload": {
-      "dropText": "Arrastra imágenes aquí o haz clic para seleccionar",
-      "formatHint": "Máximo {{maxImages}} imágenes, formato JPG/PNG",
-      "removeImage": "Eliminar imagen"
-    },
-    "available": "Disponible",
-      "unavailable": "No Disponible",
-      "roomNumber": "Habitación {{number}}",
-      "capacity": "Capacidad: {{capacity}} huéspedes",
-      "perNight": "noche",
-    "toggleAvailability": "Cambiar Disponibilidad",
-    "single": "Individual",
-    "double": "Doble",
-    "suite": "Suite",
-    "deluxe": "Deluxe",
-    "presidential": "Presidencial",
-    "guests": "huéspedes",
-    "night": "noche",
-    "uploadImages": "Subir Imágenes",
-    "dragAndDrop": "Arrastra y suelta imágenes aquí, o haz clic para seleccionar",
-    "maxImages": "Máximo {{count}} imágenes",
-    "removeImage": "Eliminar imagen",
-    "required": "Este campo es obligatorio",
-    "invalidNumber": "Por favor ingresa un número de habitación válido",
-    "invalidCapacity": "La capacidad debe ser al menos 1",
-    "invalidPrice": "El precio debe ser mayor a 0",
-    "actions": {
-      "save": "Guardar Habitación",
-      "cancel": "Cancelar",
-      "edit": "Editar",
-      "delete": "Eliminar",
-      "addNew": "Agregar Nueva Habitación",
-      "addFirst": "Agregar Primera Habitación",
-      "enable": "Habilitar",
-      "disable": "Deshabilitar"
-    },
-    "loading": "Cargando habitaciones...",
-    "noRoomsFound": "No se encontraron habitaciones",
-    "addFirstRoomHint": "Comienza agregando tu primera habitación al sistema."
-  },
-  "hero": {
-    "title": "Descubre Habitaciones",
-    "subtitle": "Excepcionales",
-    "description": "Encuentra las mejores habitaciones con comodidad excepcional y precios competitivos. Tu estadía perfecta te espera.",
-    "cta": {
-      "primary": "Explorar Habitaciones",
-      "secondary": "Ver Tipos"
-    },
-    "stats": {
-      "products": "Habitaciones",
-      "brands": "Hoteles",
-      "support": "Soporte"
-    },
-    "badge": {
-      "quality": "Calidad Premium",
-      "rating": "Valoración"
-    },
-    "imageAlt": "Habitaciones de calidad premium"
-  },
-  "home": {
-    "featuredRooms": "Habitaciones Destacadas"
-  },
-  "room": {
-    "available": "Disponible",
-    "unavailable": "No Disponible",
-    "roomNumber": "Habitación {{number}}",
-    "capacity": "{{capacity}} huéspedes",
-    "guests": "huéspedes",
-    "perNight": "por noche",
-    "moreAmenities": "más servicios",
-    "noRooms": "No hay habitaciones disponibles",
-    "noRoomsDescription": "Actualmente no hay habitaciones para mostrar.",
-    "showingRooms": "Mostrando {{showing}} de {{total}} habitaciones",
-    "types": {
-      "single": "Individual",
-      "double": "Doble",
-      "suite": "Suite",
-      "family": "Familiar",
-      "deluxe": "Deluxe"
-    }
-  },
-  "product": {
-    "available": "Disponible",
-    "unavailable": "No Disponible",
-    "reviews": "reseñas",
-    "inStock": "{{count}} en stock",
-    "outOfStock": "Sin stock",
-    "noProducts": "No hay productos disponibles",
-    "noProductsDescription": "Actualmente no hay productos para mostrar.",
-    "showingProducts": "Mostrando {{showing}} de {{total}} productos",
-    "category": {
-      "electronics": "Electrónicos",
-      "clothing": "Ropa",
-      "home": "Hogar",
-      "sports": "Deportes",
-      "books": "Libros",
-      "beauty": "Belleza",
-      "toys": "Juguetes",
-      "automotive": "Automotriz",
-      "health": "Salud",
-      "food": "Alimentación"
-    }
+  "rooms": {
+    "images": "imágenes"
   }
 }
