@@ -18,6 +18,7 @@
 - ✅ **React Hooks**
 - ✅ **Atomic Design** para componentes reutilizables
 - ✅ **Solo frontend** para esta primera historia
+- ✅ **Sin console.logs ni comentarios inecesarios en la app
 
 ---
 

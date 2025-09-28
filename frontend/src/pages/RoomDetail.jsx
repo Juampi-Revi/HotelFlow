@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { roomService } from '../services/roomService';
 import { ImageGallery } from '../components/molecules';
-import Header from '../components/organisms/Header';
+import { Header, Footer } from '../components/organisms';
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -86,10 +86,10 @@ const RoomDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
       <Header />
       
-      <div className="pt-20 pb-8">
+      <div className="pt-20 pb-8 flex-grow">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
             <button
@@ -196,6 +196,7 @@ const RoomDetail = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

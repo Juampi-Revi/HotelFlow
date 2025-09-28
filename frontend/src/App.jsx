@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Header, Hero } from './components';
+import { Header, Hero, Footer } from './components';
 import RoomGrid from './components/organisms/RoomGrid';
 import { ThemeProvider } from './contexts';
 import { roomService } from './services/roomService';
@@ -31,10 +31,10 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200 flex flex-col">
       <Header />
       
-      <main className="pt-16">
+      <main className="pt-16 flex-grow">
         <Hero />
         <RoomGrid 
           rooms={rooms}
@@ -42,6 +42,8 @@ function HomePage() {
           isLoading={isLoading}
         />
       </main>
+      
+      <Footer />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from '../../organisms/Header';
+import { Footer } from '../../organisms';
 
 const AdminLayout = ({ children }) => {
   const { t } = useTranslation();
@@ -73,11 +74,11 @@ const AdminLayout = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/10 flex flex-col">
       {/* Header del home */}
       <Header />
       
-      <div className="pt-16 flex min-h-screen">
+      <div className="pt-16 flex flex-grow">
         {/* Mobile sidebar backdrop */}
         {sidebarOpen && (
           <div 
@@ -170,6 +171,7 @@ const AdminLayout = ({ children }) => {
            </main>
          </div>
       </div>
+      <Footer />
     </div>
   );
 };
