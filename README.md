@@ -114,7 +114,7 @@ Development server runs on: `http://localhost:5173`
 ### Current Sprint: Sprint 1
 **Goal**: Develop basic site structure and add registration, visualization, and product deletion functionalities.
 
-#### User Story #1: Header Component
+#### User Story #1: Header Component ✅
 **As a user**, I want a header that displays the application logo and a navigation bar to facilitate site navigation.
 
 **Acceptance Criteria**:
@@ -126,11 +126,23 @@ Development server runs on: `http://localhost:5173`
 - Clickable logo/tagline redirects to main page
 - Right-aligned block with "Create Account" and "Sign In" buttons
 
+#### User Story #7: Footer Component ✅
+**As a user**, I want a footer that provides consistent branding and information across all pages.
+
+**Acceptance Criteria**:
+- Footer occupies 100% screen width on all pages
+- Present on all pages (public and admin)
+- Left-aligned block with company isologotype, year, and copyright
+- Optimized for different devices and screen resolutions
+- Legible design elements consistent with company visual identity
+
 ## 🌟 Features
 
 ### ✅ Completed Features
 - [x] **Project Setup** - Complete development environment
 - [x] **Modern UI Design** - Glassmorphism effects and gradients
+- [x] **Header Component** - Fixed navigation with logo and branding
+- [x] **Footer Component** - Consistent branding across all pages
 - [x] **Admin Panel** - Full administrative interface with dashboard
 - [x] **Room Management** - CRUD operations for hotel rooms
 - [x] **Responsive Design** - Optimized for all devices
