@@ -16,6 +16,10 @@ INSERT INTO room_images (room_id, image_url) VALUES
 -- Room 101 (SINGLE)
 (1, 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop'),
 (1, 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop'),
+(1, 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop'),
+(1, 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop'),
+(1, 'https://images.unsplash.com/photo-1540518614846-7eded1c3b9e1?w=800&h=600&fit=crop'),
+(1, 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=600&fit=crop'),
 -- Room 102 (DOUBLE)
 (2, 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&h=600&fit=crop'),
 (2, 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop'),

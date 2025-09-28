@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { roomService } from '../services/roomService';
+import { ImageGallery } from '../components/molecules';
 import Header from '../components/organisms/Header';
 
 const RoomDetail = () => {
@@ -11,7 +12,6 @@ const RoomDetail = () => {
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchRoom = async () => {
@@ -108,117 +108,89 @@ const RoomDetail = () => {
           </div>
 
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <div className="p-8">
-                {room.images && room.images.length > 0 && (
-                  <div className="space-y-4">
-                    <div className="aspect-w-16 aspect-h-12 rounded-2xl overflow-hidden">
-                      <img
-                        src={room.images[selectedImageIndex]}
-                        alt={`${t('common.room')} ${room.roomNumber}`}
-                        className="w-full h-80 object-cover"
-                      />
+            {/* Image Gallery - Full Width */}
+            <div className="p-8">
+              <ImageGallery images={room.images} alt={`${t('common.room')} ${room.roomNumber}`} />
+            </div>
+            
+            {/* Room Details - Full Width */}
+            <div className="p-6 bg-gradient-to-br from-gray-50/50 to-white/50 dark:from-gray-800/50 dark:to-gray-700/50">
+              <div className="max-w-4xl mx-auto">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                    {t('common.roomDetails')}
+                  </h2>
+                  <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                    room.isAvailable
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                      : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                  }`}>
+                    {room.isAvailable ? t('common.available') : t('common.notAvailable')}
+                  </span>
+                </div>
+
+                {/* Room Info Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
+                    <div className="text-center">
+                      <span className="text-gray-600 dark:text-gray-300 font-medium text-sm">{t('common.roomType')}</span>
+                      <div className="font-bold text-gray-900 dark:text-white text-lg mt-1">{room.roomType}</div>
                     </div>
-                    {room.images.length > 1 && (
-                      <div className="flex space-x-3 overflow-x-auto pb-2">
-                        {room.images.map((image, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setSelectedImageIndex(index)}
-                            className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-3 transition-all duration-200 ${
-                              selectedImageIndex === index
-                                ? 'border-blue-500 ring-2 ring-blue-200 scale-105'
-                                : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
-                            }`}
-                          >
-                            <img
-                              src={image}
-                              alt={`${t('common.room')} ${room.roomNumber} - ${index + 1}`}
-                              className="w-full h-full object-cover"
-                            />
-                          </button>
-                        ))}
+                  </div>
+
+                  <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
+                    <div className="text-center">
+                      <span className="text-gray-600 dark:text-gray-300 font-medium text-sm">{t('common.capacity')}</span>
+                      <div className="font-bold text-gray-900 dark:text-white text-lg mt-1">
+                        {room.capacity} {room.capacity === 1 ? t('common.guest') : t('common.guests')}
                       </div>
-                    )}
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-lg p-4 border border-blue-200/50 dark:border-blue-700/50">
+                    <div className="text-center">
+                      <span className="text-gray-700 dark:text-gray-200 font-semibold text-sm">{t('common.pricePerNight')}</span>
+                      <div className="font-bold text-2xl text-blue-600 dark:text-blue-400 mt-1">
+                        {formatPrice(room.pricePerNight)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                {room.description && (
+                  <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-5 mb-6">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                      {t('common.description')}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
+                      {room.description}
+                    </p>
                   </div>
                 )}
-              </div>
 
-              <div className="p-8 bg-gradient-to-br from-gray-50/50 to-white/50 dark:from-gray-800/50 dark:to-gray-700/50">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      {t('common.roomDetails')}
-                    </h2>
-                    <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                      room.isAvailable
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                        : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                    }`}>
-                      {room.isAvailable ? t('common.available') : t('common.notAvailable')}
-                    </span>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="bg-white/60 dark:bg-gray-800/60 rounded-xl p-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-600 dark:text-gray-300 font-medium">{t('common.roomType')}:</span>
-                        <span className="font-bold text-gray-900 dark:text-white text-lg">{room.roomType}</span>
-                      </div>
-                    </div>
-
-                    <div className="bg-white/60 dark:bg-gray-800/60 rounded-xl p-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-600 dark:text-gray-300 font-medium">{t('common.capacity')}:</span>
-                        <span className="font-bold text-gray-900 dark:text-white text-lg">
-                          {room.capacity} {room.capacity === 1 ? t('common.guest') : t('common.guests')}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-xl p-6 border border-blue-200/50 dark:border-blue-700/50">
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-700 dark:text-gray-200 font-semibold text-lg">{t('common.pricePerNight')}:</span>
-                        <span className="font-bold text-3xl text-blue-600 dark:text-blue-400">
-                          {formatPrice(room.pricePerNight)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {room.description && (
-                    <div className="bg-white/60 dark:bg-gray-800/60 rounded-xl p-6">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
-                        {t('common.description')}
+                {/* Booking Section */}
+                {room.isAvailable && (
+                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
+                    <div className="text-center">
+                      <h3 className="text-lg font-bold mb-2">
+                        {t('common.bookNow')}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {room.description}
+                      <p className="text-blue-100 mb-4 text-sm">
+                        {t('common.reserve')} {t('common.room')} {room.roomNumber}
                       </p>
+                      <button
+                        onClick={() => {
+                          // TODO: Implementar lógica de reserva
+                          alert(`Reservando ${t('common.room')} ${room.roomNumber}`);
+                        }}
+                        className="bg-white text-blue-600 font-bold py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-base"
+                      >
+                        {t('common.reserve')} - {formatPrice(room.pricePerNight)}
+                      </button>
                     </div>
-                  )}
-
-                  {room.isAvailable && (
-                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white">
-                      <div className="text-center">
-                        <h3 className="text-xl font-bold mb-2">
-                          {t('common.bookNow')}
-                        </h3>
-                        <p className="text-blue-100 mb-4">
-                          {t('common.reserve')} {t('common.room')} {room.roomNumber}
-                        </p>
-                        <button
-                          onClick={() => {
-                            // TODO: Implementar lógica de reserva
-                            alert(`Reservando ${t('common.room')} ${room.roomNumber}`);
-                          }}
-                          className="w-full bg-white text-blue-600 font-bold py-3 px-6 rounded-lg hover:bg-blue-50 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-                        >
-                          {t('common.reserve')} - {formatPrice(room.pricePerNight)}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

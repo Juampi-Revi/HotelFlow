@@ -65,7 +65,11 @@
     "lightMode": "Modo Claro",
     "darkMode": "Modo Oscuro",
     "english": "Inglés",
-    "spanish": "Español"
+    "spanish": "Español",
+    "noImages": "No hay imágenes disponibles"
+  },
+  "gallery": {
+    "viewMore": "Ver más"
   },
   "room": {
     "available": "Disponible",
