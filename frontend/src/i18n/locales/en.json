@@ -9,7 +9,27 @@
     "about": "About",
     "contact": "Contact",
     "login": "Login",
+    "signup": "Sign Up",
     "createAccount": "Create Account"
+  },
+  "hero": {
+    "title": "Find Your Perfect Stay",
+    "subtitle": "Discover Amazing Hotels",
+    "description": "Experience luxury and comfort in our carefully selected accommodations. From cozy rooms to premium suites, we have the perfect space for your next adventure.",
+    "cta": {
+      "primary": "Book Now",
+      "secondary": "Explore Rooms"
+    },
+    "stats": {
+      "products": "500+ Rooms",
+      "brands": "50+ Locations",
+      "support": "24/7 Support"
+    },
+    "badge": {
+      "quality": "Premium Quality",
+      "rating": "Rating"
+    },
+    "imageAlt": "Luxury hotel room"
   },
   "common": {
     "search": "Search",
@@ -25,6 +45,9 @@
     "create": "Create",
     "back": "Back",
     "close": "Close",
+    "open": "Open",
+    "expand": "Expand",
+    "collapse": "Collapse",
     "goBack": "Go Back",
     "roomNotFound": "Room not found",
     "roomDetails": "Room Details",
@@ -38,7 +61,29 @@
     "available": "Available",
     "notAvailable": "Not Available",
     "bookNow": "Book Now",
-    "reserve": "Reserve"
+    "reserve": "Reserve",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "english": "English",
+    "spanish": "Spanish"
+  },
+  "room": {
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "roomNumber": "Room {{number}}",
+    "capacity": "{{capacity}} guests",
+    "guests": "guests",
+    "moreAmenities": "more amenities",
+    "perNight": "per night",
+    "noRooms": "No rooms available",
+    "noRoomsDescription": "Please try again later or adjust your search criteria",
+    "types": {
+      "single": "Single Room",
+      "double": "Double Room",
+      "suite": "Suite",
+      "family": "Family Room",
+      "deluxe": "Deluxe Room"
+    }
   },
   "search": {
     "placeholder": "Search rooms...",
@@ -70,5 +115,70 @@
     "featured": "Featured Rooms",
     "popular": "Popular Choices",
     "newArrivals": "New Arrivals"
+  },
+  "admin": {
+    "title": "Administration",
+    "dashboard": {
+      "title": "Dashboard",
+      "stats": {
+        "occupancyRate": "Occupancy Rate",
+        "totalBookings": "Total Bookings",
+        "revenue": "Revenue"
+      },
+      "items": {
+        "bookings": "Bookings",
+        "users": "Users",
+        "analytics": "Analytics"
+      }
+    },
+    "room": {
+      "title": "Room Management",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "roomNumber": "Room {{number}}",
+      "perNight": "per night",
+      "addTitle": "Add New Room",
+      "editTitle": "Edit Room",
+      "fields": {
+        "roomNumber": "Room Number",
+        "roomType": "Room Type",
+        "capacity": "Capacity",
+        "pricePerNight": "Price per Night",
+        "description": "Description",
+        "images": "Images"
+      },
+      "placeholders": {
+        "roomNumber": "Enter room number",
+        "roomType": "Select room type",
+        "capacity": "Number of guests",
+        "price": "Price in USD",
+        "description": "Room description"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "create": "Create Room",
+        "update": "Update Room",
+        "save": "Save",
+        "saving": "Saving...",
+        "enable": "Enable",
+        "disable": "Disable"
+      },
+      "types": {
+        "single": "Single",
+        "double": "Double",
+        "suite": "Suite",
+        "family": "Family",
+        "deluxe": "Deluxe"
+      },
+      "imageUpload": {
+        "dropText": "Drop images here or click to upload",
+        "removeImage": "Remove image"
+      }
+    }
+  },
+  "rooms": {
+    "images": "images"
   }
 }
