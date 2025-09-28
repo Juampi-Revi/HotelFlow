@@ -16,6 +16,9 @@
     "home": "Inicio",
     "rooms": "Habitaciones"
   },
+  "home": {
+    "featuredRooms": "Habitaciones Destacadas"
+  },
   "hero": {
     "title": "Encuentra Tu Estadía Perfecta",
     "subtitle": "Descubre Hoteles Increíbles",
@@ -214,6 +217,61 @@
       "imageUpload": {
         "dropText": "Arrastra imágenes aquí o haz clic para subir",
         "removeImage": "Eliminar imagen"
+      }
+    },
+    "navigation": {
+      "overview": "Resumen",
+      "analytics": "Analíticas",
+      "hotelManagement": "Gestión Hotelera",
+      "rooms": "Habitaciones",
+      "bookings": "Reservas",
+      "availability": "Disponibilidad",
+      "userManagement": "Gestión de Usuarios",
+      "customers": "Clientes",
+      "staff": "Personal",
+      "configuration": "Configuración",
+      "settings": "Ajustes"
+    },
+    "mobileNotSupported": {
+      "title": "Panel de Administración",
+      "description": "El panel de administración está optimizado para dispositivos de escritorio y no está disponible en dispositivos móviles.",
+      "requirements": {
+        "title": "Requisitos del Sistema:",
+        "desktop": "• Computadora de escritorio o laptop",
+        "resolution": "• Resolución mínima: 1024x768",
+        "browser": "• Navegador moderno actualizado"
+      },
+      "backToHome": "Volver al Inicio"
+    },
+    "dashboard": {
+      "title": "Panel de Control",
+      "welcome": "Bienvenido al Panel de Administración",
+      "recentActivity": "Actividad Reciente",
+      "quickStats": "Estadísticas Rápidas",
+      "items": {
+        "bookings": "Reservas",
+        "bookingsDesc": "Gestiona las reservas activas y próximas",
+        "users": "Usuarios",
+        "usersDesc": "Administra usuarios y perfiles de clientes",
+        "analytics": "Analíticas",
+        "analyticsDesc": "Visualiza métricas y reportes del hotel"
+      },
+      "stats": {
+        "totalRooms": "Total de Habitaciones",
+        "occupancyRate": "Tasa de Ocupación",
+        "totalBookings": "Reservas Totales",
+        "revenue": "Ingresos"
+      }
+    },
+    "rooms": {
+      "title": "Gestión de Habitaciones",
+      "description": "Administra las habitaciones del hotel, sus características y disponibilidad",
+      "loading": "Cargando habitaciones...",
+      "noRoomsFound": "No se encontraron habitaciones",
+      "addFirstRoomHint": "Comienza agregando tu primera habitación al sistema",
+      "actions": {
+        "addNew": "Agregar Nueva Habitación",
+        "addFirst": "Agregar Primera Habitación"
       }
     }
   },

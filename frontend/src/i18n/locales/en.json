@@ -16,6 +16,9 @@
     "home": "Home",
     "rooms": "Rooms"
   },
+  "home": {
+    "featuredRooms": "Featured Rooms"
+  },
   "hero": {
     "title": "Find Your Perfect Stay",
     "subtitle": "Discover Amazing Hotels",
@@ -70,7 +73,36 @@
     "darkMode": "Dark Mode",
     "english": "English",
     "spanish": "Spanish",
-    "noImages": "No images available"
+    "noImages": "No images available",
+    "hotelInformation": "Hotel Information",
+    "hotelChain": "Hotel Chain",
+    "location": "Location",
+    "address": "Address",
+    "size": "Size",
+    "floor": "Floor",
+    "view": "View",
+    "roomNumber": "Room Number",
+    "amenities": "Amenities",
+    "included": "Included",
+    "additional": "Additional",
+    "airConditioning": "Air Conditioning",
+    "balcony": "Balcony",
+    "allRooms": "All Rooms",
+    "discoverCollection": "Discover our collection of {{count}} beautiful hotel rooms around the world",
+    "searchPlaceholder": "Search by hotel, city or description...",
+    "sortById": "Sort by ID",
+    "sortByPrice": "Sort by Price",
+    "sortByHotel": "Sort by Hotel",
+    "sortByCity": "Sort by City",
+    "sortByRating": "Sort by Rating",
+    "perPage": "per page",
+    "showing": "Showing {{start}}-{{end}} of {{total}} rooms",
+    "page": "Page {{current}} of {{total}}",
+    "night": "night",
+    "unavailable": "Unavailable",
+    "viewDetails": "View details",
+    "more": "more",
+    "viewType": "view"
   },
   "gallery": {
     "viewMore": "View more"
@@ -183,6 +215,69 @@
       "imageUpload": {
         "dropText": "Drop images here or click to upload",
         "removeImage": "Remove image"
+      },
+      "validation": {
+        "roomNumberRequired": "Room number is required",
+        "roomTypeRequired": "Room type is required",
+        "capacityMinimum": "Capacity must be at least 1",
+        "priceRequired": "Price per night is required",
+        "descriptionRequired": "Description is required",
+        "imagesRequired": "At least one image is required"
+      }
+    },
+    "navigation": {
+      "overview": "Overview",
+      "analytics": "Analytics",
+      "hotelManagement": "Hotel Management",
+      "rooms": "Rooms",
+      "bookings": "Bookings",
+      "availability": "Availability",
+      "userManagement": "User Management",
+      "customers": "Customers",
+      "staff": "Staff",
+      "configuration": "Configuration",
+      "settings": "Settings"
+    },
+    "mobileNotSupported": {
+      "title": "Administration Panel",
+      "description": "The administration panel is optimized for desktop devices and is not available on mobile devices.",
+      "requirements": {
+        "title": "System Requirements:",
+        "desktop": "• Desktop computer or laptop",
+        "resolution": "• Minimum resolution: 1024x768",
+        "browser": "• Modern updated browser"
+      },
+      "backToHome": "Back to Home"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome to the Administration Panel",
+      "recentActivity": "Recent Activity",
+      "quickStats": "Quick Stats",
+      "items": {
+        "bookings": "Bookings",
+        "bookingsDesc": "Manage active and upcoming reservations",
+        "users": "Users",
+        "usersDesc": "Manage users and customer profiles",
+        "analytics": "Analytics",
+        "analyticsDesc": "View hotel metrics and reports"
+      },
+      "stats": {
+        "totalRooms": "Total Rooms",
+        "occupancyRate": "Occupancy Rate",
+        "totalBookings": "Total Bookings",
+        "revenue": "Revenue"
+      }
+    },
+    "rooms": {
+      "title": "Room Management",
+      "description": "Manage hotel rooms, their features and availability",
+      "loading": "Loading rooms...",
+      "noRoomsFound": "No rooms found",
+      "addFirstRoomHint": "Start by adding your first room to the system",
+      "actions": {
+        "addNew": "Add New Room",
+        "addFirst": "Add First Room"
       }
     }
   },

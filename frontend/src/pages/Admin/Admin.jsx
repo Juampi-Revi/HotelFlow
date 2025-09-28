@@ -15,7 +15,9 @@ const Admin = () => {
         </svg>
       ),
       href: '/admin/rooms',
-      color: 'bg-blue-500',
+      color: 'from-slate-600 to-slate-700',
+      bgColor: 'bg-slate-50 dark:bg-slate-800/50',
+      borderColor: 'border-slate-200 dark:border-slate-700',
       stats: '12 rooms'
     },
     {
@@ -27,7 +29,9 @@ const Admin = () => {
         </svg>
       ),
       href: '/admin/bookings',
-      color: 'bg-green-500',
+      color: 'from-blue-600 to-blue-700',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      borderColor: 'border-blue-200 dark:border-blue-800',
       stats: '24 active bookings'
     },
     {
@@ -38,8 +42,10 @@ const Admin = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
         </svg>
       ),
-      href: '/admin/users',
-      color: 'bg-purple-500',
+      href: '/admin/customers',
+      color: 'from-emerald-600 to-emerald-700',
+      bgColor: 'bg-emerald-50 dark:bg-emerald-900/20',
+      borderColor: 'border-emerald-200 dark:border-emerald-800',
       stats: '156 users'
     },
     {
@@ -51,7 +57,9 @@ const Admin = () => {
         </svg>
       ),
       href: '/admin/analytics',
-      color: 'bg-blue-500',
+      color: 'from-indigo-600 to-indigo-700',
+      bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
+      borderColor: 'border-indigo-200 dark:border-indigo-800',
       stats: '85% occupancy'
     }
   ];
@@ -97,14 +105,34 @@ const Admin = () => {
       <div className="p-8 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="mb-10">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
-          {t('admin.dashboard.title')}
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          {t('admin.dashboard.welcome')}
-        </p>
-      </div>
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
+            <div className="space-y-3">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+                {t('admin.dashboard.title')}
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-2xl">
+                {t('admin.dashboard.welcome')}
+              </p>
+            </div>
+            <div className="flex items-center space-x-6">
+              <div className="text-right space-y-1">
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {new Date().toLocaleDateString('es-ES', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  })}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {new Date().toLocaleTimeString('es-ES', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                  })}
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Dashboard Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -112,19 +140,19 @@ const Admin = () => {
               <Link
                 key={index}
                 to={card.href}
-                className="group relative p-6 rounded-2xl bg-white/95 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 overflow-hidden"
+                className={`group relative p-6 rounded-xl ${card.bgColor} border ${card.borderColor} shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 overflow-hidden`}
               >
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Subtle gradient overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
                 
                 {/* Content */}
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 ${card.color} rounded-lg flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-12 h-12 bg-gradient-to-br ${card.color} rounded-lg flex items-center justify-center text-white shadow-sm group-hover:shadow-md transition-all duration-300`}>
                       {card.icon}
                     </div>
                     <svg 
-                      className="w-5 h-5 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-all duration-300 transform group-hover:translate-x-1" 
+                      className="w-5 h-5 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-all duration-300 transform group-hover:translate-x-1" 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -132,19 +160,19 @@ const Admin = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent mb-2 group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400 transition-all duration-300">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-300">
                     {card.title}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
                     {card.description}
                   </p>
-                  <p className="text-sm font-medium bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-700 group-hover:to-purple-700 transition-all duration-300">
+                  <p className={`text-sm font-semibold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}>
                     {card.stats}
                   </p>
                 </div>
                 
-                {/* Animated border */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10"></div>
+                {/* Subtle border accent */}
+                <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-10`}></div>
               </Link>
             ))}
           </div>
@@ -152,21 +180,26 @@ const Admin = () => {
           {/* Recent Activity & Quick Stats */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Recent Activity */}
-            <div className="bg-white/95 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 hover:shadow-xl hover:scale-105 transition-all duration-300">
-              <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                {t('admin.dashboard.recentActivity')}
-              </h3>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  {t('admin.dashboard.recentActivity')}
+                </h2>
+                <button className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors">
+                  Ver todo
+                </button>
+              </div>
               <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
-                    <div className="flex-shrink-0">
-                      <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                  <div key={index} className="flex items-start space-x-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0 shadow-sm">
+                      {activity.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900 dark:text-gray-100 truncate">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white mb-1 leading-relaxed">
                         {activity.message}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
                         {activity.time}
                       </p>
                     </div>
@@ -176,32 +209,37 @@ const Admin = () => {
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-white/95 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 hover:shadow-xl hover:scale-105 transition-all duration-300">
-              <h3 className="text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-                {t('admin.dashboard.quickStats')}
-              </h3>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  {t('admin.dashboard.quickStats')}
+                </h2>
+                <button className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors">
+                  Actualizar
+                </button>
+              </div>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('admin.dashboard.stats.totalRooms')}</span>
-                  <span className="text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{t('admin.dashboard.stats.totalRooms')}</span>
+                  <span className="text-lg font-bold text-gray-900 dark:text-white">
                     12
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('admin.dashboard.stats.occupancyRate')}</span>
-                  <span className="text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{t('admin.dashboard.stats.occupancyRate')}</span>
+                  <span className="text-lg font-bold text-gray-900 dark:text-white">
                     85%
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('admin.dashboard.stats.totalBookings')}</span>
-                  <span className="text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{t('admin.dashboard.stats.totalBookings')}</span>
+                  <span className="text-lg font-bold text-gray-900 dark:text-white">
                     24
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('admin.dashboard.stats.revenue')}</span>
-                  <span className="text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <div className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{t('admin.dashboard.stats.revenue')}</span>
+                  <span className="text-lg font-bold text-gray-900 dark:text-white">
                     $12,450
                   </span>
                 </div>
