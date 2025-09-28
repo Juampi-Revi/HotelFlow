@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const RoomCard = ({ room }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
@@ -10,10 +12,14 @@ const RoomCard = ({ room }) => {
     }).format(price);
   };
 
+  const handleCardClick = () => {
+    navigate(`/room/${room.id}`);
+  };
+
   const cardClasses = `
     bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 
-    overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer group
-    ${!room.isAvailable ? 'opacity-75' : ''}
+    hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer
+    p-6 max-w-sm mx-auto
   `;
 
   const statusClasses = `
@@ -25,7 +31,7 @@ const RoomCard = ({ room }) => {
   `;
 
   return (
-    <div className={cardClasses}>
+    <div className={cardClasses} onClick={handleCardClick}>
       {room.images && room.images.length > 0 && (
         <div className="relative overflow-hidden">
           <img 

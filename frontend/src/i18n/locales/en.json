@@ -1,101 +1,23 @@
 {
   "brand": {
-    "name": "HotelFlow",
-    "tagline": "Seamless stays, endless possibilities"
+    "name": "Digital House Hotel",
+    "tagline": "Your perfect stay awaits"
   },
   "header": {
     "home": "Home",
-    "hotels": "Hotels",
+    "rooms": "Rooms",
     "about": "About",
     "contact": "Contact",
     "login": "Login",
-    "signup": "Sign Up",
-    "backToSite": "Back to Site"
+    "createAccount": "Create Account"
   },
   "common": {
     "search": "Search",
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success",
-    "welcome": "Welcome to HotelFlow",
-    "comingSoon": "Coming Soon",
-    "description": "We're building an amazing hotel booking experience. The header navigation is now ready for your journey!",
+    "welcome": "Welcome",
     "language": "Language",
     "theme": "Theme",
-    "lightMode": "Light Mode",
-    "darkMode": "Dark Mode",
-    "english": "English",
-    "spanish": "Spanish",
-    "dismiss": "Dismiss"
-  },
-  "search": {
-    "title": "Find Your Perfect Hotel",
-    "placeholder": "Search Component Placeholder"
-  },
-  "categories": {
-    "title": "Hotel Categories",
-    "placeholder": "Category description",
-    "item1": "Luxury Hotels",
-    "item2": "Business Hotels",
-    "item3": "Beach Resorts",
-    "item4": "City Hotels",
-    "item5": "Boutique Hotels",
-    "item6": "Budget Hotels"
-  },
-  "recommendations": {
-    "title": "Recommended Hotels",
-    "imagePlaceholder": "Hotel Image",
-    "description": "Discover amazing hotels with exceptional service and comfort",
-    "price": "$99/night",
-    "hotel1": "Grand Plaza Hotel",
-    "hotel2": "Ocean View Resort",
-    "hotel3": "City Center Inn"
-  },
-  "admin": {
-    "title": "Administration",
-    "dashboard": {
-      "title": "Administration Dashboard",
-      "welcome": "Welcome to the hotel administration panel",
-      "recentActivity": "Recent Activity",
-      "quickStats": "Quick Stats",
-      "items": {
-        "rooms": "Room Management",
-        "bookings": "Bookings",
-        "bookingsDesc": "Manage hotel reservations and bookings",
-        "users": "Users",
-        "usersDesc": "Manage user accounts and permissions",
-        "analytics": "Analytics",
-        "analyticsDesc": "View reports and performance metrics"
-      },
-      "stats": {
-        "totalRooms": "Total Rooms",
-        "occupancyRate": "Occupancy Rate",
-        "totalBookings": "Active Bookings",
-        "revenue": "Monthly Revenue"
-      }
-    },
-    "rooms": {
-      "title": "Room Management",
-      "description": "Manage hotel rooms, availability, and pricing",
-      "loading": "Loading rooms...",
-      "noRoomsFound": "No rooms found",
-      "addFirstRoomHint": "Start by adding your first room to the system.",
-      "actions": {
-        "addNew": "Add New Room",
-        "addFirst": "Add First Room"
-      }
-    },
-    "newRoom": "New Room",
-    "roomManagement": "Room Management",
-    "roomsDescription": "Manage hotel rooms, availability, and pricing",
-    "noRooms": "No rooms found",
-    "noRoomsDescription": "Start by creating your first room",
-    "createFirstRoom": "Create First Room",
-    "roomCreated": "Room created successfully",
-    "roomUpdated": "Room updated successfully",
-    "roomDeleted": "Room deleted successfully",
-    "availabilityToggled": "Room availability updated",
-    "confirmDelete": "Are you sure you want to delete this room?",
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
@@ -103,178 +25,50 @@
     "create": "Create",
     "back": "Back",
     "close": "Close",
-    "room": {
-      "title": "Room Management",
-      "addTitle": "Add New Room",
-      "editTitle": "Edit Room",
-      "fields": {
-        "roomNumber": "Room Number",
-        "roomType": "Room Type",
-        "capacity": "Capacity",
-        "pricePerNight": "Price per Night",
-        "description": "Description",
-        "images": "Images"
-      },
-      "placeholders": {
-        "roomNumber": "e.g: 101, 201A, Premium Suite",
-        "roomType": "Select room type",
-        "capacity": "Number of guests",
-        "price": "Price in USD per night",
-        "description": "Describe the room features"
-      },
-      "types": {
-        "single": "Single",
-        "double": "Double",
-        "suite": "Suite",
-        "family": "Family",
-        "deluxe": "Deluxe",
-        "SINGLE": "Single",
-        "DOUBLE": "Double",
-        "SUITE": "Suite",
-        "FAMILY": "Family",
-        "DELUXE": "Deluxe"
-      },
-      "imageUpload": {
-        "dropText": "Drag images here or click to select",
-        "formatHint": "Maximum 5 images, JPG/PNG format",
-        "removeImage": "Remove image"
-      },
-      "validation": {
-        "roomNumberRequired": "Room number is required",
-        "roomTypeRequired": "Room type is required",
-        "capacityMinimum": "Capacity must be at least 1",
-        "priceRequired": "Price is required and must be greater than 0",
-        "descriptionRequired": "Description is required",
-        "imagesRequired": "At least one image must be added"
-      },
-      "actions": {
-        "save": "Save Room",
-        "cancel": "Cancel",
-        "edit": "Edit",
-        "delete": "Delete",
-        "create": "Create Room",
-        "update": "Update Room",
-        "saving": "Saving...",
-        "addNew": "Add New Room",
-        "addFirst": "Add First Room",
-        "enable": "Enable",
-        "disable": "Disable"
-      },
-      "roomNumber": "Room {{number}}",
-      "available": "Available",
-      "unavailable": "Unavailable",
-      "capacity": "Capacity: {{capacity}} guests",
-      "perNight": "night"
-    }
-  },
-  "room": {
-    "number": "Room Number",
-    "type": "Room Type",
+    "goBack": "Go Back",
+    "roomNotFound": "Room not found",
+    "roomDetails": "Room Details",
+    "guest": "guest",
+    "guests": "guests",
+    "room": "Room",
+    "roomType": "Room Type",
     "capacity": "Capacity",
     "pricePerNight": "Price per Night",
     "description": "Description",
-    "images": "Images",
     "available": "Available",
-      "unavailable": "Unavailable",
-      "roomNumber": "Room {{number}}",
-      "capacity": "Capacity: {{capacity}} guests",
-      "perNight": "night",
-    "toggleAvailability": "Toggle Availability",
+    "notAvailable": "Not Available",
+    "bookNow": "Book Now",
+    "reserve": "Reserve"
+  },
+  "search": {
+    "placeholder": "Search rooms...",
+    "filters": "Filters",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "roomType": "Room Type",
+    "priceRange": "Price Range",
+    "amenities": "Amenities",
+    "apply": "Apply Filters",
+    "clear": "Clear Filters",
+    "results": "{{count}} rooms found",
+    "noResults": "No rooms found",
+    "noResultsDescription": "Try adjusting your search criteria"
+  },
+  "categories": {
+    "all": "All Rooms",
     "single": "Single",
     "double": "Double",
     "suite": "Suite",
-    "deluxe": "Deluxe",
-    "presidential": "Presidential",
-    "guests": "guests",
-    "night": "night",
-    "uploadImages": "Upload Images",
-    "dragAndDrop": "Drag and drop images here, or click to select",
-    "maxImages": "Maximum {{count}} images",
-    "removeImage": "Remove image",
-    "required": "This field is required",
-    "invalidNumber": "Please enter a valid room number",
-    "invalidCapacity": "Capacity must be at least 1",
-    "invalidPrice": "Price must be greater than 0",
-    "actions": {
-      "save": "Save Room",
-      "cancel": "Cancel",
-      "edit": "Edit",
-      "delete": "Delete",
-      "addNew": "Add New Room",
-      "addFirst": "Add First Room",
-      "enable": "Enable",
-      "disable": "Disable"
-    },
-    "loading": "Loading rooms...",
-    "noRoomsFound": "No rooms found",
-    "addFirstRoomHint": "Start by adding your first room to the system."
+    "family": "Family",
+    "deluxe": "Deluxe"
   },
-  "imageUpload": {
-    "dropText": "Drop images here or click to select",
-    "formatHint": "Maximum {{maxImages}} images, JPG/PNG format",
-    "removeImage": "Remove image"
-  },
-  "hero": {
-    "title": "Discover Amazing",
-    "subtitle": "Rooms",
-    "description": "Find the best rooms with exceptional comfort and competitive prices. Your perfect stay awaits.",
-    "cta": {
-      "primary": "Explore Rooms",
-      "secondary": "View Types"
-    },
-    "stats": {
-      "products": "Rooms",
-      "brands": "Hotels",
-      "support": "Support"
-    },
-    "badge": {
-      "quality": "Premium Quality",
-      "rating": "Rating"
-    },
-    "imageAlt": "Premium quality rooms"
-  },
-  "home": {
-    "featuredRooms": "Featured Rooms"
-  },
-  "room": {
-    "available": "Available",
-    "unavailable": "Unavailable",
-    "roomNumber": "Room {{number}}",
-    "capacity": "{{capacity}} guests",
-    "guests": "guests",
-    "perNight": "per night",
-    "moreAmenities": "more amenities",
-    "noRooms": "No rooms available",
-    "noRoomsDescription": "There are currently no rooms to display.",
-    "showingRooms": "Showing {{showing}} of {{total}} rooms",
-    "types": {
-      "single": "Single",
-      "double": "Double",
-      "suite": "Suite",
-      "family": "Family",
-      "deluxe": "Deluxe"
-    }
-  },
-  "product": {
-    "available": "Available",
-    "unavailable": "Unavailable",
-    "reviews": "reviews",
-    "inStock": "{{count}} in stock",
-    "outOfStock": "Out of stock",
-    "noProducts": "No products available",
-    "noProductsDescription": "There are currently no products to display.",
-    "showingProducts": "Showing {{showing}} of {{total}} products",
-    "category": {
-      "electronics": "Electronics",
-      "clothing": "Clothing",
-      "home": "Home",
-      "sports": "Sports",
-      "books": "Books",
-      "beauty": "Beauty",
-      "toys": "Toys",
-      "automotive": "Automotive",
-      "health": "Health",
-      "food": "Food"
-    }
+  "recommendations": {
+    "title": "Recommended for You",
+    "subtitle": "Handpicked rooms based on your preferences",
+    "viewAll": "View All Rooms",
+    "featured": "Featured Rooms",
+    "popular": "Popular Choices",
+    "newArrivals": "New Arrivals"
   }
 }
