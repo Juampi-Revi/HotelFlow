@@ -97,5 +97,20 @@ export const roomService = {
     }
     const rooms = await response.json();
     return rooms.slice(0, 10); // Limit to 10 rooms for home page
+  },
+
+  async getPaginatedRooms(page = 0, size = 10, sortBy = 'id', sortDirection = 'asc') {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      size: size.toString(),
+      sortBy,
+      sortDirection
+    });
+    
+    const response = await fetch(`${API_BASE_URL}/rooms/paginated?${params}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch paginated rooms');
+    }
+    return response.json();
   }
 };

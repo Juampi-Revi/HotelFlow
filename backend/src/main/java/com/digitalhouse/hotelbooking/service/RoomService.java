@@ -2,12 +2,17 @@ package com.digitalhouse.hotelbooking.service;
 
 import com.digitalhouse.hotelbooking.dto.request.RoomRequestDTO;
 import com.digitalhouse.hotelbooking.dto.response.RoomResponseDTO;
+import com.digitalhouse.hotelbooking.dto.response.PagedRoomResponseDTO;
 import com.digitalhouse.hotelbooking.exception.DuplicateRoomException;
 import com.digitalhouse.hotelbooking.exception.RoomNotFoundException;
 import com.digitalhouse.hotelbooking.model.Room;
 import com.digitalhouse.hotelbooking.model.enums.RoomType;
 import com.digitalhouse.hotelbooking.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,6 +69,32 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
     
+    @Transactional(readOnly = true)
+    public PagedRoomResponseDTO getPaginatedRooms(int page, int size, String sortBy, String sortDirection) {
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        
+        Page<Room> roomPage = roomRepository.findAll(pageable);
+        
+        List<RoomResponseDTO> roomDTOs = roomPage.getContent()
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+        
+        return new PagedRoomResponseDTO(
+                roomDTOs,
+                roomPage.getNumber(),
+                roomPage.getSize(),
+                roomPage.getTotalElements(),
+                roomPage.getTotalPages(),
+                roomPage.isFirst(),
+                roomPage.isLast(),
+                roomPage.hasNext(),
+                roomPage.hasPrevious()
+        );
+    }
+    
     public RoomResponseDTO updateRoom(Long id, RoomRequestDTO roomRequestDTO) {
         Room existingRoom = findRoomById(id);
         
@@ -102,13 +133,22 @@ public class RoomService {
     }
     
     private Room mapToEntity(RoomRequestDTO dto) {
-        Room room = new Room();
-        room.setRoomNumber(dto.getRoomNumber());
-        room.setRoomType(dto.getRoomType());
-        room.setCapacity(dto.getCapacity());
-        room.setPricePerNight(dto.getPricePerNight());
-        room.setDescription(dto.getDescription());
+        Room room = new Room(dto.getRoomNumber(), dto.getRoomType(), dto.getCapacity(), 
+                           dto.getPricePerNight(), dto.getDescription(), dto.getHotelName(), 
+                           dto.getCity(), dto.getCountry());
         room.setImages(dto.getImages());
+        room.setHotelChain(dto.getHotelChain());
+        room.setHotelRating(dto.getHotelRating());
+        room.setAddress(dto.getAddress());
+        room.setLatitude(dto.getLatitude());
+        room.setLongitude(dto.getLongitude());
+        room.setAmenities(dto.getAmenities());
+        room.setViewType(dto.getViewType());
+        room.setFloor(dto.getFloor());
+        room.setSizeSqm(dto.getSizeSqm());
+        room.setHasBalcony(dto.getHasBalcony());
+        room.setHasWifi(dto.getHasWifi());
+        room.setHasAirConditioning(dto.getHasAirConditioning());
         return room;
     }
     
@@ -119,6 +159,21 @@ public class RoomService {
         room.setPricePerNight(dto.getPricePerNight());
         room.setDescription(dto.getDescription());
         room.setImages(dto.getImages());
+        room.setHotelName(dto.getHotelName());
+        room.setHotelChain(dto.getHotelChain());
+        room.setHotelRating(dto.getHotelRating());
+        room.setCity(dto.getCity());
+        room.setCountry(dto.getCountry());
+        room.setAddress(dto.getAddress());
+        room.setLatitude(dto.getLatitude());
+        room.setLongitude(dto.getLongitude());
+        room.setAmenities(dto.getAmenities());
+        room.setViewType(dto.getViewType());
+        room.setFloor(dto.getFloor());
+        room.setSizeSqm(dto.getSizeSqm());
+        room.setHasBalcony(dto.getHasBalcony());
+        room.setHasWifi(dto.getHasWifi());
+        room.setHasAirConditioning(dto.getHasAirConditioning());
     }
     
     private RoomResponseDTO mapToResponseDTO(Room room) {
@@ -130,6 +185,9 @@ public class RoomService {
                 room.getPricePerNight(),
                 room.getDescription(),
                 room.getImages(),
+                room.getHotelName(),
+                room.getCity(),
+                room.getCountry(),
                 room.getIsAvailable(),
                 room.getCreatedAt(),
                 room.getUpdatedAt()
