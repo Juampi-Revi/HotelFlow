@@ -145,10 +145,12 @@ Development server runs on: `http://localhost:5173`
 - [x] **Footer Component** - Consistent branding across all pages
 - [x] **Admin Panel** - Full administrative interface with dashboard
 - [x] **Room Management** - CRUD operations for hotel rooms
-- [x] **Responsive Design** - Optimized for all devices
+- [x] **Responsive Design** - Optimized for all devices with mobile-first approach
 - [x] **Dark/Light Mode** - Theme switching with system preference
-- [x] **Internationalization** - Multi-language support
+- [x] **Internationalization** - Complete Spanish/English translation system
 - [x] **Component Architecture** - Atomic design with reusable components
+- [x] **Mobile Support** - Device detection and mobile-optimized components
+- [x] **Custom Hooks** - Reusable logic with useDeviceDetection and others
 
 ### 🚧 In Development
 - [ ] User authentication system
@@ -163,14 +165,81 @@ Development server runs on: `http://localhost:5173`
 - **Modern UI**: Glassmorphism design with blue-indigo palette
 - **Responsive**: Mobile-optimized interface
 - **Dark Mode**: Full dark theme support
+- **Multi-language**: Complete Spanish/English support
+
+### 🌍 Internationalization (i18n)
+- **Languages**: Spanish (es) and English (en)
+- **Auto-detection**: Browser language preference detection
+- **Persistence**: Language choice saved in localStorage
+- **Complete Coverage**: All UI elements, messages, and admin panel translated
+- **Dynamic Switching**: Real-time language toggle without page reload
+- **Translation Keys**: 200+ translation keys covering entire application
+
+### 📱 Mobile & Responsive Features
+- **Device Detection**: Custom useDeviceDetection hook
+- **Mobile-First Design**: Optimized for mobile devices first
+- **Responsive Breakpoints**: Tailwind CSS breakpoints (sm, md, lg, xl)
+- **Mobile Components**: Dedicated MobileNotSupported component
+- **Adaptive Layouts**: Grid systems that adapt to screen size
+- **Touch-Friendly**: Optimized touch targets and interactions
 
 ## 🤝 Contributing
 
-1. Create feature branch: `git checkout -b feature/user-story-X-description`
-2. Follow coding standards and principles
-3. Write clean, self-documenting code
-4. Test thoroughly before committing
-5. Create pull request with detailed description
+### Git Flow - MANDATORY Process
+
+**⚠️ NEVER commit directly to `main` branch!**
+
+Follow this strict workflow for all changes:
+
+```bash
+# 1. Create feature branch from main
+git checkout main
+git pull origin main
+git checkout -b feature/sprint-X-userstory-Y-description
+
+# 2. Work on your changes
+# ... make changes ...
+
+# 3. Commit with descriptive messages
+git add .
+git commit -m "feat: descriptive commit message following conventional commits"
+
+# 4. Push feature branch
+git push origin feature/sprint-X-userstory-Y-description
+
+# 5. Create Pull Request on GitHub
+# - Add detailed description
+# - Request code review
+# - Ensure CI/CD passes
+
+# 6. Merge after approval
+# - Use "Squash and merge" for clean history
+# - Delete feature branch after merge
+```
+
+### Branch Naming Convention
+- `feature/sprint-X-userstory-Y-description` - New features
+- `bugfix/issue-description` - Bug fixes
+- `hotfix/critical-issue` - Critical production fixes
+- `docs/update-description` - Documentation updates
+
+### Commit Message Convention
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation changes
+- `style:` - Code style changes
+- `refactor:` - Code refactoring
+- `test:` - Adding tests
+- `chore:` - Maintenance tasks
+
+### Code Quality Standards
+1. Follow coding standards and principles
+2. Write clean, self-documenting code
+3. Test thoroughly before committing
+4. Ensure no linting errors
+5. Maintain SOLID principles and Clean Architecture
+6. Use Atomic Design patterns for components
 
 ## 📄 License
 
