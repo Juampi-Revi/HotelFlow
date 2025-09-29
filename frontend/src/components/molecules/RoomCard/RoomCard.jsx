@@ -84,27 +84,33 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
         )}
 
         <div className="flex gap-2 flex-wrap">
-          <Button
-            variant="secondary"
-            size="small"
+          <button
             onClick={() => onEdit(room)}
+            className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:ring-blue-500 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700/50 dark:hover:bg-blue-900/50"
           >
+            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
             {t('admin.room.actions.edit')}
-          </Button>
-          <Button
-            variant={room.isAvailable ? 'secondary' : 'primary'}
-            size="small"
+          </button>
+          <button
             onClick={() => onToggleAvailability(room.id)}
+            className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 focus:ring-amber-500 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700/50 dark:hover:bg-amber-900/50"
           >
+            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={room.isAvailable ? "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636" : "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"} />
+            </svg>
             {room.isAvailable ? t('admin.room.actions.disable') : t('admin.room.actions.enable')}
-          </Button>
-          <Button
-            variant="danger"
-            size="small"
+          </button>
+          <button
             onClick={() => onDelete(room.id)}
+            className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 focus:ring-red-500 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700/50 dark:hover:bg-red-900/50"
           >
+            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
             {t('admin.room.actions.delete')}
-          </Button>
+          </button>
         </div>
       </div>
     </div>

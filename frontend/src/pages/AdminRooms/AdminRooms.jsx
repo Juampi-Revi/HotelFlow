@@ -1,19 +1,24 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
-import Button from '../../components/atoms/Button/Button';
 import RoomCard from '../../components/molecules/RoomCard/RoomCard';
 import RoomForm from '../../components/organisms/RoomForm/RoomForm';
+import ViewToggle from '../../components/atoms/ViewToggle/ViewToggle';
+import RoomTable from '../../components/molecules/RoomTable/RoomTable';
+import Pagination from '../../components/atoms/Pagination/Pagination';
 import { roomService } from '../../services/roomService';
 
 const AdminRooms = () => {
   const { t } = useTranslation();
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [editingRoom, setEditingRoom] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [viewMode, setViewMode] = useState('cards');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     loadRooms();
@@ -90,6 +95,29 @@ const AdminRooms = () => {
     }
   };
 
+  const totalPages = Math.ceil(rooms.length / itemsPerPage);
+  
+  // Ensure currentPage is within valid range
+  const validCurrentPage = Math.min(currentPage, Math.max(0, totalPages - 1));
+  
+  const startIndex = validCurrentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentRooms = rooms.slice(startIndex, endIndex);
+  
+  // Update currentPage if it was out of range
+  if (validCurrentPage !== currentPage && totalPages > 0) {
+    setCurrentPage(validCurrentPage);
+  }
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode);
+    setCurrentPage(0);
+  };
+
   return (
     <AdminLayout>
       <div className="p-8 min-h-screen">
@@ -105,25 +133,34 @@ const AdminRooms = () => {
             </div>
           ) : (
             <>
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
-                <div>
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+              <div className="mb-8">
+                <div className="mb-6">
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                     {t('admin.rooms.title')}
                   </h1>
-                  <p className="text-lg text-gray-600 dark:text-gray-300">{t('admin.rooms.description')}</p>
+                  <p className="text-base text-gray-600 dark:text-gray-300">{t('admin.rooms.description')}</p>
                 </div>
-                <button
-                  onClick={handleAddRoom}
-                  className="group relative px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 overflow-hidden border border-blue-400/30"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 flex items-center space-x-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>{t('admin.rooms.actions.addNew')}</span>
-                  </span>
-                </button>
+                
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700/50">
+                  <div className="flex items-center gap-4">
+                    <ViewToggle
+                      currentView={viewMode}
+                      onViewChange={handleViewModeChange}
+                    />
+                  </div>
+                  <button
+                    onClick={handleAddRoom}
+                    className="group relative px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-blue-400/30"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <span className="relative z-10 flex items-center space-x-2">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                      <span>{t('admin.rooms.actions.addNew')}</span>
+                    </span>
+                  </button>
+                </div>
               </div>
 
               {error && (
@@ -181,18 +218,41 @@ const AdminRooms = () => {
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {rooms.map((room) => (
-                    <div key={room.id} className="transform transition-all duration-300 hover:scale-105">
-                      <RoomCard
-                        room={room}
+                <>
+                  {viewMode === 'cards' ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {currentRooms.map((room) => (
+                        <div key={room.id} className="transform transition-all duration-300 hover:scale-105">
+                          <RoomCard
+                            room={room}
+                            onEdit={handleEditRoom}
+                            onDelete={handleDeleteRoom}
+                            onToggleAvailability={handleToggleAvailability}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="bg-white/98 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 overflow-hidden">
+                      <RoomTable
+                        rooms={currentRooms}
                         onEdit={handleEditRoom}
                         onDelete={handleDeleteRoom}
                         onToggleAvailability={handleToggleAvailability}
                       />
                     </div>
-                  ))}
-                </div>
+                  )}
+
+                  {totalPages > 1 && (
+                    <div className="mt-8 flex justify-center">
+                      <Pagination
+                        currentPage={validCurrentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}

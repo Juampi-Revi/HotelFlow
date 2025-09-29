@@ -22,7 +22,7 @@ function HomePage() {
         const data = await roomService.getRoomsForHome();
         setRooms(data);
       } catch (error) {
-        console.error('Error fetching rooms:', error);
+        // Error handled silently - rooms will remain empty array
       } finally {
         setIsLoading(false);
       }

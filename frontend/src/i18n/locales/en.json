@@ -177,6 +177,7 @@
       "unavailable": "Unavailable",
       "roomNumber": "Room {{number}}",
       "perNight": "per night",
+      "guests": "guests",
       "addTitle": "Add New Room",
       "editTitle": "Edit Room",
       "fields": {
@@ -225,6 +226,39 @@
         "imagesRequired": "At least one image is required"
       }
     },
+    "rooms": {
+      "title": "Room Management",
+      "description": "Manage hotel rooms and availability",
+      "loading": "Loading rooms...",
+      "noRoomsFound": "No rooms found",
+      "addFirstRoomHint": "Start by adding your first room to the system",
+      "viewToggle": {
+        "label": "View as:",
+        "cards": "Cards",
+        "table": "Table"
+      },
+      "table": {
+        "id": "ID",
+        "roomNumber": "Room Number",
+        "type": "Type",
+        "capacity": "Capacity",
+        "price": "Price",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "pagination": {
+        "showing": "Showing",
+        "to": "to",
+        "of": "of",
+        "results": "results",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "actions": {
+        "addNew": "Add New Room",
+        "addFirst": "Add First Room"
+      }
+    },
     "navigation": {
       "overview": "Overview",
       "analytics": "Analytics",
@@ -271,16 +305,45 @@
     },
     "rooms": {
       "title": "Room Management",
-      "description": "Manage hotel rooms, their features and availability",
+      "description": "Manage hotel rooms and availability",
       "loading": "Loading rooms...",
       "noRoomsFound": "No rooms found",
       "addFirstRoomHint": "Start by adding your first room to the system",
+      "viewToggle": {
+        "label": "View as:",
+        "cards": "Cards",
+        "table": "Table"
+      },
+      "table": {
+        "id": "ID",
+        "roomNumber": "Room Number",
+        "type": "Type",
+        "capacity": "Capacity",
+        "price": "Price",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "pagination": {
+        "showing": "Showing",
+        "to": "to",
+        "of": "of",
+        "results": "results",
+        "previous": "Previous",
+        "next": "Next"
+      },
       "actions": {
-        "addNew": "Add New Room",
-        "addFirst": "Add First Room"
+          "addNew": "Add Room",
+          "addFirst": "Add First Room"
+        },
+        "types": {
+          "SINGLE": "Single",
+          "DOUBLE": "Double",
+          "SUITE": "Suite",
+          "DELUXE": "Deluxe",
+          "FAMILY": "Family"
+        }
       }
-    }
-  },
+    },
   "rooms": {
     "images": "images"
   },
