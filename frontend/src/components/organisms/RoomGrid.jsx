@@ -36,9 +36,6 @@ const RoomGrid = ({ rooms = [], title, isLoading = false }) => {
             </h2>
           )}
           <div className="text-center py-12">
-            <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">
-              🏨
-            </div>
             <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">
               {t('room.noRooms')}
             </h3>
@@ -51,7 +48,6 @@ const RoomGrid = ({ rooms = [], title, isLoading = false }) => {
     );
   }
 
-  // Limit to maximum 10 rooms (2 columns x 5 rows)
   const displayRooms = rooms.slice(0, 10);
 
   return (

@@ -5,12 +5,15 @@ const useRoomsPagination = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [sortBy, setSortBy] = useState('roomNumber');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState('all');
+  const [filterAvailability, setFilterAvailability] = useState('all');
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [sortBy, setSortBy] = useState('id');
-  const [sortDirection, setSortDirection] = useState('asc');
 
   const fetchRooms = async () => {
     try {
@@ -47,12 +50,12 @@ const useRoomsPagination = () => {
       setSortBy(field);
       setSortDirection('asc');
     }
-    setCurrentPage(0);
+    setCurrentPage(1);
   };
 
   const handlePageSizeChange = (size) => {
     setPageSize(size);
-    setCurrentPage(0);
+    setCurrentPage(1);
   };
 
   return {

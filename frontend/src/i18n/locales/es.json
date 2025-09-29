@@ -179,6 +179,7 @@
       "unavailable": "No disponible",
       "roomNumber": "Habitación {{number}}",
       "perNight": "por noche",
+      "guests": "huéspedes",
       "addTitle": "Agregar Nueva Habitación",
       "editTitle": "Editar Habitación",
       "fields": {
@@ -217,6 +218,46 @@
       "imageUpload": {
         "dropText": "Arrastra imágenes aquí o haz clic para subir",
         "removeImage": "Eliminar imagen"
+      },
+      "rooms": {
+        "title": "Gestión de Habitaciones",
+        "description": "Administra las habitaciones del hotel y su disponibilidad",
+        "loading": "Cargando habitaciones...",
+        "noRoomsFound": "No se encontraron habitaciones",
+        "addFirstRoomHint": "Comienza agregando tu primera habitación al sistema",
+        "viewToggle": {
+          "label": "Ver como:",
+          "cards": "Tarjetas",
+          "table": "Tabla"
+        },
+        "table": {
+          "id": "ID",
+          "roomNumber": "Número de Habitación",
+          "type": "Tipo",
+          "capacity": "Capacidad",
+          "price": "Precio",
+          "status": "Estado",
+          "actions": "Acciones"
+        },
+        "pagination": {
+          "showing": "Mostrando",
+          "to": "a",
+          "of": "de",
+          "results": "resultados",
+          "previous": "Anterior",
+          "next": "Siguiente"
+        },
+        "actions": {
+          "addNew": "Agregar Habitación",
+          "addFirst": "Agregar Primera Habitación"
+        },
+        "types": {
+          "SINGLE": "Individual",
+          "DOUBLE": "Doble",
+          "SUITE": "Suite",
+          "DELUXE": "Deluxe",
+          "FAMILY": "Familiar"
+        }
       }
     },
     "navigation": {

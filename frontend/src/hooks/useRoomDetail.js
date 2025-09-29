@@ -30,9 +30,8 @@ export const useRoomDetail = (roomId) => {
     navigate('/');
   };
 
-  const handleBooking = (roomNumber) => {
-    // TODO: Implementar lógica de reserva
-    alert(`Reservando habitación ${roomNumber}`);
+  const handleBooking = () => {
+    alert(`Booking room ${roomNumber}`);
   };
 
   return {
