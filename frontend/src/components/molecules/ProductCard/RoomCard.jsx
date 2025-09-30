@@ -19,7 +19,7 @@ const RoomCard = ({ room }) => {
   const cardClasses = `
     bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 
     hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer
-    p-6 max-w-sm mx-auto
+    p-6 max-w-sm mx-auto relative group
   `;
 
   const statusClasses = `
@@ -62,12 +62,12 @@ const RoomCard = ({ room }) => {
           {room.description}
         </p>
 
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20 px-3 py-1 rounded-full">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-sm font-semibold text-blue-700 dark:text-blue-200 bg-blue-100 dark:bg-blue-800/80 px-3 py-1.5 rounded-md border border-blue-200 dark:border-blue-600 flex-1 text-center">
             {t(`room.types.${room.roomType.toLowerCase()}`)}
           </span>
-          <span className="text-sm font-medium text-purple-600 dark:text-purple-400 bg-purple-50/50 dark:bg-purple-900/20 px-3 py-1 rounded-full">
-            {t('room.capacity', { capacity: room.capacity })} {t('room.guests')}
+          <span className="text-sm font-semibold text-purple-700 dark:text-purple-200 bg-purple-100 dark:bg-purple-800/80 px-3 py-1.5 rounded-md border border-purple-200 dark:border-purple-600 flex-1 text-center">
+            {t('room.capacity', { capacity: room.capacity })}
           </span>
         </div>
 
@@ -90,13 +90,20 @@ const RoomCard = ({ room }) => {
 
         <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 dark:border-gray-700/50">
           <div className="flex flex-col">
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-blue-600 dark:text-blue-300">
               {formatPrice(room.pricePerNight)}
             </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+            <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">
               {t('room.perNight')}
             </span>
           </div>
+        </div>
+      </div>
+      
+      {/* Overlay "Ver más" en hover */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+        <div className="text-white text-lg font-semibold bg-blue-600 px-6 py-3 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+          Ver más
         </div>
       </div>
     </div>

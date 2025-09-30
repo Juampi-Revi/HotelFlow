@@ -31,12 +31,8 @@ const ProductsPage = () => {
     navigate(`/room/${roomId}`);
   };
 
-  const filteredRooms = rooms.filter(room =>
-    room.hotelName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    room.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    room.country?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    room.description?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filtros temporalmente deshabilitados - mostrar todas las habitaciones
+  const filteredRooms = rooms;
 
   if (loading) {
     return (
@@ -85,55 +81,58 @@ const ProductsPage = () => {
           </p>
         </div>
 
-        {/* Filters and Search */}
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-            {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                placeholder={t('common.searchPlaceholder')}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              />
-            </div>
-
-            {/* Sort and Page Size Controls */}
-            <div className="flex gap-4 items-center">
-              <div className="flex items-center gap-2">
-                <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+        {/* Filters and Search - TEMPORALMENTE OCULTO */}
+        {/* TODO: Implementar filtros más adelante - por ahora están ocultos para evitar confusión */}
+        {false && (
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-8">
+            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+              {/* Search */}
+              <div className="relative flex-1 max-w-md">
+                <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <select
-                  value={sortBy}
-                  onChange={(e) => handleSortChange(e.target.value)}
-                  className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="id">{t('common.sortById')}</option>
-                  <option value="pricePerNight">{t('common.sortByPrice')}</option>
-                  <option value="hotelName">{t('common.sortByHotel')}</option>
-                  <option value="city">{t('common.sortByCity')}</option>
-                  <option value="hotelRating">{t('common.sortByRating')}</option>
-                </select>
+                <input
+                  type="text"
+                  placeholder={t('common.searchPlaceholder')}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                />
               </div>
 
-              <select
-                value={pageSize}
-                onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-                className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-              >
-                <option value={6}>6 {t('common.perPage')}</option>
-                <option value={12}>12 {t('common.perPage')}</option>
-                <option value={24}>24 {t('common.perPage')}</option>
-                <option value={48}>48 {t('common.perPage')}</option>
-              </select>
+              {/* Sort and Page Size Controls */}
+              <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-2">
+                  <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                  </svg>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => handleSortChange(e.target.value)}
+                    className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="id">{t('common.sortById')}</option>
+                    <option value="pricePerNight">{t('common.sortByPrice')}</option>
+                    <option value="hotelName">{t('common.sortByHotel')}</option>
+                    <option value="city">{t('common.sortByCity')}</option>
+                    <option value="hotelRating">{t('common.sortByRating')}</option>
+                  </select>
+                </div>
+
+                <select
+                  value={pageSize}
+                  onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                  className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value={6}>6 {t('common.perPage')}</option>
+                  <option value={12}>12 {t('common.perPage')}</option>
+                  <option value={24}>24 {t('common.perPage')}</option>
+                  <option value={48}>48 {t('common.perPage')}</option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Results Info */}
         <div className="flex justify-between items-center mb-6">

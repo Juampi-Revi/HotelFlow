@@ -115,7 +115,11 @@
   },
   "notifications": {
     "roomDeletedSuccess": "Room deleted successfully",
-    "roomDeletedError": "Error deleting room. Please try again."
+    "roomDeletedError": "Error deleting room. Please try again.",
+    "roomCreatedSuccess": "Room created successfully",
+    "roomCreatedError": "Error creating room. Please try again.",
+    "roomUpdatedSuccess": "Room updated successfully",
+    "roomUpdatedError": "Error updating room. Please try again."
   },
   "gallery": {
     "viewMore": "View more"
@@ -194,20 +198,52 @@
       "guests": "guests",
       "addTitle": "Add New Room",
       "editTitle": "Edit Room",
+      "sections": {
+        "hotelInfo": "Hotel Information",
+        "location": "Location",
+        "roomFeatures": "Room Features",
+        "basicAmenities": "Basic Amenities"
+      },
       "fields": {
         "roomNumber": "Room Number",
         "roomType": "Room Type",
         "capacity": "Capacity",
         "pricePerNight": "Price per Night",
         "description": "Description",
-        "images": "Images"
+        "images": "Images",
+        "hotelName": "Hotel Name",
+        "hotelChain": "Hotel Chain",
+        "hotelRating": "Hotel Rating",
+        "city": "City",
+        "country": "Country",
+        "address": "Address",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "viewType": "View Type",
+        "floor": "Floor",
+        "sizeSqm": "Size (m²)",
+        "hasWifi": "WiFi Available",
+        "hasAirConditioning": "Air Conditioning",
+        "hasBalcony": "Balcony",
+        "amenities": "Additional Amenities"
       },
       "placeholders": {
         "roomNumber": "Enter room number",
         "roomType": "Select room type",
         "capacity": "Number of guests",
         "price": "Price in USD",
-        "description": "Room description"
+        "description": "Room description",
+        "hotelName": "Enter hotel name",
+        "hotelChain": "Enter hotel chain (optional)",
+        "hotelRating": "Select hotel rating",
+        "city": "Enter city",
+        "country": "Enter country",
+        "address": "Enter full address",
+        "latitude": "Enter latitude (optional)",
+        "longitude": "Enter longitude (optional)",
+        "viewType": "Select view type",
+        "floor": "Enter floor number",
+        "sizeSqm": "Enter room size in square meters"
       },
       "actions": {
         "edit": "Edit",
@@ -227,6 +263,26 @@
         "family": "Family",
         "deluxe": "Deluxe"
       },
+      "viewTypes": {
+        "ocean": "Ocean View",
+        "mountain": "Mountain View",
+        "city": "City View",
+        "garden": "Garden View",
+        "pool": "Pool View",
+        "courtyard": "Courtyard View"
+      },
+      "amenities": {
+        "wifi": "WiFi",
+        "tv": "Television",
+        "minibar": "Minibar",
+        "safe": "Safe",
+        "roomService": "Room Service",
+        "laundry": "Laundry Service",
+        "parking": "Parking",
+        "gym": "Gym Access",
+        "spa": "Spa Access",
+        "pool": "Pool Access"
+      },
       "imageUpload": {
         "dropText": "Drop images here or click to upload",
         "removeImage": "Remove image"
@@ -237,7 +293,16 @@
         "capacityMinimum": "Capacity must be at least 1",
         "priceRequired": "Price per night is required",
         "descriptionRequired": "Description is required",
-        "imagesRequired": "At least one image is required"
+        "imagesRequired": "At least one image is required",
+        "hotelNameRequired": "Hotel name is required",
+        "cityRequired": "City is required",
+        "countryRequired": "Country is required",
+        "addressRequired": "Address is required",
+        "hotelRatingRange": "Hotel rating must be between 1 and 5",
+        "floorMinimum": "Floor must be 0 or higher",
+        "sizeSqmMinimum": "Room size must be greater than 0",
+        "latitudeRange": "Latitude must be between -90 and 90",
+        "longitudeRange": "Longitude must be between -180 and 180"
       }
     },
     "rooms": {
@@ -360,6 +425,16 @@
     },
   "rooms": {
     "images": "images"
+  },
+  "underConstruction": {
+    "title": "Coming Soon",
+    "message": "This section is under development. We're working to bring you the best experience possible.",
+    "info": {
+      "title": "What's happening?",
+      "description": "Our team is developing this functionality. It will be available soon with all the features you need."
+    },
+    "backToAdmin": "Back to Admin Panel",
+    "contact": "Need help? Contact our support team."
   },
   "footer": {
     "copyright": "© {{year}} HotelFlow. All rights reserved.",

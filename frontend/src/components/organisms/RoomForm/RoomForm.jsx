@@ -2,20 +2,27 @@ import { useTranslation } from 'react-i18next';
 import Input from '../../atoms/Input/Input';
 import Select from '../../atoms/Select/Select';
 import Button from '../../atoms/Button/Button';
+import Checkbox from '../../atoms/Checkbox/Checkbox';
 import ImageUpload from '../../molecules/ImageUpload/ImageUpload';
 import { useRoomForm } from '../../../hooks';
 
-const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false }) => {
+const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, isEditMode = false }) => {
   const { t } = useTranslation();
   
   const {
     formData,
     errors,
     roomTypeOptions,
+    viewTypeOptions,
+    hotelRatingOptions,
+    amenitiesOptions,
     handleInputChange,
     handleImagesChange,
     handleSubmit
   } = useRoomForm(initialData, onSubmit);
+
+  // Deshabilitar todos los campos si está en modo edición
+  const isFieldDisabled = isLoading || isEditMode;
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
@@ -34,7 +41,7 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false })
             placeholder={t('admin.room.placeholders.roomNumber')}
             error={errors.roomNumber}
             required
-            disabled={isLoading}
+            disabled={isFieldDisabled}
           />
 
           <Select
@@ -45,7 +52,7 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false })
             placeholder={t('admin.room.placeholders.roomType')}
             error={errors.roomType}
             required
-            disabled={isLoading}
+            disabled={isFieldDisabled}
           />
         </div>
 
@@ -60,7 +67,7 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false })
             max="10"
             error={errors.capacity}
             required
-            disabled={isLoading}
+            disabled={isFieldDisabled}
           />
 
           <Input
@@ -73,7 +80,7 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false })
             step="0.01"
             error={errors.pricePerNight}
             required
-            disabled={isLoading}
+            disabled={isFieldDisabled}
           />
         </div>
 
@@ -84,14 +91,191 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false })
           placeholder={t('admin.room.placeholders.description')}
           error={errors.description}
           required
-          disabled={isLoading}
+          disabled={isFieldDisabled}
         />
+
+        {/* Información del Hotel */}
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            {t('admin.room.sections.hotelInfo')}
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label={t('admin.room.fields.hotelName')}
+              value={formData.hotelName}
+              onChange={handleInputChange('hotelName')}
+              placeholder={t('admin.room.placeholders.hotelName')}
+              error={errors.hotelName}
+              required
+              disabled={isFieldDisabled}
+            />
+
+            <Input
+              label={t('admin.room.fields.hotelChain')}
+              value={formData.hotelChain}
+              onChange={handleInputChange('hotelChain')}
+              placeholder={t('admin.room.placeholders.hotelChain')}
+              error={errors.hotelChain}
+              disabled={isFieldDisabled}
+            />
+
+            <Select
+              label={t('admin.room.fields.hotelRating')}
+              value={formData.hotelRating}
+              onChange={handleInputChange('hotelRating')}
+              options={hotelRatingOptions}
+              placeholder={t('admin.room.placeholders.hotelRating')}
+              error={errors.hotelRating}
+              disabled={isFieldDisabled}
+            />
+          </div>
+        </div>
+
+        {/* Ubicación */}
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            {t('admin.room.sections.location')}
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label={t('admin.room.fields.city')}
+              value={formData.city}
+              onChange={handleInputChange('city')}
+              placeholder={t('admin.room.placeholders.city')}
+              error={errors.city}
+              required
+              disabled={isFieldDisabled}
+            />
+
+            <Input
+              label={t('admin.room.fields.country')}
+              value={formData.country}
+              onChange={handleInputChange('country')}
+              placeholder={t('admin.room.placeholders.country')}
+              error={errors.country}
+              required
+              disabled={isFieldDisabled}
+            />
+
+            <div className="md:col-span-2">
+              <Input
+                label={t('admin.room.fields.address')}
+                value={formData.address}
+                onChange={handleInputChange('address')}
+                placeholder={t('admin.room.placeholders.address')}
+                error={errors.address}
+                required
+                disabled={isFieldDisabled}
+              />
+            </div>
+
+            <Input
+              label={t('admin.room.fields.latitude')}
+              type="number"
+              value={formData.latitude}
+              onChange={handleInputChange('latitude')}
+              placeholder={t('admin.room.placeholders.latitude')}
+              error={errors.latitude}
+              step="0.000001"
+              min="-90"
+              max="90"
+              disabled={isFieldDisabled}
+            />
+
+            <Input
+              label={t('admin.room.fields.longitude')}
+              type="number"
+              value={formData.longitude}
+              onChange={handleInputChange('longitude')}
+              placeholder={t('admin.room.placeholders.longitude')}
+              error={errors.longitude}
+              step="0.000001"
+              min="-180"
+              max="180"
+              disabled={isFieldDisabled}
+            />
+          </div>
+        </div>
+
+        {/* Características de la Habitación */}
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            {t('admin.room.sections.roomFeatures')}
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Select
+              label={t('admin.room.fields.viewType')}
+              value={formData.viewType}
+              onChange={handleInputChange('viewType')}
+              options={viewTypeOptions}
+              placeholder={t('admin.room.placeholders.viewType')}
+              error={errors.viewType}
+              disabled={isFieldDisabled}
+            />
+
+            <Input
+              label={t('admin.room.fields.floor')}
+              type="number"
+              value={formData.floor}
+              onChange={handleInputChange('floor')}
+              placeholder={t('admin.room.placeholders.floor')}
+              error={errors.floor}
+              min="0"
+              disabled={isFieldDisabled}
+            />
+
+            <Input
+              label={t('admin.room.fields.sizeSqm')}
+              type="number"
+              value={formData.sizeSqm}
+              onChange={handleInputChange('sizeSqm')}
+              placeholder={t('admin.room.placeholders.sizeSqm')}
+              error={errors.sizeSqm}
+              min="1"
+              step="0.1"
+              disabled={isFieldDisabled}
+            />
+          </div>
+
+          {/* Amenidades Básicas */}
+          <div className="mt-6">
+            <h4 className="text-md font-medium text-gray-900 dark:text-white mb-3">
+              {t('admin.room.sections.basicAmenities')}
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Checkbox
+                label={t('admin.room.fields.hasWifi')}
+                checked={formData.hasWifi}
+                onChange={(checked) => handleInputChange('hasWifi')(checked)}
+                disabled={isFieldDisabled}
+              />
+
+              <Checkbox
+                label={t('admin.room.fields.hasAirConditioning')}
+                checked={formData.hasAirConditioning}
+                onChange={(checked) => handleInputChange('hasAirConditioning')(checked)}
+                disabled={isFieldDisabled}
+              />
+
+              <Checkbox
+                label={t('admin.room.fields.hasBalcony')}
+                checked={formData.hasBalcony}
+                onChange={(checked) => handleInputChange('hasBalcony')(checked)}
+                disabled={isFieldDisabled}
+              />
+            </div>
+          </div>
+        </div>
 
         <ImageUpload
           images={formData.images}
           onImagesChange={handleImagesChange}
           error={errors.images}
           maxImages={5}
+          disabled={isFieldDisabled}
         />
       </div>
 

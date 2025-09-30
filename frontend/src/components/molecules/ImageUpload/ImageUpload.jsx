@@ -6,12 +6,15 @@ const ImageUpload = ({
   images = [], 
   onImagesChange, 
   maxImages = 5, 
-  error 
+  error,
+  disabled = false
 }) => {
   const { t } = useTranslation();
   const [dragOver, setDragOver] = useState(false);
 
   const handleFileSelect = (files) => {
+    if (disabled) return;
+    
     const fileArray = Array.from(files);
     const remainingSlots = maxImages - images.length;
     const filesToProcess = fileArray.slice(0, remainingSlots);
@@ -31,16 +34,22 @@ const ImageUpload = ({
   const handleDrop = (e) => {
     e.preventDefault();
     setDragOver(false);
-    handleFileSelect(e.dataTransfer.files);
+    if (!disabled) {
+      handleFileSelect(e.dataTransfer.files);
+    }
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
-    setDragOver(true);
+    if (!disabled) {
+      setDragOver(true);
+    }
   };
 
   const handleDragLeave = () => {
-    setDragOver(false);
+    if (!disabled) {
+      setDragOver(false);
+    }
   };
 
   const handleFileInputChange = (e) => {
@@ -48,17 +57,20 @@ const ImageUpload = ({
   };
 
   const removeImage = (index) => {
+    if (disabled) return;
     const newImages = images.filter((_, i) => i !== index);
     onImagesChange(newImages);
   };
 
   const dropzoneClasses = `
-    relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors duration-200
-    ${dragOver 
-      ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' 
-      : 'border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500'
+    relative border-2 border-dashed rounded-lg p-8 text-center transition-colors duration-200
+    ${disabled 
+      ? 'opacity-50 cursor-not-allowed border-gray-200 dark:border-gray-700' 
+      : dragOver 
+        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 cursor-pointer' 
+        : 'border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500 cursor-pointer'
     }
-    ${images.length >= maxImages ? 'opacity-50 cursor-not-allowed' : ''}
+    ${images.length >= maxImages && !disabled ? 'opacity-50 cursor-not-allowed' : ''}
   `;
 
   return (
@@ -80,7 +92,7 @@ const ImageUpload = ({
           accept="image/*"
           onChange={handleFileInputChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-          disabled={images.length >= maxImages}
+          disabled={disabled || images.length >= maxImages}
         />
         <div className="flex flex-col items-center gap-2">
           <svg 
@@ -124,6 +136,7 @@ const ImageUpload = ({
                 onClick={() => removeImage(index)}
                 className="absolute -top-2 -right-2 w-6 h-6 rounded-full p-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 title={t('admin.room.imageUpload.removeImage')}
+                disabled={disabled}
               >
                 ×
               </Button>

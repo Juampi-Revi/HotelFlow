@@ -117,7 +117,11 @@
   },
   "notifications": {
     "roomDeletedSuccess": "Habitación eliminada exitosamente",
-    "roomDeletedError": "Error al eliminar la habitación. Inténtalo de nuevo."
+    "roomDeletedError": "Error al eliminar la habitación. Inténtalo de nuevo.",
+    "roomCreatedSuccess": "Habitación creada exitosamente",
+    "roomCreatedError": "Error al crear la habitación. Inténtalo de nuevo.",
+    "roomUpdatedSuccess": "Habitación actualizada exitosamente",
+    "roomUpdatedError": "Error al actualizar la habitación. Inténtalo de nuevo."
   },
   "gallery": {
     "viewMore": "Ver más"
@@ -196,20 +200,52 @@
       "guests": "huéspedes",
       "addTitle": "Agregar Nueva Habitación",
       "editTitle": "Editar Habitación",
+      "sections": {
+        "hotelInfo": "Información del Hotel",
+        "location": "Ubicación",
+        "roomFeatures": "Características de la Habitación",
+        "basicAmenities": "Amenidades Básicas"
+      },
       "fields": {
         "roomNumber": "Número de Habitación",
         "roomType": "Tipo de Habitación",
         "capacity": "Capacidad",
         "pricePerNight": "Precio por Noche",
         "description": "Descripción",
-        "images": "Imágenes"
+        "images": "Imágenes",
+        "hotelName": "Nombre del Hotel",
+        "hotelChain": "Cadena Hotelera",
+        "hotelRating": "Calificación del Hotel",
+        "city": "Ciudad",
+        "country": "País",
+        "address": "Dirección",
+        "latitude": "Latitud",
+        "longitude": "Longitud",
+        "viewType": "Tipo de Vista",
+        "floor": "Piso",
+        "sizeSqm": "Tamaño (m²)",
+        "hasWifi": "WiFi Disponible",
+        "hasAirConditioning": "Aire Acondicionado",
+        "hasBalcony": "Balcón",
+        "amenities": "Amenidades Adicionales"
       },
       "placeholders": {
         "roomNumber": "Ingresa el número de habitación",
         "roomType": "Selecciona el tipo de habitación",
         "capacity": "Número de huéspedes",
         "price": "Precio en USD",
-        "description": "Descripción de la habitación"
+        "description": "Descripción de la habitación",
+        "hotelName": "Ingresa el nombre del hotel",
+        "hotelChain": "Ingresa la cadena hotelera (opcional)",
+        "hotelRating": "Selecciona la calificación del hotel",
+        "city": "Ingresa la ciudad",
+        "country": "Ingresa el país",
+        "address": "Ingresa la dirección completa",
+        "latitude": "Ingresa la latitud (opcional)",
+        "longitude": "Ingresa la longitud (opcional)",
+        "viewType": "Selecciona el tipo de vista",
+        "floor": "Ingresa el número de piso",
+        "sizeSqm": "Ingresa el tamaño en metros cuadrados"
       },
       "actions": {
         "edit": "Editar",
@@ -229,9 +265,46 @@
         "family": "Familiar",
         "deluxe": "Deluxe"
       },
+      "viewTypes": {
+        "ocean": "Vista al Mar",
+        "mountain": "Vista a la Montaña",
+        "city": "Vista a la Ciudad",
+        "garden": "Vista al Jardín",
+        "pool": "Vista a la Piscina",
+        "courtyard": "Vista al Patio"
+      },
+      "amenities": {
+        "wifi": "WiFi",
+        "tv": "Televisión",
+        "minibar": "Minibar",
+        "safe": "Caja Fuerte",
+        "roomService": "Servicio a la Habitación",
+        "laundry": "Servicio de Lavandería",
+        "parking": "Estacionamiento",
+        "gym": "Acceso al Gimnasio",
+        "spa": "Acceso al Spa",
+        "pool": "Acceso a la Piscina"
+      },
       "imageUpload": {
         "dropText": "Arrastra imágenes aquí o haz clic para subir",
         "removeImage": "Eliminar imagen"
+      },
+      "validation": {
+        "roomNumberRequired": "El número de habitación es requerido",
+        "roomTypeRequired": "El tipo de habitación es requerido",
+        "capacityMinimum": "La capacidad debe ser al menos 1",
+        "priceRequired": "El precio por noche es requerido",
+        "descriptionRequired": "La descripción es requerida",
+        "imagesRequired": "Se requiere al menos una imagen",
+        "hotelNameRequired": "El nombre del hotel es requerido",
+        "cityRequired": "La ciudad es requerida",
+        "countryRequired": "El país es requerido",
+        "addressRequired": "La dirección es requerida",
+        "hotelRatingRange": "La calificación del hotel debe estar entre 1 y 5",
+        "floorMinimum": "El piso debe ser 0 o mayor",
+        "sizeSqmMinimum": "El tamaño de la habitación debe ser mayor a 0",
+        "latitudeRange": "La latitud debe estar entre -90 y 90",
+        "longitudeRange": "La longitud debe estar entre -180 y 180"
       },
       "rooms": {
         "title": "Gestión de Habitaciones",
@@ -332,6 +405,16 @@
   },
   "rooms": {
     "images": "imágenes"
+  },
+  "underConstruction": {
+    "title": "Próximamente",
+    "message": "Esta sección está en desarrollo. Estamos trabajando para ofrecerte la mejor experiencia posible.",
+    "info": {
+      "title": "¿Qué está pasando?",
+      "description": "Nuestro equipo está desarrollando esta funcionalidad. Pronto estará disponible con todas las características que necesitas."
+    },
+    "backToAdmin": "Volver al Panel de Administración",
+    "contact": "¿Necesitas ayuda? Contacta a nuestro equipo de soporte."
   },
   "footer": {
     "copyright": "© {{year}} HotelFlow. Todos los derechos reservados.",
