@@ -2,18 +2,94 @@
 
 > **"Seamless stays, endless possibilities"**
 
+## 📋 Definición del Proyecto
+
+**HotelFlow** es una solución integral de gestión hotelera que revoluciona la experiencia de reservas y administración de hoteles. Nuestro sistema combina una interfaz pública moderna para huéspedes con un panel administrativo completo para la gestión hotelera.
+
+### 🎯 Solución que Desarrollamos
+
+**Problema identificado**: Los sistemas hoteleros tradicionales son complejos, poco intuitivos y no ofrecen una experiencia fluida tanto para huéspedes como para administradores.
+
+**Nuestra solución**: Una plataforma web moderna que ofrece:
+
+#### Para Huéspedes:
+- **Exploración intuitiva** de habitaciones con paginación optimizada
+- **Interfaz multiidioma** (Español/Inglés) para accesibilidad global
+- **Diseño responsivo** que funciona perfectamente en móviles y desktop
+- **Experiencia visual moderna** con glassmorphism y transiciones suaves
+
+#### Para Administradores:
+- **Panel de administración completo** con sidebar persistente
+- **Gestión avanzada de habitaciones** con formularios de 25+ campos organizados
+- **Sistema de notificaciones** con toast messages para feedback inmediato
+- **Componentes reutilizables** siguiendo Atomic Design
+- **Validación robusta** de formularios con manejo de errores
+
+### 🏗️ Arquitectura de la Solución
+
+- **Frontend**: React 18 con Vite, Tailwind CSS y arquitectura de componentes atómicos
+- **Backend**: Spring Boot 3.5.6 con Java 17 y base de datos H2
+- **Principios**: SOLID, Clean Architecture, código en inglés, sin console.logs
+- **Internacionalización**: Sistema completo con 250+ claves de traducción
+
 A modern hotel booking system built with React and Spring Boot, following clean architecture principles and best practices.
 
-## 🎨 Brand Identity
+## 🎨 Diseño de Identidad de Marca
 
-- **Name**: HotelFlow
+### 📝 Información de la Marca
+- **Nombre**: HotelFlow
 - **Tagline**: "Seamless stays, endless possibilities"
-- **Concept**: Fluid booking experience with modern glassmorphism design
-- **Color Palette**: 
-  - Primary Blue: `#3b82f6`
-  - Secondary Indigo: `#6366f1`
-  - Background White: `#ffffff`
-- **Design Language**: Modern glassmorphism with gradients and smooth transitions
+- **Concepto**: Experiencia de reserva fluida con diseño glassmorphism moderno
+- **Personalidad**: Moderna, confiable, elegante, accesible
+
+### 🎨 Logo de la Marca
+- **Logo principal**: `docs/assets/logo-hotelflow.svg`
+- **Icono simplificado**: `docs/assets/logo-icon.svg`
+- **Elementos del logo**:
+  - Edificio hotelero estilizado con ventanas
+  - Ondas de flujo que representan la fluidez del servicio
+  - Gradientes que reflejan modernidad
+  - Tipografía limpia y profesional
+
+### 🌈 Paleta de Colores de Identidad
+
+#### Colores Primarios
+- **Azul Principal**: `#3b82f6` (rgb(59, 130, 246))
+  - Uso: Botones principales, enlaces, elementos destacados
+  - Significado: Confianza, profesionalismo, tecnología
+  
+- **Índigo Secundario**: `#6366f1` (rgb(99, 102, 241))
+  - Uso: Gradientes, acentos, hover states
+  - Significado: Innovación, creatividad, modernidad
+
+#### Colores de Soporte
+- **Blanco**: `#ffffff` (rgb(255, 255, 255))
+  - Uso: Fondos principales, texto en elementos oscuros
+  
+- **Gris Oscuro**: `#1f2937` (rgb(31, 41, 55))
+  - Uso: Texto principal, títulos
+  
+- **Gris Medio**: `#6b7280` (rgb(107, 114, 128))
+  - Uso: Texto secundario, subtítulos
+  
+- **Gris Claro**: `#f3f4f6` (rgb(243, 244, 246))
+  - Uso: Fondos de secciones, bordes sutiles
+
+#### Colores de Estado
+- **Verde Éxito**: `#10b981` (rgb(16, 185, 129))
+  - Uso: Mensajes de éxito, confirmaciones
+  
+- **Rojo Error**: `#ef4444` (rgb(239, 68, 68))
+  - Uso: Errores, validaciones fallidas
+  
+- **Amarillo Advertencia**: `#f59e0b` (rgb(245, 158, 11))
+  - Uso: Advertencias, información importante
+
+### 🎭 Lenguaje de Diseño
+- **Estilo**: Glassmorphism moderno con gradientes y transiciones suaves
+- **Tipografía**: Sans-serif limpia y legible
+- **Efectos**: Blur backdrop, sombras sutiles, bordes redondeados
+- **Animaciones**: Transiciones fluidas, hover effects elegantes
 
 ## 🚀 Tech Stack
 
