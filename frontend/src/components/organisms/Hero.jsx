@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
@@ -31,7 +33,10 @@ const Hero = () => {
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl">
                 {t('hero.cta.primary')}
               </button>
-              <button className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 hover:bg-blue-600 hover:text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200">
+              <button 
+                onClick={() => navigate('/rooms')}
+                className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 hover:bg-blue-600 hover:text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200"
+              >
                 {t('hero.cta.secondary')}
               </button>
             </div>

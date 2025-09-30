@@ -139,7 +139,7 @@ const AdminLayout = ({ children }) => {
       <div className="pt-16 flex flex-grow">
         {/* Sidebar - Desktop Only */}
          <div className={`
-           fixed top-16 left-0 bottom-0 z-50 bg-white/98 dark:bg-gray-800/95 backdrop-blur-xl border-r border-gray-300/60 dark:border-gray-700/50 shadow-xl transition-all duration-300 ease-in-out
+           fixed top-16 left-0 bottom-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-r border-gray-300/60 dark:border-gray-700/50 shadow-xl transition-all duration-300 ease-in-out
            ${sidebarCollapsed ? 'w-16' : 'w-64'}
          `}>
            <div className="flex flex-col h-full">

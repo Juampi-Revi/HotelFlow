@@ -62,14 +62,6 @@ const Header = () => {
             {/* Navigation buttons */}
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Button 
-                variant="outline" 
-                size="sm"
-                onClick={handleCreateAccountClick}
-                className="hidden sm:block"
-              >
-                {t('header.signup')}
-              </Button>
-              <Button 
                 variant="primary" 
                 size="sm"
                 onClick={handleLoginClick}

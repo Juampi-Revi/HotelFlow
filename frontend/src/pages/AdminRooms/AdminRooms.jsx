@@ -18,7 +18,11 @@ const AdminRooms = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingRoom, setEditingRoom] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
-  const [viewMode, setViewMode] = useState('cards');
+  // Inicializar viewMode desde localStorage o usar 'cards' como default
+  const [viewMode, setViewMode] = useState(() => {
+    const savedViewMode = localStorage.getItem('adminRoomsViewMode');
+    return savedViewMode || 'cards';
+  });
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(10);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -63,8 +67,10 @@ const AdminRooms = () => {
       
       if (editingRoom) {
         await roomService.updateRoom(editingRoom.id, roomData);
+        showNotification(t('notifications.roomUpdatedSuccess'), 'success');
       } else {
         await roomService.createRoom(roomData);
+        showNotification(t('notifications.roomCreatedSuccess'), 'success');
       }
       
       await loadRooms();
@@ -72,7 +78,11 @@ const AdminRooms = () => {
       setEditingRoom(null);
       setError('');
     } catch (err) {
+      const errorMessage = editingRoom 
+        ? t('notifications.roomUpdatedError')
+        : t('notifications.roomCreatedError');
       setError(err.message || 'Failed to save room. Please try again.');
+      showNotification(errorMessage, 'error');
     } finally {
       setFormLoading(false);
     }
@@ -157,6 +167,8 @@ const AdminRooms = () => {
   const handleViewModeChange = (mode) => {
     setViewMode(mode);
     setCurrentPage(0);
+    // Guardar la preferencia en localStorage
+    localStorage.setItem('adminRoomsViewMode', mode);
   };
 
   return (
@@ -170,6 +182,7 @@ const AdminRooms = () => {
                 onCancel={handleFormCancel}
                 initialData={editingRoom}
                 isLoading={formLoading}
+                isEditMode={!!editingRoom}
               />
             </div>
           ) : (

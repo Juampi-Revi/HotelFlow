@@ -7,6 +7,12 @@ import { ThemeProvider } from './contexts';
 import { roomService } from './services/roomService';
 import Admin from './pages/Admin/Admin';
 import AdminRooms from './pages/AdminRooms/AdminRooms';
+import AdminAnalytics from './pages/AdminAnalytics/AdminAnalytics';
+import AdminBookings from './pages/AdminBookings/AdminBookings';
+import AdminAvailability from './pages/AdminAvailability/AdminAvailability';
+import AdminCustomers from './pages/AdminCustomers/AdminCustomers';
+import AdminStaff from './pages/AdminStaff/AdminStaff';
+import AdminSettings from './pages/AdminSettings/AdminSettings';
 import RoomDetail from './pages/RoomDetail';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
 
@@ -59,6 +65,12 @@ function App() {
           <Route path="/room/:id" element={<RoomDetail />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/rooms" element={<AdminRooms />} />
+          <Route path="/admin/analytics" element={<AdminAnalytics />} />
+          <Route path="/admin/bookings" element={<AdminBookings />} />
+          <Route path="/admin/availability" element={<AdminAvailability />} />
+          <Route path="/admin/customers" element={<AdminCustomers />} />
+          <Route path="/admin/staff" element={<AdminStaff />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
         </Routes>
       </Router>
     </ThemeProvider>
