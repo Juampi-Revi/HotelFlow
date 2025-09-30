@@ -104,7 +104,20 @@
     "unavailable": "No disponible",
     "viewDetails": "Ver detalles",
     "more": "más",
-    "viewType": "vista"
+    "viewType": "vista",
+    "images": "imágenes"
+  },
+  "deleteConfirmation": {
+    "title": "Eliminar Habitación",
+    "message": "¿Estás seguro de que quieres eliminar esta habitación?",
+    "warning": "Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "deleting": "Eliminando..."
+  },
+  "notifications": {
+    "roomDeletedSuccess": "Habitación eliminada exitosamente",
+    "roomDeletedError": "Error al eliminar la habitación. Inténtalo de nuevo."
   },
   "gallery": {
     "viewMore": "Ver más"
@@ -178,6 +191,7 @@
       "available": "Disponible",
       "unavailable": "No disponible",
       "roomNumber": "Habitación {{number}}",
+      "capacity": "{{capacity}} huéspedes",
       "perNight": "por noche",
       "guests": "huéspedes",
       "addTitle": "Agregar Nueva Habitación",
