@@ -374,6 +374,55 @@ npm install i18next react-i18next i18next-browser-languagedetector
 - ✅ **🏗️ Código más limpio** - Mejor organización y mantenibilidad
 - ✅ **⚡ Rendimiento optimizado** - Separación de responsabilidades
 
+---
+
+## 🔔 Sistema de Notificaciones Toast
+**Fecha**: Enero 2025  
+**Funcionalidad**: Sistema completo de notificaciones para feedback del usuario
+
+### ✅ Implementación Técnica
+
+#### **Componente Toast**
+**Archivo**: `src/components/atoms/Toast/Toast.jsx`
+
+**Características implementadas**:
+- ✅ **Auto-dismissal** - Se oculta automáticamente después de 3 segundos
+- ✅ **Tipos múltiples** - Success, error, warning, info
+- ✅ **Iconos SVG** - Iconos específicos para cada tipo de notificación
+- ✅ **Animaciones** - Transiciones suaves de entrada y salida
+- ✅ **Glassmorphism** - Diseño moderno con backdrop-blur
+- ✅ **Modo oscuro** - Soporte completo para dark mode
+- ✅ **Cierre manual** - Botón X para cerrar manualmente
+
+#### **Integración en AdminRooms**
+**Archivo**: `src/pages/AdminRooms/AdminRooms.jsx`
+
+**Funcionalidades**:
+- ✅ **Estado de notificaciones** - `notification` state con show, message, type
+- ✅ **Funciones helper** - `showNotification` y `hideNotification`
+- ✅ **Integración con eliminación** - Notificaciones de éxito y error
+- ✅ **Traducciones** - Mensajes en español e inglés
+
+#### **Traducciones Implementadas**
+**Archivos**: `src/i18n/locales/es.json` y `en.json`
+
+```json
+"notifications": {
+  "roomDeletedSuccess": "Habitación eliminada exitosamente",
+  "roomDeletedError": "Error al eliminar la habitación. Inténtalo de nuevo."
+}
+```
+
+### 🎯 Criterios de Aceptación Cumplidos
+
+- ✅ **Feedback visual inmediato** - Toast aparece instantáneamente
+- ✅ **Mensajes claros** - Textos descriptivos y traducidos
+- ✅ **Auto-ocultado** - Se cierra automáticamente
+- ✅ **Cierre manual** - Usuario puede cerrar manualmente
+- ✅ **Tipos diferenciados** - Colores e iconos específicos
+- ✅ **Responsive** - Funciona en todos los tamaños de pantalla
+- ✅ **Accesible** - Contraste adecuado y navegación por teclado
+
 ### 🚀 Estado Actual del Proyecto
 
 **Funcionalidades completamente operativas**:
@@ -382,6 +431,7 @@ npm install i18next react-i18next i18next-browser-languagedetector
 - ✅ **Formulario de habitaciones** refactorizado y optimizado
 - ✅ **Traducciones completas** para la sección de administración
 - ✅ **Arquitectura mejorada** con hooks personalizados
+- ✅ **Sistema de notificaciones Toast** completamente funcional
 
 **Próximos pasos sugeridos**:
 - 🔄 **Pull Request** - Subir cambios al repositorio

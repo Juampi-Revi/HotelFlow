@@ -6,6 +6,8 @@ import RoomForm from '../../components/organisms/RoomForm/RoomForm';
 import ViewToggle from '../../components/atoms/ViewToggle/ViewToggle';
 import RoomTable from '../../components/molecules/RoomTable/RoomTable';
 import Pagination from '../../components/atoms/Pagination/Pagination';
+import DeleteConfirmationModal from '../../components/organisms/DeleteConfirmationModal/DeleteConfirmationModal';
+import Toast from '../../components/atoms/Toast/Toast';
 import { roomService } from '../../services/roomService';
 
 const AdminRooms = () => {
@@ -19,6 +21,14 @@ const AdminRooms = () => {
   const [viewMode, setViewMode] = useState('cards');
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(10);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [roomToDelete, setRoomToDelete] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [notification, setNotification] = useState({
+    show: false,
+    message: '',
+    type: 'success'
+  });
 
   useEffect(() => {
     loadRooms();
@@ -73,16 +83,47 @@ const AdminRooms = () => {
     setEditingRoom(null);
   };
 
-  const handleDeleteRoom = async (roomId) => {
-    if (window.confirm('Are you sure you want to delete this room?')) {
-      try {
-        await roomService.deleteRoom(roomId);
-        await loadRooms();
-        setError('');
-      } catch {
-        setError('Failed to delete room. Please try again.');
-      }
+  const showNotification = (message, type = 'success') => {
+    setNotification({
+      show: true,
+      message,
+      type
+    });
+  };
+
+  const hideNotification = () => {
+    setNotification(prev => ({ ...prev, show: false }));
+  };
+
+  const handleDeleteRoom = (roomId) => {
+    const room = rooms.find(r => r.id === roomId);
+    setRoomToDelete(room);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!roomToDelete) return;
+    
+    try {
+      setDeleteLoading(true);
+      await roomService.deleteRoom(roomToDelete.id);
+      await loadRooms();
+      setError('');
+      setShowDeleteModal(false);
+      setRoomToDelete(null);
+      showNotification(t('notifications.roomDeletedSuccess'), 'success');
+    } catch {
+      setError('Failed to delete room. Please try again.');
+      showNotification(t('notifications.roomDeletedError'), 'error');
+    } finally {
+      setDeleteLoading(false);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setRoomToDelete(null);
+    setDeleteLoading(false);
   };
 
   const handleToggleAvailability = async (roomId) => {
@@ -258,6 +299,23 @@ const AdminRooms = () => {
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={showDeleteModal}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+        isLoading={deleteLoading}
+        roomNumber={roomToDelete?.roomNumber}
+      />
+
+      {/* Toast Notification */}
+      <Toast
+        message={notification.message}
+        type={notification.type}
+        isVisible={notification.show}
+        onClose={hideNotification}
+      />
     </AdminLayout>
   );
 };

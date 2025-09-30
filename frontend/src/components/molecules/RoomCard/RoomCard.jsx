@@ -48,7 +48,7 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
       <div className="p-4">
         <div className="space-y-2 mb-4">
           <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-            {t(`admin.room.types.${room.roomType}`)}
+            {t(`admin.room.types.${room.roomType.toLowerCase()}`)}
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {t('admin.room.capacity', { capacity: room.capacity })}
