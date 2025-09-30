@@ -2,9 +2,21 @@
 
 > **"Seamless stays, endless possibilities"**
 
-## 📋 Definición del Proyecto
+A modern hotel booking system built with React and Spring Boot, following clean architecture principles and best practices.
 
-**HotelFlow** es una solución integral de gestión hotelera que revoluciona la experiencia de reservas y administración de hoteles. Nuestro sistema combina una interfaz pública moderna para huéspedes con un panel administrativo completo para la gestión hotelera.
+## 🎯 Overview
+
+**HotelFlow** es una solución integral de gestión hotelera que combina una interfaz pública moderna para huéspedes con un panel administrativo completo para la gestión hotelera.
+
+**✨ Características principales:**
+- 🌐 Interfaz multiidioma (ES/EN) con 250+ traducciones
+- 📱 Diseño responsivo con glassmorphism moderno
+- 🛠️ Panel de administración completo
+- 🏗️ Arquitectura de componentes atómicos
+- ✅ 100% compliance con estándares técnicos
+
+<details>
+<summary>📋 <strong>Definición Completa del Proyecto</strong></summary>
 
 ### 🎯 Solución que Desarrollamos
 
@@ -32,9 +44,10 @@
 - **Principios**: SOLID, Clean Architecture, código en inglés, sin console.logs
 - **Internacionalización**: Sistema completo con 250+ claves de traducción
 
-A modern hotel booking system built with React and Spring Boot, following clean architecture principles and best practices.
+</details>
 
-## 🎨 Diseño de Identidad de Marca
+<details>
+<summary>🎨 <strong>Diseño de Identidad de Marca</strong></summary>
 
 ### 📝 Información de la Marca
 - **Nombre**: HotelFlow
@@ -91,23 +104,16 @@ A modern hotel booking system built with React and Spring Boot, following clean 
 - **Efectos**: Blur backdrop, sombras sutiles, bordes redondeados
 - **Animaciones**: Transiciones fluidas, hover effects elegantes
 
+</details>
+
 ## 🚀 Tech Stack
 
-### Frontend
-- **React 18** - Modern UI library with hooks
-- **Vite** - Fast development and build tool
-- **Tailwind CSS** - Utility-first CSS framework with custom color palette
-- **React i18next** - Internationalization support
-- **Node.js 20.19.5** - Runtime environment
-- **Glassmorphism Design** - Modern UI effects with backdrop blur and gradients
+**Frontend:** React 18 • Vite • Tailwind CSS • React i18next  
+**Backend:** Spring Boot 3.5.6 • Java 17 • H2 Database • Maven  
+**Design:** Glassmorphism • Atomic Design • Responsive
 
-### Backend
-- **Spring Boot 3.5.6** - Java framework
-- **Java 17** - Programming language
-- **H2 Database** - In-memory database for development
-- **Maven** - Dependency management
-
-## 🎯 Development Principles
+<details>
+<summary>🎯 <strong>Development Principles</strong></summary>
 
 - ✅ **SOLID Principles** - Applied throughout the codebase
 - ✅ **Clean Architecture** - Separation of concerns and dependencies
@@ -117,7 +123,10 @@ A modern hotel booking system built with React and Spring Boot, following clean 
 - ✅ **React Hooks** - Modern React patterns
 - ✅ **Atomic Design** - Reusable component architecture
 
-## 📁 Project Structure
+</details>
+
+<details>
+<summary>📁 <strong>Project Structure</strong></summary>
 
 ```
 HotelFlow/
@@ -145,41 +154,25 @@ HotelFlow/
     └── DEVELOPMENT_LOG.md  # Development progress log
 ```
 
-## 🛠️ Setup Instructions
+</details>
 
-### Prerequisites
-- Java 17
-- Node.js 20+
-- Maven 3.6+
-- Git
+## 🛠️ Quick Start
 
-### Backend Setup
 ```bash
-cd backend
-./mvnw spring-boot:run
+# Backend (Terminal 1)
+cd backend && ./mvnw spring-boot:run
+
+# Frontend (Terminal 2)  
+cd frontend && npm install && npm run dev
 ```
-Server runs on: `http://localhost:8082`
 
-### Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Development server runs on: `http://localhost:5173`
-
-**Available Routes:**
-- Main site: `http://localhost:5173`
-- Admin panel: `http://localhost:5173/admin`
-- Room management: `http://localhost:5173/admin/rooms`
-
-### Database Access
+**🌐 URLs:**
+- App: `http://localhost:5173`
+- Admin: `http://localhost:5173/admin`
 - H2 Console: `http://localhost:8082/h2-console`
-- JDBC URL: `jdbc:h2:mem:testdb`
-- Username: `sa`
-- Password: `password`
 
-## 📋 Development Methodology
+<details>
+<summary>📋 <strong>Development Methodology</strong></summary>
 
 ### Sprint-Based Development
 - **4 Sprints** with user stories
@@ -189,6 +182,11 @@ Development server runs on: `http://localhost:5173`
 
 ### Current Sprint: Sprint 2 ✅
 **Goal**: Room management optimization and technical standards compliance.
+
+</details>
+
+<details>
+<summary>📊 <strong>Sprint Details</strong></summary>
 
 #### Sprint 1: Foundation ✅
 - **User Story #1**: Header Component - Navigation and branding
@@ -258,38 +256,27 @@ Development server runs on: `http://localhost:5173`
 - Ensured 100% English-only code
 - Maintained clean architecture principles
 
+</details>
+
 ## 🌟 Features
 
 ### ✅ Completed Features
-- [x] **Project Setup** - Complete development environment
-- [x] **Modern UI Design** - Glassmorphism effects and gradients
-- [x] **Header Component** - Fixed navigation with logo and branding
-- [x] **Footer Component** - Consistent branding across all pages
-- [x] **Admin Panel** - Full administrative interface with dashboard
-- [x] **Room Management** - CRUD operations for hotel rooms with optimized interface
-- [x] **Enhanced Room Form** - Comprehensive form with 25+ fields, organized sections, and validation
-- [x] **Reusable Components** - Checkbox atom component following Atomic Design principles
-- [x] **Toast Notifications** - Success/error notifications for room operations
-- [x] **Public Room Listing** - Optimized pagination (10 per page) starting from page 1
-- [x] **Responsive Design** - Optimized for all devices with mobile-first approach
-- [x] **Dark/Light Mode** - Theme switching with system preference
-- [x] **Internationalization** - Complete Spanish/English translation system (250+ keys)
-- [x] **Component Architecture** - Atomic design with reusable components
-- [x] **Mobile Support** - Device detection and mobile-optimized components
-- [x] **Custom Hooks** - Reusable logic with useDeviceDetection and optimized useRoomsPagination
-- [x] **Pagination System** - Consistent 0-based indexing with proper validation
-- [x] **Code Quality** - 100% compliance with technical standards (SOLID, Clean Code)
-- [x] **English-Only Codebase** - All code, comments, and documentation in English
-- [x] **Error-Free Production** - 0 console.logs, 0 linting errors, 0 browser errors
+- [x] **Enhanced Room Form** - 25+ fields with validation and notifications
+- [x] **Admin Panel** - Complete management interface with optimized layout
+- [x] **Internationalization** - Spanish/English with 250+ translation keys
+- [x] **Responsive Design** - Mobile-first with glassmorphism effects
+- [x] **Component Architecture** - Atomic Design with reusable components
+- [x] **Code Quality** - 100% compliance with SOLID and Clean Architecture
 
 ### 🚧 In Development
 - [ ] User authentication system
 - [ ] Hotel listing and search
 - [ ] Booking functionality
-- [ ] User dashboard
 - [ ] Payment integration
 
-### 📋 Admin Panel Features
+<details>
+<summary>📋 <strong>Admin Panel Features</strong></summary>
+
 - **Dashboard**: Overview with statistics and recent activity
 - **Room Management**: Add, edit, delete, and view rooms with optimized layout
   - Reorganized header with title/subtitle separated from controls
@@ -313,15 +300,23 @@ Development server runs on: `http://localhost:5173`
 - **Multi-language**: Complete Spanish/English support with 250+ translation keys
 - **Error-Free**: 0 console.logs, 0 linting errors, production-ready code
 
-### 🌍 Internationalization (i18n)
+</details>
+
+<details>
+<summary>🌍 <strong>Internationalization (i18n)</strong></summary>
+
 - **Languages**: Spanish (es) and English (en)
 - **Auto-detection**: Browser language preference detection
 - **Persistence**: Language choice saved in localStorage
 - **Complete Coverage**: All UI elements, messages, and admin panel translated
 - **Dynamic Switching**: Real-time language toggle without page reload
-- **Translation Keys**: 200+ translation keys covering entire application
+- **Translation Keys**: 250+ translation keys covering entire application
 
-### 📱 Mobile & Responsive Features
+</details>
+
+<details>
+<summary>📱 <strong>Mobile & Responsive Features</strong></summary>
+
 - **Device Detection**: Custom useDeviceDetection hook
 - **Mobile-First Design**: Optimized for mobile devices first
 - **Responsive Breakpoints**: Tailwind CSS breakpoints (sm, md, lg, xl)
@@ -329,7 +324,14 @@ Development server runs on: `http://localhost:5173`
 - **Adaptive Layouts**: Grid systems that adapt to screen size
 - **Touch-Friendly**: Optimized touch targets and interactions
 
+</details>
+
 ## 🤝 Contributing
+
+We follow Git Flow with strict code quality standards and English-only development.
+
+<details>
+<summary>📋 <strong>Development Guidelines</strong></summary>
 
 ### Git Flow - MANDATORY Process
 
@@ -386,6 +388,8 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 4. Ensure no linting errors
 5. Maintain SOLID principles and Clean Architecture
 6. Use Atomic Design patterns for components
+
+</details>
 
 ## 📄 License
 
