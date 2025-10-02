@@ -31,10 +31,8 @@ public class RoomRequestDTO {
     
     private Boolean isAvailable = true;
     
-    // Default constructor
     public RoomRequestDTO() {}
     
-    // Constructor with required fields
     public RoomRequestDTO(String roomNumber, RoomType roomType, Integer capacity, BigDecimal pricePerNight, String description) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
@@ -42,8 +40,7 @@ public class RoomRequestDTO {
         this.pricePerNight = pricePerNight;
         this.description = description;
     }
-    
-    // Getters and Setters
+
     public String getRoomNumber() {
         return roomNumber;
     }
