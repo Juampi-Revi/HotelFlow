@@ -13,6 +13,7 @@ import AdminAvailability from './pages/AdminAvailability/AdminAvailability';
 import AdminCustomers from './pages/AdminCustomers/AdminCustomers';
 import AdminStaff from './pages/AdminStaff/AdminStaff';
 import AdminSettings from './pages/AdminSettings/AdminSettings';
+import AdminCategories from './pages/AdminCategories/AdminCategories';
 import RoomDetail from './pages/RoomDetail';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
 
@@ -71,6 +72,7 @@ function App() {
           <Route path="/admin/customers" element={<AdminCustomers />} />
           <Route path="/admin/staff" element={<AdminStaff />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
         </Routes>
       </Router>
     </ThemeProvider>

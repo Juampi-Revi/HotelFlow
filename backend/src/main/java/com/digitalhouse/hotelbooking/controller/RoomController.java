@@ -32,8 +32,18 @@ public class RoomController {
     }
     
     @GetMapping
-    public ResponseEntity<List<RoomResponseDTO>> getAllRooms() {
-        List<RoomResponseDTO> rooms = roomService.getAllRooms();
+    public ResponseEntity<List<RoomResponseDTO>> getAllRooms(
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String categorySlug
+    ) {
+        List<RoomResponseDTO> rooms;
+        if (categoryId != null) {
+            rooms = roomService.getRoomsByCategoryId(categoryId);
+        } else if (categorySlug != null && !categorySlug.isEmpty()) {
+            rooms = roomService.getRoomsByCategorySlug(categorySlug);
+        } else {
+            rooms = roomService.getAllRooms();
+        }
         return ResponseEntity.ok(rooms);
     }
     

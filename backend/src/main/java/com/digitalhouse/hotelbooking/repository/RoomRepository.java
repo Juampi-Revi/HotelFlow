@@ -26,4 +26,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     
     @Query("SELECT r FROM Room r WHERE r.isAvailable = true ORDER BY r.pricePerNight ASC")
     List<Room> findAvailableRoomsOrderByPrice();
+
+    List<Room> findByCategory_Id(Long categoryId);
+    List<Room> findByCategory_Slug(String categorySlug);
 }

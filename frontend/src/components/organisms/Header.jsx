@@ -63,7 +63,8 @@ const Header = () => {
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Button 
                 variant="primary" 
-                size="sm"
+                size="small"
+                className="rounded-full shadow-md hover:shadow-lg"
                 onClick={handleLoginClick}
               >
                 {t('header.login')}

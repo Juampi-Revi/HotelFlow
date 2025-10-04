@@ -14,19 +14,34 @@ const useRoomsPagination = () => {
   const [filterAvailability, setFilterAvailability] = useState('all');
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
+  const [categoryId, setCategoryId] = useState(null);
 
   const fetchRooms = async () => {
     try {
       setLoading(true);
-      const response = await roomService.getPaginatedRooms(
-        currentPage, // Ya es 0-based
-        pageSize,
-        sortBy,
-        sortDirection
-      );
-      setRooms(response.content);
-      setTotalPages(response.totalPages);
-      setTotalElements(response.totalElements);
+      if (categoryId) {
+        const list = await roomService.getRoomsByCategoryId(categoryId);
+        const sorted = [...list].sort((a, b) => {
+          const dir = sortDirection === 'asc' ? 1 : -1;
+          const va = a[sortBy];
+          const vb = b[sortBy];
+          if (va === vb) return 0;
+          return va > vb ? dir : -dir;
+        });
+        setRooms(sorted);
+        setTotalPages(1);
+        setTotalElements(sorted.length);
+      } else {
+        const response = await roomService.getPaginatedRooms(
+          currentPage, // Ya es 0-based
+          pageSize,
+          sortBy,
+          sortDirection
+        );
+        setRooms(response.content);
+        setTotalPages(response.totalPages);
+        setTotalElements(response.totalElements);
+      }
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -37,7 +52,7 @@ const useRoomsPagination = () => {
 
   useEffect(() => {
     fetchRooms();
-  }, [currentPage, pageSize, sortBy, sortDirection]);
+  }, [currentPage, pageSize, sortBy, sortDirection, categoryId]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -58,6 +73,11 @@ const useRoomsPagination = () => {
     setCurrentPage(0); // Reset a página 0 (primera página)
   };
 
+  const handleCategoryChange = (id) => {
+    setCategoryId(id || null);
+    setCurrentPage(0);
+  };
+
   return {
     // State
     rooms,
@@ -69,10 +89,12 @@ const useRoomsPagination = () => {
     pageSize,
     sortBy,
     sortDirection,
+    categoryId,
     // Actions
     handlePageChange,
     handleSortChange,
     handlePageSizeChange,
+    handleCategoryChange,
     refetch: fetchRooms
   };
 };

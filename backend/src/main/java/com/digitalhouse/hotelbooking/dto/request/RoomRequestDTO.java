@@ -63,6 +63,8 @@ public class RoomRequestDTO {
     private Boolean hasWifi;
     
     private Boolean hasAirConditioning;
+
+    private Long categoryId;
     
     public RoomRequestDTO() {}
     
@@ -248,5 +250,13 @@ public class RoomRequestDTO {
     
     public void setHasAirConditioning(Boolean hasAirConditioning) {
         this.hasAirConditioning = hasAirConditioning;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }
