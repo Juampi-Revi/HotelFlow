@@ -16,13 +16,13 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
     viewTypeOptions,
     hotelRatingOptions,
     amenitiesOptions,
+    categoryOptions,
     handleInputChange,
     handleImagesChange,
     handleSubmit
   } = useRoomForm(initialData, onSubmit);
 
-  // Deshabilitar todos los campos si está en modo edición
-  const isFieldDisabled = isLoading || isEditMode;
+  const isFieldDisabled = isLoading;
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
@@ -52,6 +52,18 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
             placeholder={t('admin.room.placeholders.roomType')}
             error={errors.roomType}
             required
+            disabled={isFieldDisabled}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Select
+            label={t('admin.room.fields.category')}
+            value={formData.categoryId ?? ''}
+            onChange={handleInputChange('categoryId')}
+            options={categoryOptions}
+            placeholder={t('admin.room.placeholders.category')}
+            error={errors.categoryId}
             disabled={isFieldDisabled}
           />
         </div>
@@ -94,7 +106,6 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
           disabled={isFieldDisabled}
         />
 
-        {/* Información del Hotel */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             {t('admin.room.sections.hotelInfo')}
@@ -240,7 +251,6 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
             />
           </div>
 
-          {/* Amenidades Básicas */}
           <div className="mt-6">
             <h4 className="text-md font-medium text-gray-900 dark:text-white mb-3">
               {t('admin.room.sections.basicAmenities')}

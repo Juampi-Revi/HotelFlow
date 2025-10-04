@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Pagination } from '../../components/atoms';
@@ -6,6 +6,7 @@ import { Header, Footer } from '../../components/organisms';
 import { ImageGallery } from '../../components/molecules';
 import useRoomsPagination from '../../hooks/useRoomsPagination';
 import { formatPrice, getRoomTypeColor, getAvailabilityColor, formatGuestCount } from '../../utils/roomUtils';
+import { categoryService } from '../../services/categoryService';
 
 const ProductsPage = () => {
   const navigate = useNavigate();
@@ -24,14 +25,29 @@ const ProductsPage = () => {
     sortDirection,
     handlePageChange,
     handleSortChange,
-    handlePageSizeChange
+    handlePageSizeChange,
+    handleCategoryChange,
+    categoryId
   } = useRoomsPagination();
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const list = await categoryService.getAllCategories();
+        setCategories(list.filter(c => c.isActive !== false));
+      } catch (err) {
+        setCategories([]);
+      }
+    };
+    loadCategories();
+  }, []);
 
   const handleRoomClick = (roomId) => {
     navigate(`/room/${roomId}`);
   };
 
-  // Filtros temporalmente deshabilitados - mostrar todas las habitaciones
   const filteredRooms = rooms;
 
   if (loading) {
@@ -71,7 +87,6 @@ const ProductsPage = () => {
       <Header />
       <div className="flex-1 pt-16">
         <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             {t('common.allRooms')}
@@ -79,6 +94,24 @@ const ProductsPage = () => {
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             {t('common.discoverCollection', { count: totalElements })}
           </p>
+        </div>
+
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-8">
+          <div className="flex items-center gap-4">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t('admin.room.fields.category')}
+            </label>
+            <select
+              value={categoryId || ''}
+              onChange={(e) => handleCategoryChange(e.target.value ? Number(e.target.value) : null)}
+              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">{t('categories.all')}</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Filters and Search - TEMPORALMENTE OCULTO */}
@@ -154,7 +187,7 @@ const ProductsPage = () => {
             <div
               key={room.id}
               onClick={() => handleRoomClick(room.id)}
-              className="group bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-2 cursor-pointer"
+              className="group bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-2 cursor-pointer flex flex-col h-full"
             >
               {/* Room Image */}
               {room.images && room.images.length > 0 && (
@@ -185,11 +218,18 @@ const ProductsPage = () => {
               )}
 
               {/* Room Info */}
-              <div className="p-4">
+              <div className="p-4 flex flex-col flex-1">
                 <div className="mb-2">
                   <h3 className="font-semibold text-gray-900 dark:text-white text-lg mb-1">
                     {room.hotelName}
                   </h3>
+                  {(room?.category?.name || room?.categoryName) && (
+                    <div className="mb-2">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-700">
+                        {room?.category?.name ?? room?.categoryName}
+                      </span>
+                    </div>
+                  )}
                   {room.hotelChain && (
                     <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                       {room.hotelChain}
@@ -259,8 +299,17 @@ const ProductsPage = () => {
                   )}
                 </div>
 
-                {/* Price and Availability */}
-                <div className="flex items-center justify-between mb-3">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRoomClick(room.id);
+                  }}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
+                >
+                  {t('common.viewDetails')}
+                </button>
+
+                <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-200/50 dark:border-gray-700/50">
                   <div className="text-xl font-bold text-gray-900 dark:text-white">
                     {formatPrice(room.pricePerNight)}
                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400">/{t('common.night')}</span>
@@ -273,23 +322,11 @@ const ProductsPage = () => {
                     {room.isAvailable ? t('common.available') : t('common.unavailable')}
                   </div>
                 </div>
-                
-                {/* View Details Button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRoomClick(room.id);
-                  }}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
-                >
-                  {t('common.viewDetails')}
-                </button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Pagination */}
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

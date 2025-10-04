@@ -8,6 +8,8 @@ import com.digitalhouse.hotelbooking.exception.RoomNotFoundException;
 import com.digitalhouse.hotelbooking.model.Room;
 import com.digitalhouse.hotelbooking.model.enums.RoomType;
 import com.digitalhouse.hotelbooking.repository.RoomRepository;
+import com.digitalhouse.hotelbooking.repository.CategoryRepository;
+import com.digitalhouse.hotelbooking.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,10 +26,12 @@ import java.util.stream.Collectors;
 public class RoomService {
     
     private final RoomRepository roomRepository;
+    private final CategoryRepository categoryRepository;
     
     @Autowired
-    public RoomService(RoomRepository roomRepository) {
+    public RoomService(RoomRepository roomRepository, CategoryRepository categoryRepository) {
         this.roomRepository = roomRepository;
+        this.categoryRepository = categoryRepository;
     }
     
     public RoomResponseDTO createRoom(RoomRequestDTO roomRequestDTO) {
@@ -56,6 +60,22 @@ public class RoomService {
     @Transactional(readOnly = true)
     public List<RoomResponseDTO> getRoomsByType(RoomType roomType) {
         return roomRepository.findByRoomType(roomType)
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RoomResponseDTO> getRoomsByCategoryId(Long categoryId) {
+        return roomRepository.findByCategory_Id(categoryId)
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<RoomResponseDTO> getRoomsByCategorySlug(String categorySlug) {
+        return roomRepository.findByCategory_Slug(categorySlug)
                 .stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
@@ -149,6 +169,11 @@ public class RoomService {
         room.setHasBalcony(dto.getHasBalcony());
         room.setHasWifi(dto.getHasWifi());
         room.setHasAirConditioning(dto.getHasAirConditioning());
+        if (dto.getCategoryId() != null) {
+            Category category = categoryRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new com.digitalhouse.hotelbooking.exception.CategoryNotFoundException(dto.getCategoryId()));
+            room.setCategory(category);
+        }
         return room;
     }
     
@@ -174,10 +199,17 @@ public class RoomService {
         room.setHasBalcony(dto.getHasBalcony());
         room.setHasWifi(dto.getHasWifi());
         room.setHasAirConditioning(dto.getHasAirConditioning());
+        if (dto.getCategoryId() != null) {
+            Category category = categoryRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new com.digitalhouse.hotelbooking.exception.CategoryNotFoundException(dto.getCategoryId()));
+            room.setCategory(category);
+        } else {
+            room.setCategory(null);
+        }
     }
     
     private RoomResponseDTO mapToResponseDTO(Room room) {
-        return new RoomResponseDTO(
+        RoomResponseDTO dto = new RoomResponseDTO(
                 room.getId(),
                 room.getRoomNumber(),
                 room.getRoomType(),
@@ -192,5 +224,11 @@ public class RoomService {
                 room.getCreatedAt(),
                 room.getUpdatedAt()
         );
+        if (room.getCategory() != null) {
+            dto.setCategoryId(room.getCategory().getId());
+            dto.setCategorySlug(room.getCategory().getSlug());
+            dto.setCategoryName(room.getCategory().getName());
+        }
+        return dto;
     }
 }

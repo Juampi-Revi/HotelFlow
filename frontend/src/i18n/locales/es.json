@@ -209,6 +209,7 @@
       "fields": {
         "roomNumber": "Número de Habitación",
         "roomType": "Tipo de Habitación",
+        "category": "Categoría",
         "capacity": "Capacidad",
         "pricePerNight": "Precio por Noche",
         "description": "Descripción",
@@ -232,6 +233,7 @@
       "placeholders": {
         "roomNumber": "Ingresa el número de habitación",
         "roomType": "Selecciona el tipo de habitación",
+        "category": "Selecciona la categoría",
         "capacity": "Número de huéspedes",
         "price": "Precio en USD",
         "description": "Descripción de la habitación",
@@ -358,7 +360,8 @@
       "customers": "Clientes",
       "staff": "Personal",
       "configuration": "Configuración",
-      "settings": "Ajustes"
+      "settings": "Ajustes",
+      "categories": "Categorías"
     },
     "mobileNotSupported": {
       "title": "Panel de Administración",
@@ -401,6 +404,49 @@
         "addNew": "Agregar Nueva Habitación",
         "addFirst": "Agregar Primera Habitación"
       }
+    }
+  ,
+    "categories": {
+      "title": "Gestión de Categorías",
+      "subtitle": "Crea, edita y organiza categorías de habitaciones",
+      "searchPlaceholder": "Buscar categorías...",
+      "loading": "Cargando categorías...",
+      "empty": "No se encontraron categorías",
+      "table": {
+        "name": "Nombre",
+        "slug": "Slug",
+        "description": "Descripción",
+        "active": "Activo",
+        "actions": "Acciones"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "actions": {
+        "addNew": "Agregar Categoría",
+        "edit": "Editar",
+        "toggle": "Activar/Desactivar",
+        "delete": "Eliminar"
+      },
+      "form": {
+        "createTitle": "Crear Categoría",
+        "editTitle": "Editar Categoría",
+        "name": "Nombre",
+        "slug": "Slug",
+        "description": "Descripción",
+        "isActive": "Activo",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando..."
+      },
+      "errors": {
+        "loadFailed": "Error al cargar categorías.",
+        "saveFailed": "Error al guardar la categoría.",
+        "deleteFailed": "Error al eliminar la categoría.",
+        "toggleFailed": "Error al alternar el estado de la categoría."
+      },
+      "confirmDelete": "¿Estás seguro de eliminar esta categoría?"
     }
   },
   "rooms": {

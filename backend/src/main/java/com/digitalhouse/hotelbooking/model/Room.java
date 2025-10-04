@@ -1,6 +1,7 @@
 package com.digitalhouse.hotelbooking.model;
 
 import com.digitalhouse.hotelbooking.model.enums.RoomType;
+import com.digitalhouse.hotelbooking.model.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
@@ -97,6 +98,10 @@ public class Room {
     
     @Column(name = "is_available", nullable = false)
     private Boolean isAvailable = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
     
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -213,6 +218,14 @@ public class Room {
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
     
     public String getHotelName() {

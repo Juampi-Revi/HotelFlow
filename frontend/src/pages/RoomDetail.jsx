@@ -45,9 +45,16 @@ const RoomDetail = () => {
               <span>{t('common.back')}</span>
             </button>
             
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              {t('common.room')} {room.roomNumber}
-            </h1>
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {t('common.room')} {room.roomNumber}
+              </h1>
+              {(room?.category?.name || room?.categoryName) && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-700">
+                  {(room?.category?.name ?? room?.categoryName)}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">

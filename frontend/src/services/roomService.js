@@ -89,6 +89,22 @@ export const roomService = {
     return response.json();
   },
 
+  async getRoomsByCategoryId(categoryId) {
+    const response = await fetch(`${API_BASE_URL}/rooms?categoryId=${encodeURIComponent(categoryId)}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch rooms by category id');
+    }
+    return response.json();
+  },
+
+  async getRoomsByCategorySlug(categorySlug) {
+    const response = await fetch(`${API_BASE_URL}/rooms?categorySlug=${encodeURIComponent(categorySlug)}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch rooms by category slug');
+    }
+    return response.json();
+  },
+
   getRoomsForHome: async () => {
     const rooms = await roomService.getAllRooms();
     return rooms.slice(0, 10);

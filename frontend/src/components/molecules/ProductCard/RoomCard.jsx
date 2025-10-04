@@ -19,7 +19,7 @@ const RoomCard = ({ room }) => {
   const cardClasses = `
     bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 
     hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer
-    p-6 max-w-sm mx-auto relative group
+    p-6 max-w-sm mx-auto relative group flex flex-col
   `;
 
   const statusClasses = `
@@ -51,7 +51,7 @@ const RoomCard = ({ room }) => {
         </div>
       )}
 
-      <div className="p-6">
+      <div className="flex-1 flex flex-col p-6">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent line-clamp-2">
             {t('room.roomNumber', { number: room.roomNumber })}
@@ -61,12 +61,18 @@ const RoomCard = ({ room }) => {
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-relaxed">
           {room.description}
         </p>
-
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-sm font-semibold text-blue-700 dark:text-blue-200 bg-blue-100 dark:bg-blue-800/80 px-3 py-1.5 rounded-md border border-blue-200 dark:border-blue-600 flex-1 text-center">
+        {(room?.category?.name || room?.categoryName) && (
+          <div className="mb-4">
+            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-700">
+              {room?.category?.name ?? room?.categoryName}
+            </span>
+          </div>
+        )}
+        <div className="flex flex-col gap-2 mb-4">
+          <span className="text-sm font-semibold text-blue-700 dark:text-blue-200 bg-blue-100 dark:bg-blue-800/80 px-3 py-1.5 rounded-md border border-blue-200 dark:border-blue-600 w-full text-center">
             {t(`room.types.${room.roomType.toLowerCase()}`)}
           </span>
-          <span className="text-sm font-semibold text-purple-700 dark:text-purple-200 bg-purple-100 dark:bg-purple-800/80 px-3 py-1.5 rounded-md border border-purple-200 dark:border-purple-600 flex-1 text-center">
+          <span className="text-sm font-semibold text-purple-700 dark:text-purple-200 bg-purple-100 dark:bg-purple-800/80 px-3 py-1.5 rounded-md border border-purple-200 dark:border-purple-600 w-full text-center">
             {t('room.capacity', { capacity: room.capacity })}
           </span>
         </div>
@@ -88,7 +94,7 @@ const RoomCard = ({ room }) => {
           </div>
         )}
 
-        <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 dark:border-gray-700/50">
+        <div className="mt-auto flex items-center justify-between pt-2 border-t border-gray-200/50 dark:border-gray-700/50">
           <div className="flex flex-col">
             <span className="text-2xl font-bold text-blue-600 dark:text-blue-300">
               {formatPrice(room.pricePerNight)}

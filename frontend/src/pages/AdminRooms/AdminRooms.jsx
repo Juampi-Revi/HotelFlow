@@ -322,7 +322,6 @@ const AdminRooms = () => {
         roomNumber={roomToDelete?.roomNumber}
       />
 
-      {/* Toast Notification */}
       <Toast
         message={notification.message}
         type={notification.type}

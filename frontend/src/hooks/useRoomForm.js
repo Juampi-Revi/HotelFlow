@@ -1,45 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { categoryService } from '../services/categoryService';
 
 const useRoomForm = (initialData = null, onSubmit) => {
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
-    // Campos básicos
     roomNumber: initialData?.roomNumber || '',
     roomType: initialData?.roomType || '',
     capacity: initialData?.capacity || '',
     pricePerNight: initialData?.pricePerNight || '',
     description: initialData?.description || '',
     images: initialData?.images || [],
+    categoryId: initialData?.categoryId || null,
     
-    // Información del hotel
     hotelName: initialData?.hotelName || '',
     hotelChain: initialData?.hotelChain || '',
     hotelRating: initialData?.hotelRating || '',
     
-    // Ubicación
     city: initialData?.city || '',
     country: initialData?.country || '',
     address: initialData?.address || '',
     latitude: initialData?.latitude || '',
     longitude: initialData?.longitude || '',
     
-    // Características de la habitación
     viewType: initialData?.viewType || '',
     floor: initialData?.floor || '',
     sizeSqm: initialData?.sizeSqm || '',
     
-    // Amenidades (checkboxes)
     hasBalcony: initialData?.hasBalcony || false,
     hasWifi: initialData?.hasWifi !== undefined ? initialData.hasWifi : true,
     hasAirConditioning: initialData?.hasAirConditioning !== undefined ? initialData.hasAirConditioning : true,
     
-    // Amenidades adicionales (lista)
     amenities: initialData?.amenities || []
   });
 
   const [errors, setErrors] = useState({});
+
+  const [categoryOptions, setCategoryOptions] = useState([]);
 
   const roomTypeOptions = [
     { value: 'SINGLE', label: t('admin.room.types.single') },
@@ -78,6 +76,21 @@ const useRoomForm = (initialData = null, onSubmit) => {
     { value: 'spa', label: t('admin.room.amenities.spa') },
     { value: 'pool', label: t('admin.room.amenities.pool') }
   ];
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const categories = await categoryService.getAllCategories();
+        const activeCategories = categories.filter(c => c.isActive !== false);
+        setCategoryOptions(
+          activeCategories.map(c => ({ value: c.id, label: c.name }))
+        );
+      } catch (err) {
+        setCategoryOptions([]);
+      }
+    };
+    loadCategories();
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -149,8 +162,12 @@ const useRoomForm = (initialData = null, onSubmit) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (field) => (e) => {
-    const value = e.target.value;
+  const handleInputChange = (field) => (eOrValue) => {
+    const isEvent = eOrValue && typeof eOrValue === 'object' && 'target' in eOrValue;
+    const value = isEvent
+      ? (eOrValue.target.type === 'checkbox' ? eOrValue.target.checked : eOrValue.target.value)
+      : eOrValue;
+
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -200,6 +217,8 @@ const useRoomForm = (initialData = null, onSubmit) => {
       pricePerNight: '',
       description: '',
       images: [],
+      // Categoría
+      categoryId: null,
       
       // Información del hotel
       hotelName: '',
@@ -236,7 +255,8 @@ const useRoomForm = (initialData = null, onSubmit) => {
     viewTypeOptions,
     hotelRatingOptions,
     amenitiesOptions,
-    
+    categoryOptions,
+
     handleInputChange,
     handleImagesChange,
     handleSubmit,
