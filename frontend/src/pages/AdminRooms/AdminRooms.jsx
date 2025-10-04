@@ -9,6 +9,7 @@ import Pagination from '../../components/atoms/Pagination/Pagination';
 import DeleteConfirmationModal from '../../components/organisms/DeleteConfirmationModal/DeleteConfirmationModal';
 import Toast from '../../components/atoms/Toast/Toast';
 import { roomService } from '../../services/roomService';
+import { useToast } from '../../hooks';
 
 const AdminRooms = () => {
   const { t } = useTranslation();
@@ -28,11 +29,7 @@ const AdminRooms = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [roomToDelete, setRoomToDelete] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [notification, setNotification] = useState({
-    show: false,
-    message: '',
-    type: 'success'
-  });
+  const { notification, showNotification, hideNotification } = useToast();
 
   useEffect(() => {
     loadRooms();
@@ -67,10 +64,10 @@ const AdminRooms = () => {
       
       if (editingRoom) {
         await roomService.updateRoom(editingRoom.id, roomData);
-        showNotification(t('notifications.roomUpdatedSuccess'), 'success');
+        showNotification('success', t('notifications.roomUpdatedSuccess'));
       } else {
         await roomService.createRoom(roomData);
-        showNotification(t('notifications.roomCreatedSuccess'), 'success');
+        showNotification('success', t('notifications.roomCreatedSuccess'));
       }
       
       await loadRooms();
@@ -82,7 +79,7 @@ const AdminRooms = () => {
         ? t('notifications.roomUpdatedError')
         : t('notifications.roomCreatedError');
       setError(err.message || 'Failed to save room. Please try again.');
-      showNotification(errorMessage, 'error');
+      showNotification('error', errorMessage);
     } finally {
       setFormLoading(false);
     }
@@ -93,17 +90,7 @@ const AdminRooms = () => {
     setEditingRoom(null);
   };
 
-  const showNotification = (message, type = 'success') => {
-    setNotification({
-      show: true,
-      message,
-      type
-    });
-  };
-
-  const hideNotification = () => {
-    setNotification(prev => ({ ...prev, show: false }));
-  };
+  // Notifications handled via useToast
 
   const handleDeleteRoom = (roomId) => {
     const room = rooms.find(r => r.id === roomId);
@@ -121,10 +108,10 @@ const AdminRooms = () => {
       setError('');
       setShowDeleteModal(false);
       setRoomToDelete(null);
-      showNotification(t('notifications.roomDeletedSuccess'), 'success');
+      showNotification('success', t('notifications.roomDeletedSuccess'));
     } catch {
       setError('Failed to delete room. Please try again.');
-      showNotification(t('notifications.roomDeletedError'), 'error');
+      showNotification('error', t('notifications.roomDeletedError'));
     } finally {
       setDeleteLoading(false);
     }

@@ -2,6 +2,7 @@ package com.digitalhouse.hotelbooking.exception;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import com.digitalhouse.hotelbooking.exception.DuplicateEmailException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -34,6 +35,17 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),
                 "Duplicate Room",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+    
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateEmailException(DuplicateEmailException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                "Duplicate Email",
                 ex.getMessage(),
                 LocalDateTime.now()
         );
@@ -112,66 +124,5 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-    public static class ErrorResponse {
-        private int status;
-        private String error;
-        private String message;
-        private LocalDateTime timestamp;
-        
-        public ErrorResponse(int status, String error, String message, LocalDateTime timestamp) {
-            this.status = status;
-            this.error = error;
-            this.message = message;
-            this.timestamp = timestamp;
-        }
-        
-        public int getStatus() {
-            return status;
-        }
-        
-        public void setStatus(int status) {
-            this.status = status;
-        }
-        
-        public String getError() {
-            return error;
-        }
-        
-        public void setError(String error) {
-            this.error = error;
-        }
-        
-        public String getMessage() {
-            return message;
-        }
-        
-        public void setMessage(String message) {
-            this.message = message;
-        }
-        
-        public LocalDateTime getTimestamp() {
-            return timestamp;
-        }
-        
-        public void setTimestamp(LocalDateTime timestamp) {
-            this.timestamp = timestamp;
-        }
-    }
-    
-    public static class ValidationErrorResponse extends ErrorResponse {
-        private Map<String, String> fieldErrors;
-        
-        public ValidationErrorResponse(int status, String error, String message, Map<String, String> fieldErrors, LocalDateTime timestamp) {
-            super(status, error, message, timestamp);
-            this.fieldErrors = fieldErrors;
-        }
-        
-        public Map<String, String> getFieldErrors() {
-            return fieldErrors;
-        }
-        
-        public void setFieldErrors(Map<String, String> fieldErrors) {
-            this.fieldErrors = fieldErrors;
-        }
-    }
+    // Error response classes moved to standalone files for reusability and cleaner structure.
 }

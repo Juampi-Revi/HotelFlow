@@ -486,4 +486,64 @@
     "copyright": "© {{year}} HotelFlow. All rights reserved.",
     "tagline": "Seamless stays, endless possibilities"
   }
+  ,
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "fields": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "placeholders": {
+        "email": "Enter your email",
+        "password": "Enter your password"
+      },
+      "actions": {
+        "submit": "Sign In",
+        "submitting": "Signing in...",
+        "cancel": "Cancel"
+      },
+      "legend": {
+        "noAccount": "Don't have an account?",
+        "goToRegister": "Create an account"
+      },
+      "messages": {
+        "comingSoon": "Login is coming soon"
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "password": "Password"
+      },
+      "placeholders": {
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "email": "Enter your email",
+        "password": "Enter a secure password"
+      },
+      "actions": {
+        "submit": "Create Account",
+        "submitting": "Creating..."
+      },
+      "legend": {
+        "haveAccount": "Already have an account?",
+        "goToLogin": "Sign in"
+      },
+      "success": "Account created successfully",
+      "errors": {
+        "duplicateEmail": "This email is already registered",
+        "generic": "Registration failed. Please try again"
+      },
+      "validation": {
+        "firstName": "First name must be at least 4 characters",
+        "lastName": "Last name must be at least 4 characters",
+        "email": "Enter a valid email address",
+        "password": "Password must be 8+ chars with uppercase, lowercase and a number"
+      }
+    }
+  }
 }

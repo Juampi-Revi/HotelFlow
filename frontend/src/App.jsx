@@ -15,6 +15,7 @@ import AdminStaff from './pages/AdminStaff/AdminStaff';
 import AdminSettings from './pages/AdminSettings/AdminSettings';
 import AdminCategories from './pages/AdminCategories/AdminCategories';
 import RoomDetail from './pages/RoomDetail';
+import Auth from './pages/Auth/Auth';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
 
 function HomePage() {
@@ -64,6 +65,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/rooms" element={<ProductsPage />} />
           <Route path="/room/:id" element={<RoomDetail />} />
+          <Route path="/register" element={<Auth />} />
+          <Route path="/login" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/rooms" element={<AdminRooms />} />
           <Route path="/admin/analytics" element={<AdminAnalytics />} />

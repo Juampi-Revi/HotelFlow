@@ -648,3 +648,34 @@ const validateForm = () => {
 - 📋 **Siguiente historia de usuario** - Continuar con el desarrollo
 - 🧪 **Testing** - Implementar pruebas para los nuevos componentes
 - 📚 **Documentación** - Expandir guías de uso del sistema i18n
+### ✅ Actualización de cumplimiento (Oct 2025)
+- ✅ Código y comentarios en inglés, sin logs innecesarios
+- ✅ Validaciones centralizadas en `useAuthValidation` (min 4 chars para nombres, email válido, password segura)
+- ✅ Notificaciones unificadas con `useToast` (API: `showNotification(type, message)`, `hideNotification`)
+- ✅ Botón de envío deshabilitado cuando el formulario no es válido
+- ✅ Backend con respuestas estandarizadas y clases separadas: `ErrorResponse` y `ValidationErrorResponse`
+- ✅ Manejo consistente de errores de validación (`MethodArgumentNotValidException`, `ConstraintViolationException`)
+
+### 📄 Archivos tocados en esta iteración
+- Frontend (nuevo): `src/hooks/useToast.js`
+- Frontend (actualizados):
+  - `src/hooks/index.js` (export de `useToast`)
+  - `src/pages/Auth/Auth.jsx` (usa `useToast`, corrige `isFormValid(form)`)
+  - `src/pages/Auth/Register.jsx` (usa `useToast`)
+  - `src/pages/AdminRooms/AdminRooms.jsx` (usa `useToast`)
+  - `src/i18n/locales/en.json` y `src/i18n/locales/es.json` (mínimo 4 caracteres en nombres)
+- Backend (nuevo):
+  - `src/main/java/com/digitalhouse/hotelbooking/exception/ErrorResponse.java`
+  - `src/main/java/com/digitalhouse/hotelbooking/exception/ValidationErrorResponse.java`
+- Backend (actualizados):
+  - `src/main/java/com/digitalhouse/hotelbooking/exception/GlobalExceptionHandler.java` (extrae clases internas)
+  - `src/main/java/com/digitalhouse/hotelbooking/dto/request/RegisterRequestDTO.java` (validación de nombres ≥ 4)
+
+### 🔍 Verificación funcional
+- Frontend: formularios de Login/Register renderizan con validación en vivo y notificaciones coherentes.
+- Backend: respuestas 400 detalladas para datos inválidos y 409 para email duplicado.
+
+### 🧪 Próximas tareas de testing (backlog)
+- Unit tests `useAuthValidation` (mock de `t()`).
+- Integración básica para `Auth.jsx` y `Register.jsx` (estado de botón, errores, notificaciones).
+- Tests de controlador para validaciones y estructura de `ErrorResponse`/`ValidationErrorResponse`.

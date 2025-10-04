@@ -10,13 +10,7 @@ const Header = () => {
     // Future: Navigate to homepage
   };
 
-  const handleCreateAccountClick = () => {
-    // Future: Open create account modal/page
-  };
-
-  const handleLoginClick = () => {
-    // Future: Open login modal/page
-  };
+  // Login ahora navega a la vista /login
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-md transition-colors duration-200">
@@ -59,20 +53,22 @@ const Header = () => {
               <LanguageToggle />
             </div>
             
-            {/* Navigation buttons */}
+            {/* Navigation button: only login */}
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <Button 
-                variant="primary" 
-                size="small"
-                className="rounded-full shadow-md hover:shadow-lg"
-                onClick={handleLoginClick}
-              >
-                {t('header.login')}
-              </Button>
+              <Link to="/login">
+                <Button 
+                  variant="primary" 
+                  size="small"
+                  className="rounded-full shadow-md hover:shadow-lg"
+                >
+                  {t('header.login')}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
+      {/* Navegación directa a /login; modal eliminado */}
     </header>
   );
 };

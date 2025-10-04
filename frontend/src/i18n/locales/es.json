@@ -466,4 +466,64 @@
     "copyright": "© {{year}} HotelFlow. Todos los derechos reservados.",
     "tagline": "Estadías fluidas, posibilidades infinitas"
   }
+  ,
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "fields": {
+        "email": "Correo electrónico",
+        "password": "Contraseña"
+      },
+      "placeholders": {
+        "email": "Ingresa tu correo",
+        "password": "Ingresa tu contraseña"
+      },
+      "actions": {
+        "submit": "Iniciar Sesión",
+        "submitting": "Iniciando...",
+        "cancel": "Cancelar"
+      },
+      "legend": {
+        "noAccount": "¿No tienes cuenta?",
+        "goToRegister": "Crear una cuenta"
+      },
+      "messages": {
+        "comingSoon": "El inicio de sesión estará disponible pronto"
+      }
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "fields": {
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "email": "Email",
+        "password": "Contraseña"
+      },
+      "placeholders": {
+        "firstName": "Ingresa tu nombre",
+        "lastName": "Ingresa tu apellido",
+        "email": "Ingresa tu email",
+        "password": "Ingresa una contraseña segura"
+      },
+      "actions": {
+        "submit": "Crear Cuenta",
+        "submitting": "Creando..."
+      },
+      "legend": {
+        "haveAccount": "¿Ya tienes cuenta?",
+        "goToLogin": "Iniciar Sesión"
+      },
+      "success": "Cuenta creada exitosamente",
+      "errors": {
+        "duplicateEmail": "Este email ya está registrado",
+        "generic": "No se pudo completar el registro. Intenta nuevamente"
+      },
+      "validation": {
+        "firstName": "El nombre debe tener al menos 4 caracteres",
+        "lastName": "El apellido debe tener al menos 4 caracteres",
+        "email": "Ingresa un email válido",
+        "password": "La contraseña debe tener 8+ caracteres con mayúscula, minúscula y un número"
+      }
+    }
+  }
 }
