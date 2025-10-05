@@ -1,16 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, LanguageToggle, Logo, ThemeToggle } from '../atoms';
+import { useAuth } from '../../contexts';
 
 const Header = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const handleLogoClick = () => {
     // Future: Navigate to homepage
   };
 
-  // Login ahora navega a la vista /login
+  const goToAdmin = () => navigate('/admin');
+  const goToProfile = () => navigate('/admin/profile');
+  const handleLogout = () => { try { logout(); } catch (_) {} navigate('/'); setMenuOpen(false); };
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-md transition-colors duration-200">
@@ -53,22 +70,51 @@ const Header = () => {
               <LanguageToggle />
             </div>
             
-            {/* Navigation button: only login */}
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              <Link to="/login">
-                <Button 
-                  variant="primary" 
-                  size="small"
-                  className="rounded-full shadow-md hover:shadow-lg"
-                >
-                  {t('header.login')}
-                </Button>
-              </Link>
+            {/* Auth indicator */}
+            <div className="flex items-center space-x-2 sm:space-x-4 relative" ref={menuRef}>
+              {isAuthenticated ? (
+                <>
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    className="rounded-full shadow-md hover:shadow-lg"
+                    onClick={() => setMenuOpen((v) => !v)}
+                  >
+                    {(user?.firstName || '') + ' ' + (user?.lastName || '')}
+                  </Button>
+                  {menuOpen && (
+                    <div className="absolute right-0 top-10 w-44 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                      <button
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30"
+                        onClick={goToProfile}
+                      >
+                        {t('admin.navigation.profile')}
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 text-sm text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        onClick={handleLogout}
+                      >
+                        {t('admin.navigation.logout')}
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link to="/login">
+                  <Button 
+                    variant="primary" 
+                    size="small"
+                    className="rounded-full shadow-md hover:shadow-lg"
+                  >
+                    {t('header.login')}
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {/* Navegación directa a /login; modal eliminado */}
+      {/* Direct navigation managed via router */}
     </header>
   );
 };

@@ -7,12 +7,14 @@ import Button from '../../components/atoms/Button/Button';
 import Toast from '../../components/atoms/Toast/Toast';
 import { authService } from '../../services/authService';
 import { useAuthValidation, useToast } from '../../hooks';
+import { useAuth } from '../../contexts';
 
 const Auth = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const mode = location.pathname.includes('/login') ? 'login' : 'register';
+  const { login: setAuthSession } = useAuth();
 
   const [form, setForm] = useState({
     firstName: '',
@@ -52,13 +54,18 @@ const Auth = () => {
         setTimeout(() => navigate('/'), 1200);
         return user;
       } else {
-        // UX-only for now
-        showNotification('info', t('auth.login.messages.comingSoon'));
+        const auth = await authService.login({ email: form.email, password: form.password });
+        setAuthSession(auth);
+        showNotification('success', t('auth.login.actions.submitting'));
+        navigate('/admin');
+        return auth;
       }
     } catch (err) {
       if (err?.code === 'DUPLICATE_EMAIL') {
         showNotification('error', t('auth.register.errors.duplicateEmail'));
         setErrors(prev => ({ ...prev, email: t('auth.register.errors.duplicateEmail') }));
+      } else if (err?.code === 'INVALID_CREDENTIALS') {
+        showNotification('error', 'Invalid email or password');
       } else {
         showNotification('error', t('auth.register.errors.generic'));
       }

@@ -352,7 +352,10 @@
       "staff": "Staff",
       "configuration": "Configuration",
       "settings": "Settings",
-      "categories": "Categories"
+      "categories": "Categories",
+      "account": "Account",
+      "profile": "Profile",
+      "logout": "Logout"
     },
     "mobileNotSupported": {
       "title": "Administration Panel",
@@ -383,6 +386,17 @@
         "occupancyRate": "Occupancy Rate",
         "totalBookings": "Total Bookings",
         "revenue": "Revenue"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "View your personal information",
+      "unknownUser": "Unknown User",
+      "noEmail": "No email provided",
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email"
       }
     },
     "rooms": {

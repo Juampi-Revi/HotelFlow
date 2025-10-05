@@ -361,7 +361,10 @@
       "staff": "Personal",
       "configuration": "Configuración",
       "settings": "Ajustes",
-      "categories": "Categorías"
+      "categories": "Categorías",
+      "account": "Cuenta",
+      "profile": "Perfil",
+      "logout": "Cerrar sesión"
     },
     "mobileNotSupported": {
       "title": "Panel de Administración",
@@ -392,6 +395,17 @@
         "occupancyRate": "Tasa de Ocupación",
         "totalBookings": "Reservas Totales",
         "revenue": "Ingresos"
+      }
+    },
+    "profile": {
+      "title": "Perfil",
+      "description": "Consulta tu información personal",
+      "unknownUser": "Usuario desconocido",
+      "noEmail": "Sin correo electrónico",
+      "fields": {
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "email": "Email"
       }
     },
     "rooms": {
