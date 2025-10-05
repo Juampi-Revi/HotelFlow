@@ -27,4 +27,31 @@ export const authService = {
     const data = await response.json();
     return data;
   }
+  ,
+  async login({ email, password }) {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        const error = new Error('Invalid credentials');
+        error.code = 'INVALID_CREDENTIALS';
+        throw error;
+      }
+      let message = 'Login failed';
+      try {
+        const data = await response.json();
+        message = data?.message || message;
+      } catch (_) {}
+      const error = new Error(message);
+      error.code = 'LOGIN_FAILED';
+      throw error;
+    }
+
+    const data = await response.json();
+    return data;
+  }
 };

@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from '../../organisms/Header';
 import { Footer } from '../../organisms';
 import MobileNotSupported from '../../molecules/MobileNotSupported';
 import useDeviceDetection from '../../../hooks/useDeviceDetection';
+import { useAuth } from '../../../contexts';
 
 const AdminLayout = ({ children }) => {
   const { t } = useTranslation();
   const location = useLocation();
   const { isAdminSupported } = useDeviceDetection();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    try {
+      logout();
+    } catch (_) {}
+    navigate('/');
+  };
   
   // Initialize sidebarCollapsed from localStorage
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
@@ -28,6 +38,21 @@ const AdminLayout = ({ children }) => {
   }
 
   const navigationSections = [
+    {
+      title: t('admin.navigation.account'),
+      items: [
+        {
+          name: t('admin.navigation.profile'),
+          href: '/admin/profile',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          ),
+          current: location.pathname === '/admin/profile'
+        }
+      ]
+    },
     {
       title: t('admin.navigation.overview'),
       items: [
@@ -143,13 +168,13 @@ const AdminLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col">
-      {/* Header del home */}
+      {/* Header */}
       <Header />
       
       <div className="pt-16 flex flex-grow">
         {/* Sidebar - Desktop Only */}
          <div className={`
-           fixed top-16 left-0 bottom-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-r border-gray-300/60 dark:border-gray-700/50 shadow-xl transition-all duration-300 ease-in-out
+           sticky top-16 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-r border-gray-300/60 dark:border-gray-700/50 shadow-xl transition-all duration-300 ease-in-out h-[calc(100vh-4rem)] flex-shrink-0
            ${sidebarCollapsed ? 'w-16' : 'w-64'}
          `}>
            <div className="flex flex-col h-full">
@@ -167,7 +192,7 @@ const AdminLayout = ({ children }) => {
              </div>
              
              {/* Navigation */}
-             <nav className="flex-1 px-4 py-6 space-y-6 overflow-y-auto">
+             <nav className="flex-1 px-4 py-4 space-y-4 overflow-y-hidden">
                
                {navigationSections.map((section, sectionIndex) => (
                  <div key={section.title} className="space-y-2">
@@ -177,13 +202,16 @@ const AdminLayout = ({ children }) => {
                      </h3>
                    )}
                    <div className="space-y-1">
-                     {section.items.map((item) => (
-                       <Link
+                     {section.items.map((item) => {
+                       const ItemTag = item.onClick ? 'button' : Link;
+                       const itemProps = item.onClick ? { onClick: item.onClick, type: 'button' } : { to: item.href };
+                       return (
+                         <ItemTag
                            key={item.name}
-                           to={item.href}
+                           {...itemProps}
                            className={`
-                             flex items-center text-sm font-medium rounded-xl transition-all duration-300 group transform hover:scale-105 hover:shadow-lg
-                             ${sidebarCollapsed ? 'justify-center px-2 py-3' : 'px-4 py-3'}
+                             flex items-center text-xs font-medium rounded-xl transition-all duration-300 group transform hover:scale-105 hover:shadow-lg
+                             ${sidebarCollapsed ? 'justify-center px-2 py-2' : 'px-3 py-2'}
                              ${item.current
                                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25'
                                : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-blue-300'
@@ -193,20 +221,43 @@ const AdminLayout = ({ children }) => {
                          >
                            <span className={`${sidebarCollapsed ? 'mr-0' : 'mr-3'} transition-all duration-200 ${item.current ? 'text-white' : ''}`}>{item.icon}</span>
                            <span className={`transition-all duration-200 ${sidebarCollapsed ? 'hidden' : ''} ${item.current ? 'font-semibold' : ''}`}>{item.name}</span>
-                         </Link>
-                     ))}
-                   </div>
-                   {sectionIndex < navigationSections.length - 1 && !sidebarCollapsed && (
-                     <div className="border-t border-gray-200 dark:border-gray-700/50 pt-2"></div>
-                   )}
-                 </div>
-               ))}
+                         </ItemTag>
+                       );
+                     })}
+                  </div>
+                  {sectionIndex < navigationSections.length - 1 && !sidebarCollapsed && (
+                    <div className="border-t border-gray-200 dark:border-gray-700/50 pt-1"></div>
+                  )}
+                </div>
+              ))}
              </nav>
+
+             {/* Bottom fixed action - Logout */}
+             <div className="mt-auto px-4 py-3 border-t border-gray-200 dark:border-gray-700/50">
+               <button
+                 type="button"
+                 onClick={handleLogout}
+                 className={`
+                   w-full flex items-center text-xs font-medium rounded-xl transition-all duration-300 group transform hover:scale-[1.02] hover:shadow-lg
+                   ${sidebarCollapsed ? 'justify-center px-2 py-2' : 'px-3 py-2'}
+                   text-gray-700 hover:bg-red-50 hover:text-red-700 dark:text-gray-300 dark:hover:bg-red-900/20 dark:hover:text-red-300
+                 `}
+                 title={sidebarCollapsed ? t('admin.navigation.logout') : ''}
+               >
+                 <span className={`${sidebarCollapsed ? 'mr-0' : 'mr-3'} transition-all duration-200`}>
+                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7" />
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7a2 2 0 012-2h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                   </svg>
+                 </span>
+                 <span className={`transition-all duration-200 ${sidebarCollapsed ? 'hidden' : ''}`}>{t('admin.navigation.logout')}</span>
+               </button>
+             </div>
            </div>
          </div>
 
          {/* Main content area */}
-         <div className={`flex-1 min-h-screen transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
+         <div className={`flex-1 min-h-screen transition-all duration-300`}>
            {/* Page content */}
            <main className="min-h-full bg-transparent">
              {children}

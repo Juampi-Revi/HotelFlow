@@ -1,6 +1,8 @@
 package com.digitalhouse.hotelbooking.controller;
 
+import com.digitalhouse.hotelbooking.dto.request.LoginRequestDTO;
 import com.digitalhouse.hotelbooking.dto.request.RegisterRequestDTO;
+import com.digitalhouse.hotelbooking.dto.response.AuthResponseDTO;
 import com.digitalhouse.hotelbooking.dto.response.UserResponseDTO;
 import com.digitalhouse.hotelbooking.service.AuthService;
 import jakarta.validation.Valid;
@@ -23,5 +25,11 @@ public class AuthController {
     public ResponseEntity<UserResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         UserResponseDTO response = authService.register(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
+        AuthResponseDTO response = authService.authenticate(request);
+        return ResponseEntity.ok(response);
     }
 }
