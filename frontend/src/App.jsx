@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Header, Hero, Footer } from './components';
 import RoomGrid from './components/organisms/RoomGrid';
-import { ThemeProvider } from './contexts';
+import { ThemeProvider, useAuth } from './contexts';
 import { roomService } from './services/roomService';
 import Admin from './pages/Admin/Admin';
 import AdminRooms from './pages/AdminRooms/AdminRooms';
@@ -59,6 +59,14 @@ function HomePage() {
 }
 
 function App() {
+  const RequireAuth = ({ children }) => {
+    const { isAuthenticated } = useAuth();
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+    return children;
+  };
+
   return (
     <ThemeProvider>
       <Router>
@@ -68,16 +76,16 @@ function App() {
           <Route path="/room/:id" element={<RoomDetail />} />
           <Route path="/register" element={<Auth />} />
           <Route path="/login" element={<Auth />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/rooms" element={<AdminRooms />} />
-          <Route path="/admin/analytics" element={<AdminAnalytics />} />
-          <Route path="/admin/bookings" element={<AdminBookings />} />
-          <Route path="/admin/availability" element={<AdminAvailability />} />
-          <Route path="/admin/customers" element={<AdminCustomers />} />
-          <Route path="/admin/staff" element={<AdminStaff />} />
-          <Route path="/admin/settings" element={<AdminSettings />} />
-          <Route path="/admin/profile" element={<AdminProfile />} />
-          <Route path="/admin/categories" element={<AdminCategories />} />
+          <Route path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
+          <Route path="/admin/rooms" element={<RequireAuth><AdminRooms /></RequireAuth>} />
+          <Route path="/admin/analytics" element={<RequireAuth><AdminAnalytics /></RequireAuth>} />
+          <Route path="/admin/bookings" element={<RequireAuth><AdminBookings /></RequireAuth>} />
+          <Route path="/admin/availability" element={<RequireAuth><AdminAvailability /></RequireAuth>} />
+          <Route path="/admin/customers" element={<RequireAuth><AdminCustomers /></RequireAuth>} />
+          <Route path="/admin/staff" element={<RequireAuth><AdminStaff /></RequireAuth>} />
+          <Route path="/admin/settings" element={<RequireAuth><AdminSettings /></RequireAuth>} />
+          <Route path="/admin/profile" element={<RequireAuth><AdminProfile /></RequireAuth>} />
+          <Route path="/admin/categories" element={<RequireAuth><AdminCategories /></RequireAuth>} />
         </Routes>
       </Router>
     </ThemeProvider>
