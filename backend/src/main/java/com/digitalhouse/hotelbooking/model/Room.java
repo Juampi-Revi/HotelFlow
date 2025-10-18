@@ -2,11 +2,13 @@ package com.digitalhouse.hotelbooking.model;
 
 import com.digitalhouse.hotelbooking.model.enums.RoomType;
 import com.digitalhouse.hotelbooking.model.Category;
+import com.digitalhouse.hotelbooking.model.Feature;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
@@ -102,6 +104,14 @@ public class Room {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "room_features",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    private Set<Feature> features;
     
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -226,6 +236,14 @@ public class Room {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<Feature> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(Set<Feature> features) {
+        this.features = features;
     }
     
     public String getHotelName() {

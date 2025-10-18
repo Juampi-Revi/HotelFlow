@@ -35,6 +35,7 @@ public class RoomResponseDTO {
     private Long categoryId;
     private String categorySlug;
     private String categoryName;
+    private java.util.List<FeatureResponseDTO> features;
     
     public RoomResponseDTO() {}
     
@@ -159,6 +160,14 @@ public class RoomResponseDTO {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public java.util.List<FeatureResponseDTO> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(java.util.List<FeatureResponseDTO> features) {
+        this.features = features;
     }
 
     public String getHotelName() {

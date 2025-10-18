@@ -27,13 +27,14 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/rooms/**", "/api/categories/**").permitAll()
-                        // Create and edit guarded by specific roles or permissions
+                        .requestMatchers(HttpMethod.GET, "/api/rooms/**", "/api/categories/**", "/api/features/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/rooms/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "ROOMS_CREATE")
                         .requestMatchers(HttpMethod.PUT, "/api/rooms/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "ROOMS_EDIT")
                         .requestMatchers(HttpMethod.POST, "/api/categories/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "CATEGORIES_CREATE")
                         .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "CATEGORIES_EDIT")
-                        .requestMatchers(HttpMethod.DELETE, "/api/rooms/**", "/api/categories/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER")
+                        .requestMatchers(HttpMethod.POST, "/api/features/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "FEATURES_CREATE")
+                        .requestMatchers(HttpMethod.PUT, "/api/features/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "FEATURES_EDIT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/rooms/**", "/api/categories/**", "/api/features/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER")
                         .requestMatchers("/api/admin/**").hasAuthority("ROLE_OWNER")
                         .anyRequest().authenticated()
                 )

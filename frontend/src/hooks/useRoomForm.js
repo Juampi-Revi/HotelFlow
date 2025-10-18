@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { categoryService } from '../services/categoryService';
+import { featureService } from '../services/featureService';
 
 const useRoomForm = (initialData = null, onSubmit) => {
   const { t } = useTranslation();
@@ -32,12 +33,15 @@ const useRoomForm = (initialData = null, onSubmit) => {
     hasWifi: initialData?.hasWifi !== undefined ? initialData.hasWifi : true,
     hasAirConditioning: initialData?.hasAirConditioning !== undefined ? initialData.hasAirConditioning : true,
     
-    amenities: initialData?.amenities || []
+    amenities: initialData?.amenities || [],
+    // Features (IDs)
+    featureIds: initialData?.features?.map(f => f.id) || []
   });
 
   const [errors, setErrors] = useState({});
 
   const [categoryOptions, setCategoryOptions] = useState([]);
+  const [featureOptions, setFeatureOptions] = useState([]);
 
   const roomTypeOptions = [
     { value: 'SINGLE', label: t('admin.room.types.single') },
@@ -92,6 +96,19 @@ const useRoomForm = (initialData = null, onSubmit) => {
     loadCategories();
   }, []);
 
+  useEffect(() => {
+    const loadFeatures = async () => {
+      try {
+        const features = await featureService.getActiveFeatures();
+        const activeFeatures = features.filter(f => f.isActive !== false);
+        setFeatureOptions(activeFeatures.map(f => ({ value: f.id, label: f.name, icon: f.icon })));
+      } catch (err) {
+        setFeatureOptions([]);
+      }
+    };
+    loadFeatures();
+  }, []);
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -119,7 +136,7 @@ const useRoomForm = (initialData = null, onSubmit) => {
       newErrors.images = t('admin.room.validation.imagesRequired');
     }
 
-    // Validaciones para información del hotel
+    // Hotel information validations
     if (!formData.hotelName.trim()) {
       newErrors.hotelName = t('admin.room.validation.hotelNameRequired');
     }
@@ -136,7 +153,7 @@ const useRoomForm = (initialData = null, onSubmit) => {
       newErrors.address = t('admin.room.validation.addressRequired');
     }
 
-    // Validaciones numéricas opcionales
+    // Optional numeric validations
     if (formData.hotelRating && (formData.hotelRating < 1 || formData.hotelRating > 5)) {
       newErrors.hotelRating = t('admin.room.validation.hotelRatingRange');
     }
@@ -149,7 +166,7 @@ const useRoomForm = (initialData = null, onSubmit) => {
       newErrors.sizeSqm = t('admin.room.validation.sizeSqmMinimum');
     }
 
-    // Validaciones de coordenadas
+    // Coordinate validations
     if (formData.latitude && (formData.latitude < -90 || formData.latitude > 90)) {
       newErrors.latitude = t('admin.room.validation.latitudeRange');
     }
@@ -195,6 +212,21 @@ const useRoomForm = (initialData = null, onSubmit) => {
     }
   };
 
+  const handleFeatureToggle = (id, checked) => {
+    setFormData(prev => {
+      const nextIds = new Set(prev.featureIds);
+      if (checked) {
+        nextIds.add(id);
+      } else {
+        nextIds.delete(id);
+      }
+      return { ...prev, featureIds: Array.from(nextIds) };
+    });
+    if (errors.featureIds) {
+      setErrors(prev => ({ ...prev, featureIds: '' }));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -210,40 +242,43 @@ const useRoomForm = (initialData = null, onSubmit) => {
 
   const resetForm = () => {
     setFormData({
-      // Campos básicos
+      // Basic fields
       roomNumber: '',
       roomType: '',
       capacity: '',
       pricePerNight: '',
       description: '',
       images: [],
-      // Categoría
+      // Category
       categoryId: null,
       
-      // Información del hotel
+      // Hotel information
       hotelName: '',
       hotelChain: '',
       hotelRating: '',
       
-      // Ubicación
+      // Location
       city: '',
       country: '',
       address: '',
       latitude: '',
       longitude: '',
       
-      // Características de la habitación
+      // Room features
       viewType: '',
       floor: '',
       sizeSqm: '',
       
-      // Amenidades (checkboxes)
+      // Amenities (checkboxes)
       hasBalcony: false,
       hasWifi: true,
       hasAirConditioning: true,
       
-      // Amenidades adicionales (lista)
-      amenities: []
+      // Additional amenities (list)
+      amenities: [],
+      
+      // Features
+      featureIds: []
     });
     setErrors({});
   };
@@ -256,9 +291,11 @@ const useRoomForm = (initialData = null, onSubmit) => {
     hotelRatingOptions,
     amenitiesOptions,
     categoryOptions,
+    featureOptions,
 
     handleInputChange,
     handleImagesChange,
+    handleFeatureToggle,
     handleSubmit,
     resetForm,
     validateForm

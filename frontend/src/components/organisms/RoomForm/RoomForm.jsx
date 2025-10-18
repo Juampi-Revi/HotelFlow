@@ -17,8 +17,10 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
     hotelRatingOptions,
     amenitiesOptions,
     categoryOptions,
+    featureOptions,
     handleInputChange,
     handleImagesChange,
+    handleFeatureToggle,
     handleSubmit
   } = useRoomForm(initialData, onSubmit);
 
@@ -143,7 +145,6 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
           </div>
         </div>
 
-        {/* Ubicación */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             {t('admin.room.sections.location')}
@@ -276,6 +277,28 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
                 onChange={(checked) => handleInputChange('hasBalcony')(checked)}
                 disabled={isFieldDisabled}
               />
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="text-md font-medium text-gray-900 dark:text-white mb-3">
+              {t('admin.features.sectionTitle')}
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {featureOptions.map(opt => (
+                <Checkbox
+                  key={opt.value}
+                  label={opt.label}
+                  checked={Array.isArray(formData.featureIds) && formData.featureIds.includes(opt.value)}
+                  onChange={(checked) => handleFeatureToggle(opt.value, checked)}
+                  disabled={isFieldDisabled}
+                />
+              ))}
+              {featureOptions.length === 0 && (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {t('admin.features.empty')}
+                </p>
+              )}
             </div>
           </div>
         </div>

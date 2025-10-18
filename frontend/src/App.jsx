@@ -19,6 +19,7 @@ import AdminUsers from './pages/AdminUsers/AdminUsers';
 import RoomDetail from './pages/RoomDetail';
 import Auth from './pages/Auth/Auth';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
+import AdminFeatures from './pages/AdminFeatures/AdminFeatures';
 
 function HomePage() {
   const { t } = useTranslation();
@@ -109,6 +110,7 @@ function App() {
           <Route path="/admin/settings" element={<RequireAdmin><AdminSettings /></RequireAdmin>} />
           <Route path="/admin/profile" element={<RequireAdmin><AdminProfile /></RequireAdmin>} />
           <Route path="/admin/categories" element={<RequireAdmin><AdminCategories /></RequireAdmin>} />
+          <Route path="/admin/features" element={<RequireAdmin><AdminFeatures /></RequireAdmin>} />
           {/* OWNER-only user management */}
           <Route path="/admin/users" element={<RequireOwner><AdminUsers /></RequireOwner>} />
         </Routes>

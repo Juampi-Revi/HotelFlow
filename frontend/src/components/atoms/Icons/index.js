@@ -1,0 +1,1 @@
+export { renderFeatureIcon } from './FeatureIcons';

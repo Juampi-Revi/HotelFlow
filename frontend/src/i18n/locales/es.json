@@ -372,6 +372,7 @@
       "configuration": "Configuración",
       "settings": "Ajustes",
       "categories": "Categorías",
+      "features": "Características",
       "account": "Cuenta",
       "profile": "Perfil",
       "logout": "Cerrar sesión"
@@ -515,6 +516,76 @@
         "toggleFailed": "Error al alternar el estado de la categoría."
       },
       "confirmDelete": "¿Estás seguro de eliminar esta categoría?"
+    }
+    ,
+    "features": {
+      "title": "Gestión de Características",
+      "subtitle": "Crear, editar y administrar características de habitación",
+      "searchPlaceholder": "Buscar características...",
+      "loading": "Cargando características...",
+      "empty": "No se encontraron características",
+      "table": {
+        "name": "Nombre",
+        "icon": "Ícono",
+        "active": "Activo",
+        "actions": "Acciones"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "actions": {
+        "addNew": "Agregar Característica",
+        "edit": "Editar",
+        "toggle": "Activar/Desactivar",
+        "delete": "Eliminar"
+      },
+      "form": {
+        "createTitle": "Crear Característica",
+        "editTitle": "Editar Característica",
+        "name": "Nombre",
+        "icon": "Ícono",
+        "isActive": "Activo",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "saving": "Guardando..."
+      },
+      "errors": {
+        "loadFailed": "Error al cargar características.",
+        "saveFailed": "Error al guardar la característica.",
+        "deleteFailed": "Error al eliminar la característica.",
+        "toggleFailed": "Error al alternar el estado de la característica."
+      },
+      "confirmDelete": "¿Estás seguro de eliminar esta característica?",
+      "iconSelector": {
+        "select": "Seleccionar ícono",
+        "searchPlaceholder": "Buscar ícono...",
+        "noResults": "No hay resultados"
+      },
+      "icons": {
+        "wifi": "Wi‑Fi",
+        "air_conditioning": "Aire acondicionado",
+        "balcony": "Balcón",
+        "breakfast": "Desayuno",
+        "ocean_view": "Vista al mar",
+        "pet_friendly": "Pet friendly",
+        "gym": "Gimnasio",
+        "spa": "Spa",
+        "shuttle": "Shuttle",
+        "late_checkout": "Late checkout",
+        "accessible": "Accesible",
+        "parking": "Estacionamiento",
+        "tv": "TV",
+        "minibar": "Minibar",
+        "safe": "Caja fuerte",
+        "room_service": "Room service",
+        "laundry": "Lavandería",
+        "pool": "Piscina",
+        "garden_view": "Vista al jardín",
+        "mountain_view": "Vista a la montaña",
+        "city_view": "Vista a la ciudad",
+        "coffee": "Café"
+      }
     }
   },
   "rooms": {

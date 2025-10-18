@@ -41,7 +41,7 @@ const AdminUsers = () => {
   const startToggleAdmin = (u) => {
     const isAdmin = (u.roles || []).includes('ADMIN');
     const next = !isAdmin;
-    // No permitir acciones sobre sí mismo (frontend)
+    // Disallow self updates from the frontend
     if (currentUser?.email && currentUser.email === u.email) {
       showNotification('warning', t('admin.users.actions.cannotSelfUpdate'));
       return;
@@ -75,7 +75,7 @@ const AdminUsers = () => {
       }
       const hasCreate = (u.permissions || []).includes('ROOMS_CREATE');
       const hasEdit = (u.permissions || []).includes('ROOMS_EDIT');
-      // Evitar desactivar el último permiso activo
+      // Prevent disabling the last active permission
       if (permKey === 'ROOMS_CREATE' && hasCreate && !hasEdit) {
         showNotification('warning', t('admin.users.permissions.mustKeepOne'));
         return;

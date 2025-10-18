@@ -10,6 +10,9 @@ import com.digitalhouse.hotelbooking.model.enums.RoomType;
 import com.digitalhouse.hotelbooking.repository.RoomRepository;
 import com.digitalhouse.hotelbooking.repository.CategoryRepository;
 import com.digitalhouse.hotelbooking.model.Category;
+import com.digitalhouse.hotelbooking.repository.FeatureRepository;
+import com.digitalhouse.hotelbooking.model.Feature;
+import com.digitalhouse.hotelbooking.dto.response.FeatureResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,11 +30,13 @@ public class RoomService {
     
     private final RoomRepository roomRepository;
     private final CategoryRepository categoryRepository;
+    private final FeatureRepository featureRepository;
     
     @Autowired
-    public RoomService(RoomRepository roomRepository, CategoryRepository categoryRepository) {
+    public RoomService(RoomRepository roomRepository, CategoryRepository categoryRepository, FeatureRepository featureRepository) {
         this.roomRepository = roomRepository;
         this.categoryRepository = categoryRepository;
+        this.featureRepository = featureRepository;
     }
     
     public RoomResponseDTO createRoom(RoomRequestDTO roomRequestDTO) {
@@ -174,6 +179,16 @@ public class RoomService {
                     .orElseThrow(() -> new com.digitalhouse.hotelbooking.exception.CategoryNotFoundException(dto.getCategoryId()));
             room.setCategory(category);
         }
+        if (dto.getFeatureIds() != null && !dto.getFeatureIds().isEmpty()) {
+            java.util.Set<Feature> features = new java.util.HashSet<>(
+                    featureRepository.findAllById(dto.getFeatureIds()).stream()
+                            .filter(f -> Boolean.TRUE.equals(f.getIsActive()))
+                            .toList()
+            );
+            room.setFeatures(features);
+        } else {
+            room.setFeatures(null);
+        }
         return room;
     }
     
@@ -206,6 +221,18 @@ public class RoomService {
         } else {
             room.setCategory(null);
         }
+        if (dto.getFeatureIds() != null) {
+            if (!dto.getFeatureIds().isEmpty()) {
+                java.util.Set<Feature> features = new java.util.HashSet<>(
+                        featureRepository.findAllById(dto.getFeatureIds()).stream()
+                                .filter(f -> Boolean.TRUE.equals(f.getIsActive()))
+                                .toList()
+                );
+                room.setFeatures(features);
+            } else {
+                room.setFeatures(null);
+            }
+        }
     }
     
     private RoomResponseDTO mapToResponseDTO(Room room) {
@@ -228,6 +255,13 @@ public class RoomService {
             dto.setCategoryId(room.getCategory().getId());
             dto.setCategorySlug(room.getCategory().getSlug());
             dto.setCategoryName(room.getCategory().getName());
+        }
+        if (room.getFeatures() != null) {
+            dto.setFeatures(
+                    room.getFeatures().stream()
+                            .map(f -> new FeatureResponseDTO(f.getId(), f.getName(), f.getIcon(), f.getIsActive()))
+                            .collect(java.util.stream.Collectors.toList())
+            );
         }
         return dto;
     }
