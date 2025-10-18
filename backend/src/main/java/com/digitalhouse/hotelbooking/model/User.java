@@ -2,6 +2,10 @@ package com.digitalhouse.hotelbooking.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import com.digitalhouse.hotelbooking.model.enums.Role;
+import com.digitalhouse.hotelbooking.model.enums.Permission;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -27,6 +31,18 @@ public class User {
 
     @Column(nullable = false)
     private Boolean isActive = true;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Set<Role> roles = new HashSet<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_permissions", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "permission")
+    private Set<Permission> permissions = new HashSet<>();
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -88,6 +104,22 @@ public class User {
 
     public void setIsActive(Boolean active) {
         isActive = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     public LocalDateTime getCreatedAt() {

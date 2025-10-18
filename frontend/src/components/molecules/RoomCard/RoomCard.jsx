@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
 
-const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
+const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability, canEdit = true }) => {
   const { t } = useTranslation();
   
   const formatPrice = (price) => {
@@ -84,15 +84,17 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability }) => {
         )}
 
         <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => onEdit(room)}
-            className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:ring-blue-500 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700/50 dark:hover:bg-blue-900/50"
-          >
-            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-            {t('admin.room.actions.edit')}
-          </button>
+          {canEdit && (
+            <button
+              onClick={() => onEdit(room)}
+              className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:ring-blue-500 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700/50 dark:hover:bg-blue-900/50"
+            >
+              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              {t('admin.room.actions.edit')}
+            </button>
+          )}
           <button
             onClick={() => onToggleAvailability(room.id)}
             className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 focus:ring-amber-500 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700/50 dark:hover:bg-amber-900/50"

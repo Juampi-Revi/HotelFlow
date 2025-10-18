@@ -114,8 +114,7 @@ const ProductsPage = () => {
           </div>
         </div>
 
-        {/* Filters and Search - TEMPORALMENTE OCULTO */}
-        {/* TODO: Implementar filtros más adelante - por ahora están ocultos para evitar confusión */}
+
         {false && (
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-8">
             <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">

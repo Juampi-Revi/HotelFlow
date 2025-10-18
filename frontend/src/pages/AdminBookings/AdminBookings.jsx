@@ -8,7 +8,7 @@ const AdminBookings = () => {
   return (
     <UnderConstruction 
       title={t('admin.navigation.bookings')}
-      message="El módulo de reservas estará disponible próximamente. Aquí podrás gestionar todas las reservas, ver el estado de las mismas y administrar check-ins y check-outs."
+      message={t('common.bookingsComingSoon')}
     />
   );
 };

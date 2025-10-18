@@ -5,7 +5,9 @@ const Pagination = ({
   totalPages,
   onPageChange,
   showFirstLast = true,
-  maxVisiblePages = 5
+  maxVisiblePages = 5,
+  prevLabel = 'Previous',
+  nextLabel = 'Next'
 }) => {
   if (totalPages <= 1) return null;
 
@@ -40,7 +42,7 @@ const Pagination = ({
         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Previous
+        {prevLabel}
       </button>
 
       {/* First Page */}
@@ -94,7 +96,7 @@ const Pagination = ({
         disabled={currentPage === totalPages - 1}
         className="flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
       >
-        Next
+        {nextLabel}
         <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>

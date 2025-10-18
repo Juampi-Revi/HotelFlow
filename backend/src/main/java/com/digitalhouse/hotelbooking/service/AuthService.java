@@ -9,6 +9,7 @@ import com.digitalhouse.hotelbooking.exception.InvalidCredentialsException;
 import com.digitalhouse.hotelbooking.model.User;
 import com.digitalhouse.hotelbooking.repository.UserRepository;
 import com.digitalhouse.hotelbooking.security.JwtService;
+import com.digitalhouse.hotelbooking.model.enums.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,7 @@ public class AuthService {
         user.setEmail(normalizedEmail);
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setIsActive(true);
+        user.setRoles(java.util.Set.of(Role.USER));
 
         User saved = userRepository.save(user);
 
@@ -71,7 +73,10 @@ public class AuthService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                token
+                token,
+                user.getRoles() != null ?
+                        user.getRoles().stream().map(Role::name).collect(java.util.stream.Collectors.toList()) :
+                        java.util.Collections.emptyList()
         );
     }
 }

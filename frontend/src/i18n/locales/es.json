@@ -105,7 +105,16 @@
     "viewDetails": "Ver detalles",
     "more": "más",
     "viewType": "vista",
-    "images": "imágenes"
+    "images": "imágenes",
+    "viewAll": "Ver todo",
+    "update": "Actualizar",
+    "comingSoon": "Próximamente",
+    "customersComingSoon": "El módulo de clientes estará disponible próximamente. Aquí podrás gestionar la base de datos de clientes, ver historial de reservas y administrar perfiles de huéspedes.",
+    "availabilityComingSoon": "El módulo de disponibilidad estará disponible próximamente. Aquí podrás gestionar la disponibilidad de habitaciones, bloquear fechas y configurar tarifas especiales.",
+    "analyticsComingSoon": "El módulo de analíticas estará disponible próximamente. Aquí podrás ver estadísticas detalladas, reportes de ocupación y métricas de rendimiento del hotel.",
+    "bookingsComingSoon": "El módulo de reservas estará disponible próximamente. Aquí podrás gestionar todas las reservas, ver el estado de las mismas y administrar check-ins y check-outs.",
+    "settingsComingSoon": "El módulo de configuración estará disponible próximamente. Aquí podrás configurar parámetros del sistema, gestionar usuarios administradores y personalizar la aplicación.",
+    "staffComingSoon": "El módulo de personal estará disponible próximamente. Aquí podrás gestionar empleados, asignar roles y permisos, y administrar horarios de trabajo."
   },
   "deleteConfirmation": {
     "title": "Eliminar Habitación",
@@ -358,6 +367,7 @@
       "availability": "Disponibilidad",
       "userManagement": "Gestión de Usuarios",
       "customers": "Clientes",
+      "users": "Usuarios",
       "staff": "Personal",
       "configuration": "Configuración",
       "settings": "Ajustes",
@@ -406,6 +416,50 @@
         "firstName": "Nombre",
         "lastName": "Apellido",
         "email": "Email"
+      }
+    },
+    "users": {
+      "title": "Gestión de Usuarios",
+      "subtitle": "Administra los usuarios de la aplicación y sus roles",
+      "comingSoon": "La interfaz de gestión de usuarios estará disponible pronto.",
+      "search": {
+        "placeholder": "Buscar por nombre o email..."
+      },
+      "table": {
+        "name": "Nombre",
+        "email": "Email",
+        "roles": "Roles",
+        "createdAt": "Creación",
+        "actions": "Acciones",
+        "pageSize": "Por página",
+        "showing": "Página",
+        "results": "resultados",
+        "previous": "Anterior",
+        "next": "Siguiente"
+      },
+      "actions": {
+        "makeAdmin": "Otorgar ADMIN",
+        "revokeAdmin": "Revocar ADMIN",
+        "confirmMakeAdmin": "¿Otorgar rol ADMIN a este usuario?",
+        "confirmRevokeAdmin": "¿Revocar rol ADMIN de este usuario?",
+        "confirmMakeAdminTitle": "Otorgar ADMIN",
+        "confirmRevokeAdminTitle": "Revocar ADMIN",
+        "confirmMakeAdminDesc": "Otorgar ADMIN a {{email}}. Los ADMIN pueden crear y editar habitaciones y categorías, y realizar acciones avanzadas de administración.",
+        "confirmRevokeAdminDesc": "Revocar ADMIN de {{email}}. Se quitan las capacidades administrativas generales; los permisos granulares existentes (Crear/Editar) se mantienen.",
+        "confirmMakeAdminAction": "Otorgar ADMIN",
+        "confirmRevokeAdminAction": "Revocar ADMIN",
+        "updated": "Rol de usuario actualizado",
+        "updateFailed": "No se pudo actualizar el rol",
+        "cannotSelfUpdate": "No puedes cambiar tu propio rol",
+        "permissionsUpdated": "Permisos de usuario actualizados",
+        "permissionsUpdateFailed": "No se pudieron actualizar los permisos"
+      }
+      ,
+      "permissions": {
+        "create": "Crear",
+        "edit": "Editar",
+        "mustKeepOne": "Debe quedar activo al menos uno (Crear o Editar)",
+        "onlyForAdmins": "Los permisos están disponibles solo cuando el usuario es ADMIN"
       }
     },
     "rooms": {

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
 
-const RoomTable = ({ rooms, onEdit, onDelete, onToggleAvailability }) => {
+const RoomTable = ({ rooms, onEdit, onDelete, onToggleAvailability, canEdit = true }) => {
   const { t } = useTranslation();
 
   const formatPrice = (price) => {
@@ -136,17 +136,19 @@ const RoomTable = ({ rooms, onEdit, onDelete, onToggleAvailability }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div className="flex items-center justify-end space-x-2">
-                    <ActionButton
-                      variant="edit"
-                      onClick={() => onEdit(room)}
-                      icon={
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                      }
-                    >
-                      {t('admin.room.actions.edit')}
-                    </ActionButton>
+                    {canEdit && (
+                      <ActionButton
+                        variant="edit"
+                        onClick={() => onEdit(room)}
+                        icon={
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        }
+                      >
+                        {t('admin.room.actions.edit')}
+                      </ActionButton>
+                    )}
                     <ActionButton
                       variant="toggle"
                       onClick={() => onToggleAvailability(room.id)}

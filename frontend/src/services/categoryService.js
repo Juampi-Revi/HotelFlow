@@ -1,3 +1,4 @@
+import { apiFetch } from './apiClient';
 const API_BASE_URL = 'http://localhost:8082/api';
 
 export const categoryService = {
@@ -26,49 +27,26 @@ export const categoryService = {
   },
 
   async createCategory(data) {
-    const response = await fetch(`${API_BASE_URL}/categories`, {
+    return apiFetch('/categories', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(errText || 'Failed to create category');
-    }
-    return response.json();
   },
 
   async updateCategory(id, data) {
-    const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
+    return apiFetch(`/categories/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(errText || 'Failed to update category');
-    }
-    return response.json();
   },
 
   async deleteCategory(id) {
-    const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
-      method: 'DELETE'
-    });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(errText || 'Failed to delete category');
-    }
+    await apiFetch(`/categories/${id}`, { method: 'DELETE' });
   },
 
   async toggleActive(id) {
-    const response = await fetch(`${API_BASE_URL}/categories/${id}/toggle-active`, {
-      method: 'PATCH'
-    });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(errText || 'Failed to toggle category active state');
-    }
-    return response.json();
+    return apiFetch(`/categories/${id}/toggle-active`, { method: 'PATCH' });
   }
 };

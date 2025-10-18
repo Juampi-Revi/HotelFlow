@@ -8,7 +8,7 @@ const AdminCustomers = () => {
   return (
     <UnderConstruction 
       title={t('admin.navigation.customers')}
-      message="El módulo de clientes estará disponible próximamente. Aquí podrás gestionar la base de datos de clientes, ver historial de reservas y administrar perfiles de huéspedes."
+      message={t('common.customersComingSoon')}
     />
   );
 };

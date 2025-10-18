@@ -15,6 +15,7 @@ import AdminStaff from './pages/AdminStaff/AdminStaff';
 import AdminSettings from './pages/AdminSettings/AdminSettings';
 import AdminCategories from './pages/AdminCategories/AdminCategories';
 import AdminProfile from './pages/AdminProfile/AdminProfile';
+import AdminUsers from './pages/AdminUsers/AdminUsers';
 import RoomDetail from './pages/RoomDetail';
 import Auth from './pages/Auth/Auth';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
@@ -67,6 +68,28 @@ function App() {
     return children;
   };
 
+  const RequireAdmin = ({ children }) => {
+    const { isAuthenticated, isAdmin } = useAuth();
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+    if (!isAdmin) {
+      return <Navigate to="/" replace />;
+    }
+    return children;
+  };
+
+  const RequireOwner = ({ children }) => {
+    const { isAuthenticated, isOwner } = useAuth();
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+    if (!isOwner) {
+      return <Navigate to="/" replace />;
+    }
+    return children;
+  };
+
   return (
     <ThemeProvider>
       <Router>
@@ -76,16 +99,18 @@ function App() {
           <Route path="/room/:id" element={<RoomDetail />} />
           <Route path="/register" element={<Auth />} />
           <Route path="/login" element={<Auth />} />
-          <Route path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
-          <Route path="/admin/rooms" element={<RequireAuth><AdminRooms /></RequireAuth>} />
-          <Route path="/admin/analytics" element={<RequireAuth><AdminAnalytics /></RequireAuth>} />
-          <Route path="/admin/bookings" element={<RequireAuth><AdminBookings /></RequireAuth>} />
-          <Route path="/admin/availability" element={<RequireAuth><AdminAvailability /></RequireAuth>} />
-          <Route path="/admin/customers" element={<RequireAuth><AdminCustomers /></RequireAuth>} />
-          <Route path="/admin/staff" element={<RequireAuth><AdminStaff /></RequireAuth>} />
-          <Route path="/admin/settings" element={<RequireAuth><AdminSettings /></RequireAuth>} />
-          <Route path="/admin/profile" element={<RequireAuth><AdminProfile /></RequireAuth>} />
-          <Route path="/admin/categories" element={<RequireAuth><AdminCategories /></RequireAuth>} />
+          <Route path="/admin" element={<RequireAdmin><Admin /></RequireAdmin>} />
+          <Route path="/admin/rooms" element={<RequireAdmin><AdminRooms /></RequireAdmin>} />
+          <Route path="/admin/analytics" element={<RequireAdmin><AdminAnalytics /></RequireAdmin>} />
+          <Route path="/admin/bookings" element={<RequireAdmin><AdminBookings /></RequireAdmin>} />
+          <Route path="/admin/availability" element={<RequireAdmin><AdminAvailability /></RequireAdmin>} />
+          <Route path="/admin/customers" element={<RequireAdmin><AdminCustomers /></RequireAdmin>} />
+          <Route path="/admin/staff" element={<RequireAdmin><AdminStaff /></RequireAdmin>} />
+          <Route path="/admin/settings" element={<RequireAdmin><AdminSettings /></RequireAdmin>} />
+          <Route path="/admin/profile" element={<RequireAdmin><AdminProfile /></RequireAdmin>} />
+          <Route path="/admin/categories" element={<RequireAdmin><AdminCategories /></RequireAdmin>} />
+          {/* OWNER-only user management */}
+          <Route path="/admin/users" element={<RequireOwner><AdminUsers /></RequireOwner>} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -3,6 +3,7 @@ package com.digitalhouse.hotelbooking.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.digitalhouse.hotelbooking.model.User;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,10 @@ public class JwtService {
     public String generateToken(User user) {
         Instant now = Instant.now();
         Algorithm algorithm = Algorithm.HMAC256(secret);
+        String[] roles = user.getRoles().stream().map(Enum::name).toArray(String[]::new);
+        String[] permissions = (user.getPermissions() == null)
+                ? new String[0]
+                : user.getPermissions().stream().map(Enum::name).toArray(String[]::new);
 
         return JWT.create()
                 .withIssuer(issuer)
@@ -39,6 +44,16 @@ public class JwtService {
                 .withClaim("email", user.getEmail())
                 .withClaim("firstName", user.getFirstName())
                 .withClaim("lastName", user.getLastName())
+                .withArrayClaim("roles", roles)
+                .withArrayClaim("permissions", permissions)
                 .sign(algorithm);
+    }
+
+    public DecodedJWT validate(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        return JWT.require(algorithm)
+                .withIssuer(issuer)
+                .build()
+                .verify(token);
     }
 }

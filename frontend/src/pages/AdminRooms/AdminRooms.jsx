@@ -10,6 +10,7 @@ import DeleteConfirmationModal from '../../components/organisms/DeleteConfirmati
 import Toast from '../../components/atoms/Toast/Toast';
 import { roomService } from '../../services/roomService';
 import { useToast } from '../../hooks';
+import { useAuth } from '../../contexts';
 
 const AdminRooms = () => {
   const { t } = useTranslation();
@@ -117,6 +118,10 @@ const AdminRooms = () => {
     }
   };
 
+  const { isAdmin, isOwner, permissions } = useAuth();
+  const canCreate = isOwner || (isAdmin && permissions.includes('ROOMS_CREATE'));
+  const canEdit = isOwner || (isAdmin && permissions.includes('ROOMS_EDIT'));
+
   const handleCancelDelete = () => {
     setShowDeleteModal(false);
     setRoomToDelete(null);
@@ -189,18 +194,20 @@ const AdminRooms = () => {
                       onViewChange={handleViewModeChange}
                     />
                   </div>
-                  <button
-                    onClick={handleAddRoom}
-                    className="group relative px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-blue-400/30"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <span className="relative z-10 flex items-center space-x-2">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                      <span>{t('admin.rooms.actions.addNew')}</span>
-                    </span>
-                  </button>
+                  {canCreate && (
+                    <button
+                      onClick={handleAddRoom}
+                      className="group relative px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-blue-400/30"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <span className="relative z-10 flex items-center space-x-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>{t('admin.rooms.actions.addNew')}</span>
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -244,18 +251,20 @@ const AdminRooms = () => {
                       {t('admin.rooms.noRoomsFound')}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-8">{t('admin.rooms.addFirstRoomHint')}</p>
-                    <button
-                      onClick={handleAddRoom}
-                      className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-blue-400/30"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <span className="relative z-10 flex items-center space-x-2">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                        <span>{t('admin.rooms.actions.addFirst')}</span>
-                      </span>
-                    </button>
+                    {canCreate && (
+                      <button
+                        onClick={handleAddRoom}
+                        className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-blue-400/30"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <span className="relative z-10 flex items-center space-x-2">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                          <span>{t('admin.rooms.actions.addFirst')}</span>
+                        </span>
+                      </button>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -269,6 +278,7 @@ const AdminRooms = () => {
                             onEdit={handleEditRoom}
                             onDelete={handleDeleteRoom}
                             onToggleAvailability={handleToggleAvailability}
+                            canEdit={canEdit}
                           />
                         </div>
                       ))}
@@ -280,6 +290,7 @@ const AdminRooms = () => {
                         onEdit={handleEditRoom}
                         onDelete={handleDeleteRoom}
                         onToggleAvailability={handleToggleAvailability}
+                        canEdit={canEdit}
                       />
                     </div>
                   )}
