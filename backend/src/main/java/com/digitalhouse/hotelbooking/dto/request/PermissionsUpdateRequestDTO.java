@@ -5,6 +5,8 @@ public class PermissionsUpdateRequestDTO {
     private Boolean roomsEdit;
     private Boolean categoriesCreate;
     private Boolean categoriesEdit;
+    private Boolean featuresCreate;
+    private Boolean featuresEdit;
 
     public Boolean getRoomsCreate() { return roomsCreate; }
     public void setRoomsCreate(Boolean roomsCreate) { this.roomsCreate = roomsCreate; }
@@ -17,4 +19,10 @@ public class PermissionsUpdateRequestDTO {
 
     public Boolean getCategoriesEdit() { return categoriesEdit; }
     public void setCategoriesEdit(Boolean categoriesEdit) { this.categoriesEdit = categoriesEdit; }
+
+    public Boolean getFeaturesCreate() { return featuresCreate; }
+    public void setFeaturesCreate(Boolean featuresCreate) { this.featuresCreate = featuresCreate; }
+
+    public Boolean getFeaturesEdit() { return featuresEdit; }
+    public void setFeaturesEdit(Boolean featuresEdit) { this.featuresEdit = featuresEdit; }
 }

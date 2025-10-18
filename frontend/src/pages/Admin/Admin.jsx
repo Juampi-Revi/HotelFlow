@@ -4,8 +4,9 @@ import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
 import { useAuth } from '../../contexts';
 
 const Admin = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isOwner } = useAuth();
+  const locale = i18n.language === 'es' ? 'es-ES' : 'en-US';
 
   const dashboardCards = [
     {
@@ -34,7 +35,7 @@ const Admin = () => {
       color: 'from-purple-600 to-pink-600',
       bgColor: 'bg-purple-50 dark:bg-purple-900/20',
       borderColor: 'border-purple-200 dark:border-purple-800',
-      stats: 'Gestión de categorías'
+      stats: t('admin.categories.subtitle')
     },
     {
       title: t('admin.dashboard.items.bookings'),
@@ -133,7 +134,7 @@ const Admin = () => {
             <div className="flex items-center space-x-6">
               <div className="text-right space-y-1">
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {new Date().toLocaleDateString('es-ES', { 
+                  {new Date().toLocaleDateString(locale, { 
                     weekday: 'long', 
                     year: 'numeric', 
                     month: 'long', 
@@ -141,7 +142,7 @@ const Admin = () => {
                   })}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {new Date().toLocaleTimeString('es-ES', { 
+                  {new Date().toLocaleTimeString(locale, { 
                     hour: '2-digit', 
                     minute: '2-digit' 
                   })}

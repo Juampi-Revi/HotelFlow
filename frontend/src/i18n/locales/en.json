@@ -363,6 +363,7 @@
       "configuration": "Configuration",
       "settings": "Settings",
       "categories": "Categories",
+      "features": "Features",
       "account": "Account",
       "profile": "Profile",
       "logout": "Logout"
@@ -535,6 +536,76 @@
           "toggleFailed": "Failed to toggle category."
         },
         "confirmDelete": "Are you sure you want to delete this category?"
+      }
+      ,
+      "features": {
+        "title": "Feature Management",
+        "subtitle": "Create, edit, and manage room features",
+        "searchPlaceholder": "Search features...",
+        "loading": "Loading features...",
+        "empty": "No features found",
+        "table": {
+          "name": "Name",
+          "icon": "Icon",
+          "active": "Active",
+          "actions": "Actions"
+        },
+        "status": {
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "actions": {
+          "addNew": "Add Feature",
+          "edit": "Edit",
+          "toggle": "Toggle",
+          "delete": "Delete"
+        },
+        "form": {
+          "createTitle": "Create Feature",
+          "editTitle": "Edit Feature",
+          "name": "Name",
+          "icon": "Icon",
+          "isActive": "Active",
+          "cancel": "Cancel",
+          "save": "Save",
+          "saving": "Saving..."
+        },
+        "errors": {
+          "loadFailed": "Failed to load features.",
+          "saveFailed": "Failed to save feature.",
+          "deleteFailed": "Failed to delete feature.",
+          "toggleFailed": "Failed to toggle feature."
+        },
+        "confirmDelete": "Are you sure you want to delete this feature?",
+        "iconSelector": {
+          "select": "Select icon",
+          "searchPlaceholder": "Search icon...",
+          "noResults": "No results"
+        },
+        "icons": {
+          "wifi": "Wi‑Fi",
+          "air_conditioning": "Air conditioning",
+          "balcony": "Balcony",
+          "breakfast": "Breakfast",
+          "ocean_view": "Ocean view",
+          "pet_friendly": "Pet friendly",
+          "gym": "Gym",
+          "spa": "Spa",
+          "shuttle": "Shuttle",
+          "late_checkout": "Late checkout",
+          "accessible": "Accessible",
+          "parking": "Parking",
+          "tv": "TV",
+          "minibar": "Minibar",
+          "safe": "Safe",
+          "room_service": "Room service",
+          "laundry": "Laundry",
+          "pool": "Pool",
+          "garden_view": "Garden view",
+          "mountain_view": "Mountain view",
+          "city_view": "City view",
+          "coffee": "Coffee"
+        }
       }
     },
   "rooms": {

@@ -106,10 +106,9 @@ const RoomCard = ({ room }) => {
         </div>
       </div>
       
-      {/* Overlay "Ver más" en hover */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
         <div className="text-white text-lg font-semibold bg-blue-600 px-6 py-3 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-          Ver más
+          {t('gallery.viewMore')}
         </div>
       </div>
     </div>

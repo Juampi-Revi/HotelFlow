@@ -131,8 +131,15 @@ public class AdminService {
             if (Boolean.TRUE.equals(request.getCategoriesEdit())) perms.add(Permission.CATEGORIES_EDIT);
             else perms.remove(Permission.CATEGORIES_EDIT);
         }
+        if (request.getFeaturesCreate() != null) {
+            if (Boolean.TRUE.equals(request.getFeaturesCreate())) perms.add(Permission.FEATURES_CREATE);
+            else perms.remove(Permission.FEATURES_CREATE);
+        }
+        if (request.getFeaturesEdit() != null) {
+            if (Boolean.TRUE.equals(request.getFeaturesEdit())) perms.add(Permission.FEATURES_EDIT);
+            else perms.remove(Permission.FEATURES_EDIT);
+        }
 
-        // Regla: si el usuario es ADMIN, debe mantener al menos uno de ROOMS_CREATE o ROOMS_EDIT
         boolean isAdmin = user.getRoles() != null && user.getRoles().contains(Role.ADMIN);
         if (isAdmin) {
             boolean hasRoomsCreate = perms.contains(Permission.ROOMS_CREATE);

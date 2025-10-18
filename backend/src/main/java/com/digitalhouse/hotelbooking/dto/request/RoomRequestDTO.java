@@ -65,6 +65,7 @@ public class RoomRequestDTO {
     private Boolean hasAirConditioning;
 
     private Long categoryId;
+    private List<Long> featureIds;
     
     public RoomRequestDTO() {}
     
@@ -258,5 +259,13 @@ public class RoomRequestDTO {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public List<Long> getFeatureIds() {
+        return featureIds;
+    }
+
+    public void setFeatureIds(List<Long> featureIds) {
+        this.featureIds = featureIds;
     }
 }

@@ -19,7 +19,6 @@ const UnderConstruction = ({
     <AdminLayout>
       <div className="min-h-screen flex items-center justify-center p-8">
         <div className="max-w-2xl mx-auto text-center">
-          {/* Icono de construcción */}
           <div className="mb-8">
             <div className="mx-auto w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-2xl">
               <svg 
@@ -38,17 +37,14 @@ const UnderConstruction = ({
             </div>
           </div>
 
-          {/* Título */}
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             {title || t('underConstruction.title')}
           </h1>
 
-          {/* Mensaje */}
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
             {message || t('underConstruction.message')}
           </p>
 
-          {/* Información adicional */}
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-8 border border-blue-200 dark:border-blue-800/50">
             <div className="flex items-center justify-center mb-3">
               <svg 
@@ -73,7 +69,6 @@ const UnderConstruction = ({
             </p>
           </div>
 
-          {/* Botón de regreso */}
           {showBackButton && (
             <button
               onClick={handleBackToAdmin}
@@ -99,7 +94,6 @@ const UnderConstruction = ({
             </button>
           )}
 
-          {/* Información de contacto */}
           <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {t('underConstruction.contact')}

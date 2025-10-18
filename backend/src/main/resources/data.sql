@@ -137,3 +137,29 @@ INSERT INTO room_images (room_id, image_url) VALUES
 (11, 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&h=600&fit=crop'),
 (12, 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=600&fit=crop'),
 (12, 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&h=600&fit=crop');
+
+-- Insert features
+INSERT INTO features (name, icon, is_active, created_at, updated_at) VALUES
+('Breakfast', 'breakfast', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Ocean View', 'ocean_view', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Pet Friendly', 'pet_friendly', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Gym Access', 'gym', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Spa Included', 'spa', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Airport Shuttle', 'shuttle', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Late Checkout', 'late_checkout', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Wheelchair Accessible', 'accessible', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- Link rooms with features
+INSERT INTO room_features (room_id, feature_id) VALUES
+(1, 1), (1, 4),
+(2, 1), (2, 5),
+(3, 2), (3, 5),
+(4, 3),
+(5, 1), (5, 6),
+(6, 2), (6, 7),
+(7, 5),
+(8, 3), (8, 4),
+(9, 2),
+(10, 1), (10, 8),
+(11, 6),
+(12, 7);

@@ -5,9 +5,9 @@ const useRoomsPagination = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0); // Cambio a 0-based para coincidir con backend
-  const [pageSize, setPageSize] = useState(10); // Cambio a 6 como default para coincidir con ProductsPage
-  const [sortBy, setSortBy] = useState('id'); // Cambio a 'id' para coincidir con backend default
+  const [currentPage, setCurrentPage] = useState(0); // 0-based to match backend
+  const [pageSize, setPageSize] = useState(10); // Default page size
+  const [sortBy, setSortBy] = useState('id'); // Default sort field to match backend
   const [sortDirection, setSortDirection] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
@@ -33,7 +33,7 @@ const useRoomsPagination = () => {
         setTotalElements(sorted.length);
       } else {
         const response = await roomService.getPaginatedRooms(
-          currentPage, // Ya es 0-based
+          currentPage,
           pageSize,
           sortBy,
           sortDirection
@@ -65,12 +65,12 @@ const useRoomsPagination = () => {
       setSortBy(field);
       setSortDirection('asc');
     }
-    setCurrentPage(0); // Reset a página 0 (primera página)
+    setCurrentPage(0); // Reset to page 0 (first page)
   };
 
   const handlePageSizeChange = (size) => {
     setPageSize(size);
-    setCurrentPage(0); // Reset a página 0 (primera página)
+    setCurrentPage(0); // Reset to page 0 (first page)
   };
 
   const handleCategoryChange = (id) => {
