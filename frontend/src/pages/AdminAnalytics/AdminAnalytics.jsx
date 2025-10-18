@@ -8,7 +8,7 @@ const AdminAnalytics = () => {
   return (
     <UnderConstruction 
       title={t('admin.navigation.analytics')}
-      message="El módulo de analíticas estará disponible próximamente. Aquí podrás ver estadísticas detalladas, reportes de ocupación y métricas de rendimiento del hotel."
+      message={t('common.analyticsComingSoon')}
     />
   );
 };

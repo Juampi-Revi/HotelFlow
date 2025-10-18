@@ -39,3 +39,8 @@ build/
 # Dependencies (will be handled by individual .gitignore files)
 # node_modules/ - handled by frontend/.gitignore
 # target/ - handled by backend/.gitignore
+
+# Local test artifacts (do not commit)
+*.raw
+login*.json
+new_room*.json

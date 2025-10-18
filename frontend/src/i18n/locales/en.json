@@ -103,7 +103,16 @@
     "viewDetails": "View details",
     "more": "more",
     "viewType": "view",
-    "images": "images"
+    "images": "images",
+    "viewAll": "View all",
+    "update": "Update",
+    "comingSoon": "Coming soon",
+    "customersComingSoon": "The customers module will be available soon. Manage the customer database, view booking history, and guest profiles.",
+    "availabilityComingSoon": "The availability module will be available soon. Manage room availability, block dates, and configure special rates.",
+    "analyticsComingSoon": "The analytics module will be available soon. View detailed statistics, occupancy reports, and performance metrics.",
+    "bookingsComingSoon": "The bookings module will be available soon. Manage all bookings, their statuses, and check-ins/check-outs.",
+    "settingsComingSoon": "The settings module will be available soon. Configure system parameters, manage admin users, and customize the application.",
+    "staffComingSoon": "The staff module will be available soon. Manage employees, assign roles and permissions, and handle work schedules."
   },
   "deleteConfirmation": {
     "title": "Delete Room",
@@ -349,6 +358,7 @@
       "availability": "Availability",
       "userManagement": "User Management",
       "customers": "Customers",
+      "users": "Users",
       "staff": "Staff",
       "configuration": "Configuration",
       "settings": "Settings",
@@ -397,6 +407,50 @@
         "firstName": "First Name",
         "lastName": "Last Name",
         "email": "Email"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "subtitle": "Manage application users and their roles",
+      "comingSoon": "User management UI is coming soon.",
+      "search": {
+        "placeholder": "Search by name or email..."
+      },
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "roles": "Roles",
+        "createdAt": "Created",
+        "actions": "Actions",
+        "pageSize": "Per page",
+        "showing": "Page",
+        "results": "results",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "actions": {
+        "makeAdmin": "Make ADMIN",
+        "revokeAdmin": "Revoke ADMIN",
+        "confirmMakeAdmin": "Grant ADMIN role to this user?",
+        "confirmRevokeAdmin": "Revoke ADMIN role from this user?",
+        "confirmMakeAdminTitle": "Grant ADMIN",
+        "confirmRevokeAdminTitle": "Revoke ADMIN",
+        "confirmMakeAdminDesc": "Grant ADMIN to {{email}}. Admins can create and edit rooms and categories, and perform advanced administration actions.",
+        "confirmRevokeAdminDesc": "Revoke ADMIN from {{email}}. This removes general admin capabilities; existing granular permissions (Create/Edit) remain.",
+        "confirmMakeAdminAction": "Grant ADMIN",
+        "confirmRevokeAdminAction": "Revoke ADMIN",
+        "updated": "User role updated",
+        "updateFailed": "Failed to update role",
+        "cannotSelfUpdate": "You cannot change your own role",
+        "permissionsUpdated": "User permissions updated",
+        "permissionsUpdateFailed": "Failed to update permissions"
+      }
+      ,
+      "permissions": {
+        "create": "Create",
+        "edit": "Edit",
+        "mustKeepOne": "At least one (Create or Edit) must remain active",
+        "onlyForAdmins": "Permissions are available only when ADMIN is granted"
       }
     },
     "rooms": {

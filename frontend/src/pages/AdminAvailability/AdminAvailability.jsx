@@ -8,7 +8,7 @@ const AdminAvailability = () => {
   return (
     <UnderConstruction 
       title={t('admin.navigation.availability')}
-      message="El módulo de disponibilidad estará disponible próximamente. Aquí podrás gestionar la disponibilidad de habitaciones, bloquear fechas y configurar tarifas especiales."
+      message={t('common.availabilityComingSoon')}
     />
   );
 };

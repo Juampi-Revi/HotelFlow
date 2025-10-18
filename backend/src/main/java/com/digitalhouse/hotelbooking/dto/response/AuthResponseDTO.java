@@ -1,20 +1,24 @@
 package com.digitalhouse.hotelbooking.dto.response;
 
+import java.util.List;
+
 public class AuthResponseDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String token;
+    private List<String> roles;
 
     public AuthResponseDTO() {}
 
-    public AuthResponseDTO(Long id, String firstName, String lastName, String email, String token) {
+    public AuthResponseDTO(Long id, String firstName, String lastName, String email, String token, List<String> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.token = token;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -55,5 +59,13 @@ public class AuthResponseDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

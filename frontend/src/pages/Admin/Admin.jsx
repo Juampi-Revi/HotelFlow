@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
+import { useAuth } from '../../contexts';
 
 const Admin = () => {
   const { t } = useTranslation();
+  const { isOwner } = useAuth();
 
   const dashboardCards = [
     {
@@ -19,6 +21,20 @@ const Admin = () => {
       bgColor: 'bg-slate-50 dark:bg-slate-800/50',
       borderColor: 'border-slate-200 dark:border-slate-700',
       stats: '12 rooms'
+    },
+    {
+      title: t('admin.categories.title'),
+      description: t('admin.categories.description'),
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h10" />
+        </svg>
+      ),
+      href: '/admin/categories',
+      color: 'from-purple-600 to-pink-600',
+      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+      borderColor: 'border-purple-200 dark:border-purple-800',
+      stats: 'Gestión de categorías'
     },
     {
       title: t('admin.dashboard.items.bookings'),
@@ -42,7 +58,7 @@ const Admin = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
         </svg>
       ),
-      href: '/admin/customers',
+      href: '/admin/users',
       color: 'from-emerald-600 to-emerald-700',
       bgColor: 'bg-emerald-50 dark:bg-emerald-900/20',
       borderColor: 'border-emerald-200 dark:border-emerald-800',
@@ -136,45 +152,55 @@ const Admin = () => {
 
           {/* Dashboard Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {dashboardCards.map((card, index) => (
-              <Link
-                key={index}
-                to={card.href}
-                className={`group relative p-6 rounded-xl ${card.bgColor} border ${card.borderColor} shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 overflow-hidden`}
-              >
-                {/* Subtle gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${card.color} rounded-lg flex items-center justify-center text-white shadow-sm group-hover:shadow-md transition-all duration-300`}>
-                      {card.icon}
+            {(isOwner ? dashboardCards : dashboardCards.filter(c => c.href !== '/admin/users')).map((card, index) => {
+              const availableHrefs = new Set(['/admin/rooms', '/admin/categories', ...(isOwner ? ['/admin/users'] : [])]);
+              const isAvailable = availableHrefs.has(card.href);
+              const Wrapper = isAvailable ? Link : 'div';
+              const wrapperProps = isAvailable ? { to: card.href } : {};
+              return (
+                <Wrapper
+                  key={index}
+                  {...wrapperProps}
+                  className={`group relative p-6 rounded-xl ${card.bgColor} border ${card.borderColor} shadow-sm transition-all duration-300 overflow-hidden ${isAvailable ? 'transform hover:scale-[1.02] hover:-translate-y-1 hover:shadow-md' : 'opacity-80'}`}
+                >
+                  {/* Subtle gradient overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${card.color} ${isAvailable ? 'opacity-0 group-hover:opacity-5' : 'opacity-[0.03]'} transition-opacity duration-300`}></div>
+
+                  {/* Content */}
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`w-12 h-12 bg-gradient-to-br ${card.color} rounded-lg flex items-center justify-center text-white shadow-sm ${isAvailable ? 'group-hover:shadow-md' : ''} transition-all duration-300`}>
+                        {card.icon}
+                      </div>
+                      {isAvailable ? (
+                        <svg 
+                          className="w-5 h-5 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-all duration-300 transform group-hover:translate-x-1" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      ) : (
+                        <span className="px-2 py-1 text-xs font-semibold rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">{t('common.comingSoon')}</span>
+                      )}
                     </div>
-                    <svg 
-                      className="w-5 h-5 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-all duration-300 transform group-hover:translate-x-1" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      {card.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
+                      {card.description}
+                    </p>
+                    <p className={`text-sm font-semibold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}>
+                      {card.stats}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors duration-300">
-                    {card.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
-                    {card.description}
-                  </p>
-                  <p className={`text-sm font-semibold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}>
-                    {card.stats}
-                  </p>
-                </div>
-                
-                {/* Subtle border accent */}
-                <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${card.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-10`}></div>
-              </Link>
-            ))}
+
+                  {/* Subtle border accent */}
+                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${card.color} ${isAvailable ? 'opacity-0 group-hover:opacity-10' : 'opacity-[0.06]'} transition-opacity duration-300 -z-10`}></div>
+                </Wrapper>
+              );
+            })}
           </div>
 
           {/* Recent Activity & Quick Stats */}
@@ -186,7 +212,7 @@ const Admin = () => {
                   {t('admin.dashboard.recentActivity')}
                 </h2>
                 <button className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors">
-                  Ver todo
+                  {t('common.viewAll')}
                 </button>
               </div>
               <div className="space-y-4">
@@ -215,7 +241,7 @@ const Admin = () => {
                   {t('admin.dashboard.quickStats')}
                 </h2>
                 <button className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors">
-                  Actualizar
+                  {t('common.update')}
                 </button>
               </div>
               <div className="space-y-4">

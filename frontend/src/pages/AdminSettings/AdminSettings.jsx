@@ -8,7 +8,7 @@ const AdminSettings = () => {
   return (
     <UnderConstruction 
       title={t('admin.navigation.settings')}
-      message="El módulo de configuración estará disponible próximamente. Aquí podrás configurar parámetros del sistema, gestionar usuarios administradores y personalizar la aplicación."
+      message={t('common.settingsComingSoon')}
     />
   );
 };

@@ -8,7 +8,7 @@ const AdminStaff = () => {
   return (
     <UnderConstruction 
       title={t('admin.navigation.staff')}
-      message="El módulo de personal estará disponible próximamente. Aquí podrás gestionar empleados, asignar roles y permisos, y administrar horarios de trabajo."
+      message={t('common.staffComingSoon')}
     />
   );
 };
