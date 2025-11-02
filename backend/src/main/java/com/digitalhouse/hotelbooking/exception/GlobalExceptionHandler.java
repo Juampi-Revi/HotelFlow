@@ -167,6 +167,4 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
-    
-    // Error response classes moved to standalone files for reusability and cleaner structure.
 }
