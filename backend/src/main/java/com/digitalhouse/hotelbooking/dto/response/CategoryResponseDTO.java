@@ -7,6 +7,7 @@ public class CategoryResponseDTO {
     private String name;
     private String slug;
     private String description;
+    private String imageUrl;
     private Boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -14,11 +15,12 @@ public class CategoryResponseDTO {
     public CategoryResponseDTO() {}
 
     public CategoryResponseDTO(Long id, String name, String slug, String description,
-                               Boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
+                               String imageUrl, Boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
         this.description = description;
+        this.imageUrl = imageUrl;
         this.isActive = isActive;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -35,6 +37,9 @@ public class CategoryResponseDTO {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
     public Boolean getIsActive() { return isActive; }
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }

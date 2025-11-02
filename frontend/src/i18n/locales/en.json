@@ -548,6 +548,7 @@
           "name": "Name",
           "slug": "Slug",
           "description": "Description",
+          "imageUrl": "Image URL",
           "isActive": "Active",
           "cancel": "Cancel",
           "save": "Save",

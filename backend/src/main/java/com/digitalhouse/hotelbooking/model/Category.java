@@ -23,6 +23,9 @@ public class Category {
     @Column(name = "description", length = 1000)
     private String description;
 
+    @Column(name = "image_url", length = 2048)
+    private String imageUrl;
+
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
 
@@ -82,6 +85,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Boolean getIsActive() {
