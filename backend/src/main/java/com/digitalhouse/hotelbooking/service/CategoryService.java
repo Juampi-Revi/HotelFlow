@@ -27,6 +27,7 @@ public class CategoryService {
     public CategoryResponseDTO create(CategoryRequestDTO dto) {
         validateUniqueness(dto.getName(), dto.getSlug());
         Category category = new Category(dto.getName(), dto.getSlug(), dto.getDescription());
+        category.setImageUrl(dto.getImageUrl());
         if (dto.getIsActive() != null) category.setIsActive(dto.getIsActive());
         Category saved = categoryRepository.save(category);
         return mapToResponse(saved);
@@ -75,6 +76,9 @@ public class CategoryService {
         if (dto.getDescription() != null) {
             existing.setDescription(dto.getDescription());
         }
+        if (dto.getImageUrl() != null) {
+            existing.setImageUrl(dto.getImageUrl());
+        }
         if (dto.getIsActive() != null) {
             existing.setIsActive(dto.getIsActive());
         }
@@ -112,6 +116,7 @@ public class CategoryService {
                 c.getName(),
                 c.getSlug(),
                 c.getDescription(),
+                c.getImageUrl(),
                 c.getIsActive(),
                 c.getCreatedAt(),
                 c.getUpdatedAt()

@@ -526,6 +526,7 @@
         "name": "Nombre",
         "slug": "Slug",
         "description": "Descripción",
+        "imageUrl": "URL de imagen",
         "isActive": "Activo",
         "cancel": "Cancelar",
         "save": "Guardar",

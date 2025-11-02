@@ -4,7 +4,7 @@ import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
 import { categoryService } from '../../services/categoryService';
 import Button from '../../components/atoms/Button/Button';
 
-const initialForm = { name: '', slug: '', description: '', isActive: true };
+const initialForm = { name: '', slug: '', description: '', imageUrl: '', isActive: true };
 
 const AdminCategories = () => {
   const { t } = useTranslation();
@@ -55,6 +55,7 @@ const AdminCategories = () => {
       name: cat.name || '',
       slug: cat.slug || '',
       description: cat.description || '',
+      imageUrl: cat.imageUrl || '',
       isActive: !!cat.isActive
     });
     setShowForm(true);
@@ -222,6 +223,10 @@ const AdminCategories = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('admin.categories.form.description')}</label>
                     <textarea name="description" value={form.description} onChange={handleChange} rows="3" className="w-full px-3 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('admin.categories.form.imageUrl')}</label>
+                    <input name="imageUrl" value={form.imageUrl} onChange={handleChange} placeholder="https://..." className="w-full px-3 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
                   </div>
                   <div className="flex items-center gap-2">
                     <input id="isActive" type="checkbox" name="isActive" checked={form.isActive} onChange={handleChange} />

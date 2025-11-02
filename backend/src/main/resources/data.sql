@@ -1,9 +1,9 @@
 -- Insert sample categories
-INSERT INTO categories (name, slug, description, is_active, created_at, updated_at) VALUES
-('Playa', 'beach', 'Alojamiento frente al mar y playa', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('Ciudad', 'city', 'Hoteles en zonas urbanas y céntricas', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('Montaña', 'mountain', 'Lodges y refugios en zonas montañosas', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('Negocios', 'business', 'Alojamiento enfocado en viajes corporativos', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO categories (name, slug, description, image_url, is_active, created_at, updated_at) VALUES
+('Playa', 'beach', 'Alojamiento frente al mar y playa', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Ciudad', 'city', 'Hoteles en zonas urbanas y céntricas', 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&h=600&fit=crop', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Montaña', 'mountain', 'Lodges y refugios en zonas montañosas', 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Negocios', 'business', 'Alojamiento enfocado en viajes corporativos', 'https://images.unsplash.com/photo-1520607162513-777e9f3f7854?w=800&h=600&fit=crop', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insert sample rooms data with comprehensive hotel information
 INSERT INTO rooms (room_number, room_type, capacity, price_per_night, description, hotel_name, hotel_chain, hotel_rating, city, country, address, latitude, longitude, view_type, floor, size_sqm, has_balcony, has_wifi, has_air_conditioning, is_available, created_at, updated_at) VALUES
