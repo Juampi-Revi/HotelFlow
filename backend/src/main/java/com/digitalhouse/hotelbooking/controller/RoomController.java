@@ -70,8 +70,9 @@ public class RoomController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-        PagedRoomResponseDTO pagedRooms = roomService.getPaginatedRooms(page, size, sortBy, sortDirection);
+            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(required = false) java.util.List<Long> categoryIds) {
+        PagedRoomResponseDTO pagedRooms = roomService.getPaginatedRooms(page, size, sortBy, sortDirection, categoryIds);
         return ResponseEntity.ok(pagedRooms);
     }
     

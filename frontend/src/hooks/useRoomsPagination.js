@@ -14,34 +14,23 @@ const useRoomsPagination = () => {
   const [filterAvailability, setFilterAvailability] = useState('all');
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
-  const [categoryId, setCategoryId] = useState(null);
+  const [overallTotalElements, setOverallTotalElements] = useState(0);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
 
   const fetchRooms = async () => {
     try {
       setLoading(true);
-      if (categoryId) {
-        const list = await roomService.getRoomsByCategoryId(categoryId);
-        const sorted = [...list].sort((a, b) => {
-          const dir = sortDirection === 'asc' ? 1 : -1;
-          const va = a[sortBy];
-          const vb = b[sortBy];
-          if (va === vb) return 0;
-          return va > vb ? dir : -dir;
-        });
-        setRooms(sorted);
-        setTotalPages(1);
-        setTotalElements(sorted.length);
-      } else {
-        const response = await roomService.getPaginatedRooms(
-          currentPage,
-          pageSize,
-          sortBy,
-          sortDirection
-        );
-        setRooms(response.content);
-        setTotalPages(response.totalPages);
-        setTotalElements(response.totalElements);
-      }
+      const response = await roomService.getPaginatedRooms(
+        currentPage,
+        pageSize,
+        sortBy,
+        sortDirection,
+        selectedCategoryIds
+      );
+      setRooms(response.content);
+      setTotalPages(response.totalPages);
+      setTotalElements(response.totalElements);
+      setOverallTotalElements(response.overallTotalElements ?? response.totalElements);
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -52,7 +41,7 @@ const useRoomsPagination = () => {
 
   useEffect(() => {
     fetchRooms();
-  }, [currentPage, pageSize, sortBy, sortDirection, categoryId]);
+  }, [currentPage, pageSize, sortBy, sortDirection, selectedCategoryIds]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -73,8 +62,22 @@ const useRoomsPagination = () => {
     setCurrentPage(0); // Reset to page 0 (first page)
   };
 
-  const handleCategoryChange = (id) => {
-    setCategoryId(id || null);
+  const handleCategoryToggle = (id) => {
+    setSelectedCategoryIds((prev) => {
+      const exists = prev.includes(id);
+      const next = exists ? prev.filter((x) => x !== id) : [...prev, id];
+      return next;
+    });
+    setCurrentPage(0);
+  };
+
+  const clearCategoryFilters = () => {
+    setSelectedCategoryIds([]);
+    setCurrentPage(0);
+  };
+
+  const setSelectedCategories = (ids) => {
+    setSelectedCategoryIds(Array.isArray(ids) ? ids : []);
     setCurrentPage(0);
   };
 
@@ -86,15 +89,18 @@ const useRoomsPagination = () => {
     currentPage,
     totalPages,
     totalElements,
+    overallTotalElements,
     pageSize,
     sortBy,
     sortDirection,
-    categoryId,
+    selectedCategoryIds,
     // Actions
     handlePageChange,
     handleSortChange,
     handlePageSizeChange,
-    handleCategoryChange,
+    handleCategoryToggle,
+    clearCategoryFilters,
+    setSelectedCategories,
     refetch: fetchRooms
   };
 };

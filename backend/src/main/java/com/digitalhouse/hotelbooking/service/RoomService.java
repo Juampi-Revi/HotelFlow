@@ -95,19 +95,24 @@ public class RoomService {
     }
     
     @Transactional(readOnly = true)
-    public PagedRoomResponseDTO getPaginatedRooms(int page, int size, String sortBy, String sortDirection) {
+    public PagedRoomResponseDTO getPaginatedRooms(int page, int size, String sortBy, String sortDirection, java.util.List<Long> categoryIds) {
         Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         
-        Page<Room> roomPage = roomRepository.findAll(pageable);
+        Page<Room> roomPage;
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            roomPage = roomRepository.findByCategory_IdIn(categoryIds, pageable);
+        } else {
+            roomPage = roomRepository.findAll(pageable);
+        }
         
-        List<RoomResponseDTO> roomDTOs = roomPage.getContent()
+        java.util.List<RoomResponseDTO> roomDTOs = roomPage.getContent()
                 .stream()
                 .map(this::mapToResponseDTO)
-                .collect(Collectors.toList());
+                .collect(java.util.stream.Collectors.toList());
         
-        return new PagedRoomResponseDTO(
+        PagedRoomResponseDTO dto = new PagedRoomResponseDTO(
                 roomDTOs,
                 roomPage.getNumber(),
                 roomPage.getSize(),
@@ -118,6 +123,9 @@ public class RoomService {
                 roomPage.hasNext(),
                 roomPage.hasPrevious()
         );
+        // Set overall total without filters
+        dto.setOverallTotalElements(roomRepository.count());
+        return dto;
     }
     
     public RoomResponseDTO updateRoom(Long id, RoomRequestDTO roomRequestDTO) {

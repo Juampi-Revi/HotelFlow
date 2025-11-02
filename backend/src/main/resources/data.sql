@@ -163,3 +163,9 @@ INSERT INTO room_features (room_id, feature_id) VALUES
 (10, 1), (10, 8),
 (11, 6),
 (12, 7);
+
+-- Link rooms with categories
+UPDATE rooms SET category_id = 2 WHERE room_number IN ('101','102','201','301','M101','M102','M201','M301','P101','P102','P201','P301','L101','L102','L201','L301','NY101','NY102','NY201','NY301','R101','R102','R201','R301');
+UPDATE rooms SET category_id = 1 WHERE room_number IN ('MI101','MI102','MI201','MI301','S101','S102','S201','S301','F501','F502');
+UPDATE rooms SET category_id = 3 WHERE room_number IN ('Z101','Z102','Z201','Z301');
+UPDATE rooms SET category_id = 4 WHERE room_number IN ('SG101','SG102','SG201','SG301','D101','D102','D201','D301');

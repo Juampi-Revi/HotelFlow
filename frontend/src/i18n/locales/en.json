@@ -97,6 +97,7 @@
     "sortByRating": "Sort by Rating",
     "perPage": "per page",
     "showing": "Showing {{start}}-{{end}} of {{total}} rooms",
+    "showingFilteredOfOverall": "Showing {{start}}-{{end}} of {{filtered}} (out of {{overall}} total)",
     "page": "Page {{current}} of {{total}}",
     "night": "night",
     "unavailable": "Unavailable",
@@ -176,7 +177,8 @@
     "double": "Double",
     "suite": "Suite",
     "family": "Family",
-    "deluxe": "Deluxe"
+    "deluxe": "Deluxe",
+    "clearFilters": "Clear filters"
   },
   "recommendations": {
     "title": "Recommended for You",

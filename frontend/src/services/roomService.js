@@ -79,13 +79,17 @@ export const roomService = {
     return rooms.slice(0, 10);
   },
 
-  async getPaginatedRooms(page = 0, size = 10, sortBy = 'id', sortDirection = 'asc') {
+  async getPaginatedRooms(page = 0, size = 10, sortBy = 'id', sortDirection = 'asc', categoryIds = []) {
     const params = new URLSearchParams({
       page: page.toString(),
       size: size.toString(),
       sortBy,
       sortDirection
     });
+    // Append multiple categoryIds as repeated query params
+    if (Array.isArray(categoryIds) && categoryIds.length > 0) {
+      categoryIds.forEach((id) => params.append('categoryIds', String(id)));
+    }
     
     const response = await fetch(`${API_BASE_URL}/rooms/paginated?${params}`);
     if (!response.ok) {

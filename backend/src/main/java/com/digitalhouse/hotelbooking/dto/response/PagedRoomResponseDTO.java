@@ -13,6 +13,8 @@ public class PagedRoomResponseDTO {
     private Boolean last;
     private Boolean hasNext;
     private Boolean hasPrevious;
+    // Added: overall total elements without filters
+    private Long overallTotalElements;
     
     public PagedRoomResponseDTO() {}
     
@@ -100,5 +102,13 @@ public class PagedRoomResponseDTO {
     
     public void setHasPrevious(Boolean hasPrevious) {
         this.hasPrevious = hasPrevious;
+    }
+
+    public Long getOverallTotalElements() {
+        return overallTotalElements;
+    }
+
+    public void setOverallTotalElements(Long overallTotalElements) {
+        this.overallTotalElements = overallTotalElements;
     }
 }
