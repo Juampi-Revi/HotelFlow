@@ -6,17 +6,18 @@ import com.digitalhouse.hotelbooking.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
 @Configuration
+@Profile("dev")
 public class TestUsersBootstrap {
 
     @Bean
     public CommandLineRunner createTestUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            // Usuarios normales para pruebas
             createIfMissing(userRepository, passwordEncoder,
                     "User", "One", "user1@hotelflow.local", "User123!", Set.of(Role.USER));
             createIfMissing(userRepository, passwordEncoder,

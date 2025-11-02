@@ -5,6 +5,7 @@ import { Header, Footer } from '../../components/organisms';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import Toast from '../../components/atoms/Toast/Toast';
+import ResendEmailModal from '../../components/molecules/ResendEmailModal/ResendEmailModal';
 import { authService } from '../../services/authService';
 import { useAuthValidation, useToast } from '../../hooks';
 
@@ -21,6 +22,7 @@ const Register = () => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isResendModalOpen, setIsResendModalOpen] = useState(false);
   const { notification, showNotification, hideNotification } = useToast();
 
   const { getFieldError, getFormErrors, isFormValid } = useAuthValidation(t, 'register');
@@ -103,7 +105,15 @@ const Register = () => {
                 required
                 disabled={isSubmitting}
               />
-              <div className="flex justify-end">
+              <div className="flex justify-between items-center">
+                <button
+                  type="button"
+                  onClick={() => setIsResendModalOpen(true)}
+                  className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 underline disabled:opacity-50"
+                  disabled={isSubmitting}
+                >
+                  {t('auth.resendEmail.actions.send')}
+                </button>
                 <Button type="submit" variant="primary" disabled={isSubmitting || !isFormValid(form)}>
                   {isSubmitting ? t('auth.register.actions.submitting') : t('auth.register.actions.submit')}
                 </Button>
@@ -112,6 +122,11 @@ const Register = () => {
           </div>
         </div>
       </main>
+      <ResendEmailModal
+        isOpen={isResendModalOpen}
+        onClose={() => setIsResendModalOpen(false)}
+        onSuccess={(message) => showNotification('success', message)}
+      />
       <Footer />
       {notification.show && (
         <Toast
