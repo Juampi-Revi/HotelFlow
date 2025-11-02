@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/email/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/rooms/**", "/api/categories/**", "/api/features/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/rooms/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "ROOMS_CREATE")
                         .requestMatchers(HttpMethod.PUT, "/api/rooms/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "ROOMS_EDIT")

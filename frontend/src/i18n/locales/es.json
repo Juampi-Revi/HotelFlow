@@ -681,6 +681,28 @@
         "email": "Ingresa un email válido",
         "password": "La contraseña debe tener 8+ caracteres con mayúscula, minúscula y un número"
       }
+    },
+    "resendEmail": {
+      "title": "Reenviar Email de Confirmación",
+      "description": "Ingresa tu email para recibir nuevamente el enlace de confirmación de registro.",
+      "fields": {
+        "email": "Email"
+      },
+      "placeholders": {
+        "email": "Ingresa tu email"
+      },
+      "actions": {
+        "send": "Reenviar Email",
+        "sending": "Enviando...",
+        "cancel": "Cancelar"
+      },
+      "success": "Email de confirmación reenviado exitosamente",
+      "errors": {
+        "generic": "No se pudo reenviar el email. Intenta nuevamente"
+      },
+      "validation": {
+        "emailRequired": "El email es requerido"
+      }
     }
   }
 }

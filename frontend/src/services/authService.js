@@ -53,5 +53,26 @@ export const authService = {
 
     const data = await response.json();
     return data;
+  },
+
+  async resendConfirmationEmail(email) {
+    const response = await fetch(`${API_BASE_URL}/email/resend-confirmation?email=${encodeURIComponent(email)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      let message = 'Failed to resend confirmation email';
+      try {
+        const data = await response.json();
+        message = data?.message || message;
+      } catch (_) {}
+      const error = new Error(message);
+      error.code = 'RESEND_FAILED';
+      throw error;
+    }
+
+    const data = await response.json();
+    return data;
   }
 };

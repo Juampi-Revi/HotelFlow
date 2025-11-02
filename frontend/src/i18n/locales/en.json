@@ -705,6 +705,28 @@
         "email": "Enter a valid email address",
         "password": "Password must be 8+ chars with uppercase, lowercase and a number"
       }
+    },
+    "resendEmail": {
+      "title": "Resend Confirmation Email",
+      "description": "Enter your email to receive the registration confirmation link again.",
+      "fields": {
+        "email": "Email"
+      },
+      "placeholders": {
+        "email": "Enter your email"
+      },
+      "actions": {
+        "send": "Resend Email",
+        "sending": "Sending...",
+        "cancel": "Cancel"
+      },
+      "success": "Confirmation email resent successfully",
+      "errors": {
+        "generic": "Failed to resend email. Please try again"
+      },
+      "validation": {
+        "emailRequired": "Email is required"
+      }
     }
   }
 }
