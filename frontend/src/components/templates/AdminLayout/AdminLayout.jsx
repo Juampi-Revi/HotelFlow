@@ -21,18 +21,15 @@ const AdminLayout = ({ children }) => {
     navigate('/');
   };
   
-  // Initialize sidebarCollapsed from localStorage
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
     return saved !== null ? JSON.parse(saved) : false;
   });
 
-  // Save to localStorage when state changes
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', JSON.stringify(sidebarCollapsed));
   }, [sidebarCollapsed]);
 
-  // Show mobile not supported message if device is not supported
   if (!isAdminSupported) {
     return <MobileNotSupported />;
   }

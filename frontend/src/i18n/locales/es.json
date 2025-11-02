@@ -151,6 +151,10 @@
       "suite": "Suite",
       "family": "Habitación Familiar",
       "deluxe": "Habitación Deluxe"
+    },
+    "sections": {
+      "whatOffers": "¿Qué ofrece este lugar?",
+      "keyDetails": "Detalles clave"
     }
   },
   "search": {
@@ -213,6 +217,7 @@
         "hotelInfo": "Información del Hotel",
         "location": "Ubicación",
         "roomFeatures": "Características de la Habitación",
+        "whatOffers": "¿Qué ofrece este lugar?",
         "basicAmenities": "Amenidades Básicas"
       },
       "fields": {
@@ -316,6 +321,20 @@
         "sizeSqmMinimum": "El tamaño de la habitación debe ser mayor a 0",
         "latitudeRange": "La latitud debe estar entre -90 y 90",
         "longitudeRange": "La longitud debe estar entre -180 y 180"
+      },
+      "quickCreate": {
+        "addCategory": "Crear Categoría",
+        "addFeature": "Crear Característica",
+        "categoryForm": {
+          "title": "Nueva Categoría"
+        },
+        "featureForm": {
+          "title": "Nueva Característica"
+        },
+        "errors": {
+          "categorySaveFailed": "No se pudo guardar la categoría.",
+          "featureSaveFailed": "No se pudo guardar la característica."
+        }
       },
       "rooms": {
         "title": "Gestión de Habitaciones",
@@ -423,6 +442,9 @@
       "title": "Gestión de Usuarios",
       "subtitle": "Administra los usuarios de la aplicación y sus roles",
       "comingSoon": "La interfaz de gestión de usuarios estará disponible pronto.",
+      "errors": {
+        "accessDenied": "Acceso denegado. Debes iniciar sesión con rol OWNER."
+      },
       "search": {
         "placeholder": "Buscar por nombre o email..."
       },
@@ -454,8 +476,7 @@
         "cannotSelfUpdate": "No puedes cambiar tu propio rol",
         "permissionsUpdated": "Permisos de usuario actualizados",
         "permissionsUpdateFailed": "No se pudieron actualizar los permisos"
-      }
-      ,
+      },
       "permissions": {
         "create": "Crear",
         "edit": "Editar",
@@ -473,8 +494,7 @@
         "addNew": "Agregar Nueva Habitación",
         "addFirst": "Agregar Primera Habitación"
       }
-    }
-  ,
+    },
     "categories": {
       "title": "Gestión de Categorías",
       "subtitle": "Crea, edita y organiza categorías de habitaciones",
@@ -516,8 +536,7 @@
         "toggleFailed": "Error al alternar el estado de la categoría."
       },
       "confirmDelete": "¿Estás seguro de eliminar esta categoría?"
-    }
-    ,
+    },
     "features": {
       "title": "Gestión de Características",
       "subtitle": "Crear, editar y administrar características de habitación",
@@ -553,7 +572,6 @@
       "errors": {
         "loadFailed": "Error al cargar características.",
         "saveFailed": "Error al guardar la característica.",
-        "deleteFailed": "Error al eliminar la característica.",
         "toggleFailed": "Error al alternar el estado de la característica."
       },
       "confirmDelete": "¿Estás seguro de eliminar esta característica?",
