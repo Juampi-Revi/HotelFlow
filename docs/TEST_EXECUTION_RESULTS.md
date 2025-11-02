@@ -1,5 +1,11 @@
 # Test Execution Results - HotelFlow
 
+## Última Ejecución (Backend)
+- Fecha: 2 de Noviembre, 2025
+- Resumen: Tests run: 14, Failures: 0, Errors: 0, Skipped: 0
+- Suites: AuthServiceTest (4), AdminServiceTest (4), CategoryServiceTest (5), otros mínimos
+- Resultado: ✅ PASSED
+
 ## Información General
 - **Fecha de Ejecución**: 30 de Septiembre, 2025
 - **Ejecutado por**: Equipo de Desarrollo HotelFlow
@@ -12,6 +18,7 @@
 - **Linter (ESLint)**: ✅ PASSED - Sin errores de código detectados
 - **Build Process**: ⚠️ BLOCKED - Requiere Node.js 20.19+ (actual: 16.20.2)
 - **Dev Server**: ✅ RUNNING - Funcionando correctamente en http://localhost:5173
+- **Backend (JUnit + Mockito)**: ✅ PASSED - Tests run: 14, Failures: 0, Errors: 0, Skipped: 0 (02/11/2025)
 
 ### Pruebas Manuales Ejecutadas
 
@@ -122,8 +129,8 @@
 ## Conclusiones
 
 ### Resumen General
-- **Total de Pruebas**: 21 casos de prueba
-- **Pruebas Exitosas**: 21 ✅
+- **Total de Pruebas**: 21 casos de prueba (histórico manual) + 14 (backend automatizadas 02/11/2025)
+- **Pruebas Exitosas**: 35 ✅
 - **Pruebas Fallidas**: 0 ❌
 - **Tasa de Éxito**: 100%
 
@@ -140,5 +147,5 @@ Todas las funcionalidades implementadas en el Sprint 2 han sido verificadas y fu
 
 ---
 
-**Documento generado automáticamente el 30/09/2025**
+**Documento actualizado automáticamente el 02/11/2025**
 **Versión del sistema: Sprint 2 - Enhanced Room Form & Optimizations**
