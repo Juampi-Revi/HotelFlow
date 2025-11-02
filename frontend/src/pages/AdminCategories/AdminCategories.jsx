@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../../components/templates/AdminLayout/AdminLayout';
 import { categoryService } from '../../services/categoryService';
+import Button from '../../components/atoms/Button/Button';
 
 const initialForm = { name: '', slug: '', description: '', isActive: true };
 
@@ -131,12 +132,9 @@ const AdminCategories = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button
-                onClick={openCreate}
-                className="px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-              >
+              <Button variant="primary" onClick={openCreate}>
                 {t('admin.categories.actions.addNew')}
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -184,15 +182,15 @@ const AdminCategories = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => openEdit(cat)} className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">
+                            <Button variant="secondary" size="small" onClick={() => openEdit(cat)}>
                               {t('admin.categories.actions.edit')}
-                            </button>
-                            <button onClick={() => toggleActive(cat.id)} className="px-3 py-1 rounded bg-yellow-600 text-white hover:bg-yellow-700">
+                            </Button>
+                            <Button variant="secondary" size="small" onClick={() => toggleActive(cat.id)}>
                               {t('admin.categories.actions.toggle')}
-                            </button>
-                            <button onClick={() => deleteCategory(cat.id)} disabled={deletingId === cat.id} className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700 disabled:opacity-60">
+                            </Button>
+                            <Button variant="danger" size="small" onClick={() => deleteCategory(cat.id)} disabled={deletingId === cat.id}>
                               {t('admin.categories.actions.delete')}
-                            </button>
+                            </Button>
                           </div>
                         </td>
                       </tr>
@@ -210,7 +208,7 @@ const AdminCategories = () => {
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                     {editing ? t('admin.categories.form.editTitle') : t('admin.categories.form.createTitle')}
                   </h2>
-                  <button onClick={closeForm} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">✕</button>
+                  <Button variant="secondary" size="small" onClick={closeForm}>✕</Button>
                 </div>
                 <form onSubmit={saveCategory} className="px-6 py-4 space-y-4">
                   <div>
@@ -230,8 +228,8 @@ const AdminCategories = () => {
                     <label htmlFor="isActive" className="text-sm text-gray-700 dark:text-gray-300">{t('admin.categories.form.isActive')}</label>
                   </div>
                   <div className="flex justify-end gap-3 pt-2">
-                    <button type="button" onClick={closeForm} className="px-4 py-2 rounded border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300">{t('admin.categories.form.cancel')}</button>
-                    <button type="submit" disabled={saving} className="px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60">{saving ? t('admin.categories.form.saving') : t('admin.categories.form.save')}</button>
+                    <Button variant="outline" type="button" onClick={closeForm}>{t('admin.categories.form.cancel')}</Button>
+                    <Button variant="primary" type="submit" disabled={saving}>{saving ? t('admin.categories.form.saving') : t('admin.categories.form.save')}</Button>
                   </div>
                 </form>
               </div>

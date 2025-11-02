@@ -251,6 +251,20 @@ public class RoomService {
                 room.getCreatedAt(),
                 room.getUpdatedAt()
         );
+        // Map additional fields to avoid empty info on frontend
+        dto.setHotelChain(room.getHotelChain());
+        dto.setHotelRating(room.getHotelRating());
+        dto.setAddress(room.getAddress());
+        dto.setLatitude(room.getLatitude());
+        dto.setLongitude(room.getLongitude());
+        dto.setAmenities(room.getAmenities());
+        dto.setViewType(room.getViewType());
+        dto.setFloor(room.getFloor());
+        dto.setSizeSqm(room.getSizeSqm());
+        dto.setHasBalcony(room.getHasBalcony());
+        dto.setHasWifi(room.getHasWifi());
+        dto.setHasAirConditioning(room.getHasAirConditioning());
+        
         if (room.getCategory() != null) {
             dto.setCategoryId(room.getCategory().getId());
             dto.setCategorySlug(room.getCategory().getSlug());

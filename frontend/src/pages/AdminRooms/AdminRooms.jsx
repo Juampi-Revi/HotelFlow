@@ -43,7 +43,7 @@ const AdminRooms = () => {
       setRooms(roomsData);
       setError('');
     } catch {
-      setError('Failed to load rooms. Please try again.');
+      setError(t('admin.rooms.errors.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -79,7 +79,7 @@ const AdminRooms = () => {
       const errorMessage = editingRoom 
         ? t('notifications.roomUpdatedError')
         : t('notifications.roomCreatedError');
-      setError(err.message || 'Failed to save room. Please try again.');
+      setError(err.message || t('admin.rooms.errors.saveFailed'));
       showNotification('error', errorMessage);
     } finally {
       setFormLoading(false);
@@ -111,7 +111,7 @@ const AdminRooms = () => {
       setRoomToDelete(null);
       showNotification('success', t('notifications.roomDeletedSuccess'));
     } catch {
-      setError('Failed to delete room. Please try again.');
+      setError(t('admin.rooms.errors.deleteFailed'));
       showNotification('error', t('notifications.roomDeletedError'));
     } finally {
       setDeleteLoading(false);
@@ -134,7 +134,7 @@ const AdminRooms = () => {
       await loadRooms();
       setError('');
     } catch {
-      setError('Failed to update room availability. Please try again.');
+      setError(t('admin.rooms.errors.toggleAvailabilityFailed'));
     }
   };
 

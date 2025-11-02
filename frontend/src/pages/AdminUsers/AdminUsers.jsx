@@ -15,7 +15,7 @@ const AdminUsers = () => {
   const [usersPage, setUsersPage] = useState({ content: [], totalPages: 0, totalElements: 0, number: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(0); // 0-based
+  const [page, setPage] = useState(0);
   const [size, setSize] = useState(20);
   const [query, setQuery] = useState('');
   const [confirmState, setConfirmState] = useState({ open: false, nextIsAdmin: false, target: null });
@@ -27,8 +27,9 @@ const AdminUsers = () => {
       setUsersPage(pageData);
       setError(null);
     } catch (err) {
-      setError(err.message || 'Failed to load users');
-      showNotification('error', t('common.error') + ': ' + (err.message || ''));
+      const friendly = err.status === 403 ? t('admin.users.errors.accessDenied') : (err.message || t('common.error'));
+      setError(friendly);
+      showNotification('error', friendly);
     } finally {
       setLoading(false);
     }
@@ -41,7 +42,6 @@ const AdminUsers = () => {
   const startToggleAdmin = (u) => {
     const isAdmin = (u.roles || []).includes('ADMIN');
     const next = !isAdmin;
-    // Disallow self updates from the frontend
     if (currentUser?.email && currentUser.email === u.email) {
       showNotification('warning', t('admin.users.actions.cannotSelfUpdate'));
       return;
@@ -57,7 +57,8 @@ const AdminUsers = () => {
       showNotification('success', t('admin.users.actions.updated'));
       fetchUsers();
     } catch (err) {
-      showNotification('error', err.message || t('admin.users.actions.updateFailed'));
+      const friendly = err.status === 403 ? t('admin.users.errors.accessDenied') : (err.message || t('admin.users.actions.updateFailed'));
+      showNotification('error', friendly);
     }
     setConfirmState({ open: false, nextIsAdmin: false, target: null });
   };
@@ -75,7 +76,6 @@ const AdminUsers = () => {
       }
       const hasCreate = (u.permissions || []).includes('ROOMS_CREATE');
       const hasEdit = (u.permissions || []).includes('ROOMS_EDIT');
-      // Prevent disabling the last active permission
       if (permKey === 'ROOMS_CREATE' && hasCreate && !hasEdit) {
         showNotification('warning', t('admin.users.permissions.mustKeepOne'));
         return;
@@ -94,7 +94,8 @@ const AdminUsers = () => {
       showNotification('success', t('admin.users.actions.permissionsUpdated'));
       fetchUsers();
     } catch (err) {
-      showNotification('error', err.message || t('admin.users.actions.permissionsUpdateFailed'));
+      const friendly = err.status === 403 ? t('admin.users.errors.accessDenied') : (err.message || t('admin.users.actions.permissionsUpdateFailed'));
+      showNotification('error', friendly);
     }
   };
 
@@ -163,7 +164,11 @@ const AdminUsers = () => {
                   placeholder={t('admin.users.search.placeholder')}
                   className="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
-                <span className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500">🔎</span>
+                <span className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+                  </svg>
+                </span>
               </div>
             </div>
             {loading ? (

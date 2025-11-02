@@ -149,6 +149,10 @@
       "suite": "Suite",
       "family": "Family Room",
       "deluxe": "Deluxe Room"
+    },
+    "sections": {
+      "whatOffers": "What this place offers",
+      "keyDetails": "Key Details"
     }
   },
   "search": {
@@ -211,6 +215,7 @@
         "hotelInfo": "Hotel Information",
         "location": "Location",
         "roomFeatures": "Room Features",
+        "whatOffers": "What this place offers",
         "basicAmenities": "Basic Amenities"
       },
       "fields": {
@@ -314,6 +319,20 @@
         "sizeSqmMinimum": "Room size must be greater than 0",
         "latitudeRange": "Latitude must be between -90 and 90",
         "longitudeRange": "Longitude must be between -180 and 180"
+      },
+      "quickCreate": {
+        "addCategory": "Create Category",
+        "addFeature": "Create Feature",
+        "categoryForm": {
+          "title": "New Category"
+        },
+        "featureForm": {
+          "title": "New Feature"
+        },
+        "errors": {
+          "categorySaveFailed": "Failed to save category.",
+          "featureSaveFailed": "Failed to save feature."
+        }
       }
     },
     "rooms": {
@@ -414,6 +433,9 @@
       "title": "User Management",
       "subtitle": "Manage application users and their roles",
       "comingSoon": "User management UI is coming soon.",
+      "errors": {
+        "accessDenied": "Access denied. You must sign in with OWNER role."
+      },
       "search": {
         "placeholder": "Search by name or email..."
       },

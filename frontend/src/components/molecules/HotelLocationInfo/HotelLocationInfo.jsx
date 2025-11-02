@@ -7,20 +7,8 @@ const HotelLocationInfo = ({ room }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
-        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('common.hotelInformation')}</h4>
+        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('common.location')}</h4>
         <div className="space-y-2">
-          {room.hotelChain && (
-            <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-300">{t('common.hotelChain')}:</span>
-              <span className="font-medium text-gray-900 dark:text-white">{room.hotelChain}</span>
-            </div>
-          )}
-          {room.hotelRating && (
-            <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-300">{t('common.rating')}:</span>
-              <span className="font-medium text-gray-900 dark:text-white">{room.hotelRating} ⭐</span>
-            </div>
-          )}
           <div className="flex justify-between">
             <span className="text-gray-600 dark:text-gray-300">{t('common.location')}:</span>
             <span className="font-medium text-gray-900 dark:text-white">{room.city}, {room.country}</span>
@@ -35,7 +23,7 @@ const HotelLocationInfo = ({ room }) => {
       </div>
 
       <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
-        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('common.roomDetails')}</h4>
+        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('room.sections.keyDetails', 'Detalles clave')}</h4>
         <div className="space-y-2">
           {room.sizeSqm && (
             <div className="flex justify-between">
@@ -55,10 +43,6 @@ const HotelLocationInfo = ({ room }) => {
               <span className="font-medium text-gray-900 dark:text-white">{room.viewType} {t('common.viewType')}</span>
             </div>
           )}
-          <div className="flex justify-between">
-            <span className="text-gray-600 dark:text-gray-300">{t('common.roomNumber')}:</span>
-            <span className="font-medium text-gray-900 dark:text-white">{room.roomNumber}</span>
-          </div>
         </div>
       </div>
     </div>
