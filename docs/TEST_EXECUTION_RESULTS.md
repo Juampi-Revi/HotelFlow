@@ -107,6 +107,18 @@
 - **ImageUpload**: ✅ Verificado
 - **Toast Notifications**: ✅ Verificado (nuevo)
 
+### Categories Tests
+- **TC008.1**: POST /api/categories con imageUrl ✅ PASSED
+- **TC008.2**: PUT /api/categories/{id} actualiza imageUrl ✅ PASSED
+- **TC008.3**: GET /api/categories incluye imageUrl ✅ PASSED
+- **TC008.4**: PATCH /api/categories/{id}/toggle-active ✅ PASSED
+- **TC008.5**: POST duplicado (slug) retorna 409 ✅ PASSED
+- **TC008.6**: GET por slug inexistente retorna 404 ✅ PASSED
+
+**Entorno**
+- Backend: Spring Boot (tests con MockMvc)
+- Frontend Admin: verificado campo `Image URL` visible y funcional (manual)
+
 ## Conclusiones
 
 ### Resumen General
