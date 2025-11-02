@@ -238,23 +238,50 @@
    - **Resultado Esperado**: Diseño se adapta correctamente
    - **Estado**: ✅ PASS
 
----
+### 🗂️ TC008: Categorías (Admin y API)
+**Objetivo**: Verificar creación/edición/listado y manejo de errores de Categorías incluyendo `imageUrl`.
 
-## 📊 Resumen de Ejecución
+#### Casos de Prueba API
+1. **TC008.1 - Crear Categoría con imageUrl**
+   - Pasos: `POST /api/categories` con `{ name, slug, description, imageUrl }`
+   - Esperado: `201 Created`, respuesta incluye `imageUrl` y `isActive=true` por defecto
+2. **TC008.2 - Actualizar imageUrl de Categoría**
+   - Pasos: `PUT /api/categories/{id}` con `{ imageUrl }`
+   - Esperado: `200 OK`, `imageUrl` actualizado
+3. **TC008.3 - Listar Categorías incluye imageUrl**
+   - Pasos: `GET /api/categories`
+   - Esperado: `200 OK`, cada item contiene `imageUrl` (puede ser null si no definido)
+4. **TC008.4 - Toggle Active**
+   - Pasos: `PATCH /api/categories/{id}/toggle-active`
+   - Esperado: `200 OK`, `isActive` alterna su valor
+5. **TC008.5 - Error por slug duplicado**
+   - Pasos: `POST /api/categories` con `slug` existente
+   - Esperado: `409 Conflict`, mensaje "Duplicate Category"
+6. **TC008.6 - No encontrado por slug**
+   - Pasos: `GET /api/categories/slug/{slug}` inexistente
+   - Esperado: `404 Not Found`, mensaje "Category Not Found"
 
-### Estadísticas Generales
-- **Total de Casos de Prueba**: 15
-- **Casos Ejecutados**: 15
-- **Casos Exitosos**: 15 ✅
-- **Casos Fallidos**: 0 ❌
-- **Porcentaje de Éxito**: 100%
+#### Casos de Prueba Frontend Admin
+1. **TC008.7 - Formulario muestra campo imageUrl**
+   - Pasos: `Admin > Categories > Add Category`
+   - Esperado: campo `Image URL` visible con i18n EN/ES
+2. **TC008.8 - Crear categoría desde UI**
+   - Pasos: completar y guardar
+   - Esperado: aparece en la tabla con datos completos
+3. **TC008.9 - Editar categoría (imageUrl)**
+   - Pasos: abrir edición, cambiar `imageUrl`, guardar
+   - Esperado: persistencia y reflejo en listado
 
-### Cobertura por Historia de Usuario
-- **User Story #1 (Header)**: 3/3 ✅
-- **User Story #7 (Footer)**: 2/2 ✅
-- **User Story #8 (Admin Interface)**: 3/3 ✅
-- **User Story #10 (Enhanced Form)**: 4/4 ✅
-- **User Story #10 (Public Page)**: 3/3 ✅
+#### Datos y Semilla
+- Verificar `data.sql` inicializa `image_url` para categorías sembradas.
+- **TC006.2 - Persistencia de Idioma**
+   - **Descripción**: Verificar que el idioma se mantenga al recargar
+   - **Pasos**:
+     1. Cambiar idioma a Inglés
+     2. Recargar página
+     3. Verificar idioma mantenido
+   - **Resultado Esperado**: Idioma se mantiene después de recargar
+   - **Estado**: ✅ PASS
 
 ### Funcionalidades Críticas Verificadas
 - ✅ **Navegación**: Funcional en todas las páginas
