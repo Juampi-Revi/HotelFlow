@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Pagination } from '../../components/atoms';
 import { Header, Footer } from '../../components/organisms';
@@ -10,6 +10,7 @@ import { categoryService } from '../../services/categoryService';
 
 const ProductsPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -20,29 +21,58 @@ const ProductsPage = () => {
     currentPage,
     totalPages,
     totalElements,
+    overallTotalElements,
     pageSize,
     sortBy,
     sortDirection,
     handlePageChange,
     handleSortChange,
     handlePageSizeChange,
-    handleCategoryChange,
-    categoryId
+    handleCategoryToggle,
+    clearCategoryFilters,
+    setSelectedCategories,
+    selectedCategoryIds
   } = useRoomsPagination();
 
   const [categories, setCategories] = useState([]);
+  // Dropdown state
+  const [isCatOpen, setIsCatOpen] = useState(false);
+  const catDropdownRef = useRef(null);
 
   useEffect(() => {
     const loadCategories = async () => {
       try {
         const list = await categoryService.getAllCategories();
-        setCategories(list.filter(c => c.isActive !== false));
+        const active = list.filter(c => c.isActive !== false);
+        setCategories(active);
+        // Parse initial categoryIds from query string
+        const params = new URLSearchParams(location.search);
+        const idsParam = params.get('categoryIds') || params.get('categoryId');
+        if (idsParam) {
+          const parsed = idsParam.split(',').map((x) => Number(x)).filter((n) => !isNaN(n));
+          const valid = parsed.filter((id) => active.some((c) => c.id === id));
+          if (valid.length > 0) {
+            setSelectedCategories(valid);
+          }
+        }
       } catch (err) {
         setCategories([]);
       }
     };
     loadCategories();
-  }, []);
+  }, [location.search]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isCatOpen && catDropdownRef.current && !catDropdownRef.current.contains(event.target)) {
+        setIsCatOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isCatOpen]);
 
   const handleRoomClick = (roomId) => {
     navigate(`/room/${roomId}`);
@@ -92,87 +122,106 @@ const ProductsPage = () => {
             {t('common.allRooms')}
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            {t('common.discoverCollection', { count: totalElements })}
+            {t('common.discoverCollection', { count: overallTotalElements })}
           </p>
         </div>
 
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-8">
-          <div className="flex items-center gap-4">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {t('admin.room.fields.category')}
-            </label>
-            <select
-              value={categoryId || ''}
-              onChange={(e) => handleCategoryChange(e.target.value ? Number(e.target.value) : null)}
-              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">{t('categories.all')}</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-
-        {false && (
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-8">
-            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-              {/* Search */}
-              <div className="relative flex-1 max-w-md">
-                <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder={t('common.searchPlaceholder')}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              {/* Sort and Page Size Controls */}
-              <div className="flex gap-4 items-center">
-                <div className="flex items-center gap-2">
-                  <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                  </svg>
-                  <select
-                    value={sortBy}
-                    onChange={(e) => handleSortChange(e.target.value)}
-                    className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="id">{t('common.sortById')}</option>
-                    <option value="pricePerNight">{t('common.sortByPrice')}</option>
-                    <option value="hotelName">{t('common.sortByHotel')}</option>
-                    <option value="city">{t('common.sortByCity')}</option>
-                    <option value="hotelRating">{t('common.sortByRating')}</option>
-                  </select>
-                </div>
-
-                <select
-                  value={pageSize}
-                  onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-                  className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+        {/* Categories Filter */}
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-6 mb-4 relative z-40">
+          <div className="flex items-start gap-6 flex-col md:flex-row">
+            <div className="flex-1">
+              <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                {t('admin.room.fields.category')}
+              </label>
+              <div className="relative inline-block text-left z-50" ref={catDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsCatOpen((prev) => !prev)}
+                  className="inline-flex items-center justify-between gap-2 w-64 px-4 py-2 text-sm font-medium rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600"
+                  aria-haspopup="listbox"
+                  aria-expanded={isCatOpen}
                 >
-                  <option value={6}>6 {t('common.perPage')}</option>
-                  <option value={12}>12 {t('common.perPage')}</option>
-                  <option value={24}>24 {t('common.perPage')}</option>
-                  <option value={48}>48 {t('common.perPage')}</option>
-                </select>
+                  <span>
+                    {selectedCategoryIds.length > 0
+                      ? `${selectedCategoryIds.length} ${t('common.selected', 'seleccionadas')}`
+                      : t('categories.title', 'Categorías')}
+                  </span>
+                  <span className="text-gray-500 dark:text-gray-400">▾</span>
+                </button>
+                {isCatOpen && (
+                  <div className="absolute z-50 mt-2 w-64 rounded-lg shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                    <div className="max-h-64 overflow-auto p-2">
+                      {categories.map((c) => (
+                        <label key={c.id} className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={selectedCategoryIds.includes(c.id)}
+                            onChange={() => handleCategoryToggle(c.id)}
+                            className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
+                          />
+                          <span className="text-gray-800 dark:text-gray-200 text-sm">{c.name}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between px-3 py-2 border-t border-gray-200 dark:border-gray-700">
+                      <button
+                        onClick={clearCategoryFilters}
+                        className="text-xs px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600"
+                      >
+                        {t('categories.clearFilters', 'Limpiar filtros')}
+                      </button>
+                      <button
+                        onClick={() => setIsCatOpen(false)}
+                        className="text-xs px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-700 text-white"
+                      >
+                        {t('common.close', 'Cerrar')}
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+            {/* (Optional) keep a clear button outside if desired */}
+            {/* <div className="flex-0">
+              <button
+                onClick={clearCategoryFilters}
+                className="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600"
+              >
+                {t('categories.clearFilters', 'Limpiar filtros')}
+              </button>
+            </div> */}
           </div>
-        )}
+          {/* Selected chips */}
+          {selectedCategoryIds.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {selectedCategoryIds.map((id) => {
+                const cat = categories.find((c) => c.id === id);
+                if (!cat) return null;
+                return (
+                  <span key={id} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-700 text-sm">
+                    {cat.name}
+                    <button
+                      onClick={() => handleCategoryToggle(id)}
+                      className="ml-1 text-indigo-700 dark:text-indigo-300 hover:text-indigo-900"
+                      aria-label={t('common.remove')}
+                    >
+                      ×
+                    </button>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         {/* Results Info */}
         <div className="flex justify-between items-center mb-6">
           <p className="text-gray-600 dark:text-gray-300">
-            {t('common.showing', { 
+            {t('common.showingFilteredOfOverall', { 
               start: currentPage * pageSize + 1, 
               end: Math.min((currentPage + 1) * pageSize, totalElements), 
-              total: totalElements 
+              filtered: totalElements,
+              overall: overallTotalElements
             })}
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">

@@ -99,6 +99,7 @@
     "sortByRating": "Ordenar por Calificación",
     "perPage": "por página",
     "showing": "Mostrando {{start}}-{{end}} de {{total}} habitaciones",
+    "showingFilteredOfOverall": "Mostrando {{start}}-{{end}} de {{filtered}} (de {{overall}} total)",
     "page": "Página {{current}} de {{total}}",
     "night": "noche",
     "unavailable": "No disponible",
@@ -178,7 +179,8 @@
     "double": "Doble",
     "suite": "Suite",
     "family": "Familiar",
-    "deluxe": "Deluxe"
+    "deluxe": "Deluxe",
+    "clearFilters": "Limpiar filtros"
   },
   "recommendations": {
     "title": "Recomendado para Ti",
