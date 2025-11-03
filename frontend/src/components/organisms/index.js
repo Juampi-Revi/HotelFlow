@@ -1,9 +1,11 @@
 export { default as Header } from './Header';
+export { default as Footer } from './Footer';
 export { SearchSection } from './SearchSection';
+export { SimpleSearchSection } from './SimpleSearchSection';
+export { default as CompactFiltersBar } from './CompactFiltersBar';
 export { CategoriesSection } from './CategoriesSection';
 export { RecommendationsSection } from './RecommendationsSection';
 export { default as Hero } from './Hero';
 export { default as RoomGrid } from './RoomGrid';
 export { default as RoomForm } from './RoomForm/RoomForm';
-export { default as Footer } from './Footer';
 export { default as DeleteConfirmationModal } from './DeleteConfirmationModal';

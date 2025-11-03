@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,4 +35,41 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     
     // Added: paginated fetch by multiple category ids
     Page<Room> findByCategory_IdIn(List<Long> categoryIds, Pageable pageable);
+    
+    @Query("SELECT r FROM Room r WHERE " +
+           "(:destination IS NULL OR :destination = '' OR " +
+           " LOWER(r.city) LIKE LOWER(CONCAT('%', :destination, '%')) OR " +
+           " LOWER(r.country) LIKE LOWER(CONCAT('%', :destination, '%')) OR " +
+           " LOWER(r.hotelName) LIKE LOWER(CONCAT('%', :destination, '%'))) AND " +
+           "(:minCapacity IS NULL OR r.capacity >= :minCapacity) AND " +
+           "(:minPrice IS NULL OR r.pricePerNight >= :minPrice) AND " +
+           "(:maxPrice IS NULL OR r.pricePerNight <= :maxPrice) AND " +
+           "(:roomType IS NULL OR r.roomType = :roomType) AND " +
+           "(:categoryIds IS NULL OR r.category.id IN :categoryIds) AND " +
+           "r.isAvailable = true")
+    Page<Room> searchRooms(@Param("destination") String destination,
+                          @Param("minCapacity") Integer minCapacity,
+                          @Param("minPrice") BigDecimal minPrice,
+                          @Param("maxPrice") BigDecimal maxPrice,
+                          @Param("roomType") RoomType roomType,
+                          @Param("categoryIds") List<Long> categoryIds,
+                          Pageable pageable);
+    
+    @Query("SELECT DISTINCT r.city FROM Room r WHERE " +
+           "LOWER(r.city) LIKE LOWER(CONCAT('%', :query, '%')) AND " +
+           "r.isAvailable = true " +
+           "ORDER BY r.city")
+    List<String> findCitiesByQuery(@Param("query") String query);
+    
+    @Query("SELECT DISTINCT r.country FROM Room r WHERE " +
+           "LOWER(r.country) LIKE LOWER(CONCAT('%', :query, '%')) AND " +
+           "r.isAvailable = true " +
+           "ORDER BY r.country")
+    List<String> findCountriesByQuery(@Param("query") String query);
+    
+    @Query("SELECT DISTINCT r.hotelName FROM Room r WHERE " +
+           "LOWER(r.hotelName) LIKE LOWER(CONCAT('%', :query, '%')) AND " +
+           "r.isAvailable = true " +
+           "ORDER BY r.hotelName")
+    List<String> findHotelsByQuery(@Param("query") String query);
 }

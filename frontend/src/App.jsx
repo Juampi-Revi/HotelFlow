@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Header, Hero, Footer } from './components';
+import { Header, Hero, Footer, SimpleSearchSection } from './components';
 import RoomGrid from './components/organisms/RoomGrid';
 import { ThemeProvider, useAuth } from './contexts';
 import { roomService } from './services/roomService';
@@ -23,6 +23,7 @@ import AdminFeatures from './pages/AdminFeatures/AdminFeatures';
 
 function HomePage() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -42,12 +43,24 @@ function HomePage() {
     fetchRooms();
   }, []);
 
+  const handleSearchResults = (searchResults, searchParams) => {
+    // Navigate to rooms page with search results and parameters
+    navigate('/rooms', { 
+      state: { 
+        searchResults,
+        searchParams,
+        fromSearch: true 
+      } 
+    });
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200 flex flex-col">
       <Header />
       
       <main className="pt-16 flex-grow">
         <Hero />
+        <SimpleSearchSection onSearchResults={handleSearchResults} />
         <RoomGrid 
           rooms={rooms}
           title={t('home.featuredRooms')}

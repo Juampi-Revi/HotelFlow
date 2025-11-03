@@ -8,3 +8,26 @@
     @apply font-sans antialiased;
   }
 }
+
+/* Dedicated portal root for datepicker */
+#datepicker-portal-root {
+  position: static;
+  z-index: auto;
+}
+
+/* Elevate react-datepicker popper and portal above cards/grid */
+.react-datepicker-popper,
+.react-datepicker__portal,
+.react-datepicker,
+.react-datepicker__triangle {
+  z-index: 2147483647 !important;
+}
+
+/* Ensure portal covers viewport (default behavior) */
+.react-datepicker__portal {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+}

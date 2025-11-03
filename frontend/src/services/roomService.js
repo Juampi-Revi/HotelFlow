@@ -86,14 +86,47 @@ export const roomService = {
       sortBy,
       sortDirection
     });
-    // Append multiple categoryIds as repeated query params
-    if (Array.isArray(categoryIds) && categoryIds.length > 0) {
-      categoryIds.forEach((id) => params.append('categoryIds', String(id)));
+    
+    if (categoryIds && categoryIds.length > 0) {
+      categoryIds.forEach(id => params.append('categoryIds', id));
     }
     
     const response = await fetch(`${API_BASE_URL}/rooms/paginated?${params}`);
     if (!response.ok) {
       throw new Error('Failed to fetch paginated rooms');
+    }
+    return response.json();
+  },
+
+  async searchRooms(searchParams) {
+    const params = new URLSearchParams();
+    
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        if (Array.isArray(value)) {
+          value.forEach(item => params.append(key, item));
+        } else {
+          params.append(key, value.toString());
+        }
+      }
+    });
+
+    const response = await fetch(`${API_BASE_URL}/rooms/search?${params}`);
+    if (!response.ok) {
+      throw new Error('Failed to search rooms');
+    }
+    return response.json();
+  },
+
+  async getDestinationSuggestions(query) {
+    if (!query || query.length < 2) {
+      return [];
+    }
+    
+    const params = new URLSearchParams({ query });
+    const response = await fetch(`${API_BASE_URL}/rooms/suggestions?${params}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch destination suggestions');
     }
     return response.json();
   }
