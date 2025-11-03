@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -153,7 +154,57 @@ public class RoomService {
         
         return mapToResponseDTO(updatedRoom);
     }
-    
+
+    @Transactional(readOnly = true)
+    public PagedRoomResponseDTO searchRooms(String destination, Integer guests, 
+                                          BigDecimal minPrice, BigDecimal maxPrice, 
+                                          RoomType roomType, List<Long> categoryIds,
+                                          int page, int size, String sortBy, String sortDirection) {
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        
+        Page<Room> roomPage = roomRepository.searchRooms(
+            destination, guests, minPrice, maxPrice, roomType, categoryIds, pageable
+        );
+        
+        List<RoomResponseDTO> roomDTOs = roomPage.getContent()
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+        
+        PagedRoomResponseDTO dto = new PagedRoomResponseDTO(
+                roomDTOs,
+                roomPage.getNumber(),
+                roomPage.getSize(),
+                roomPage.getTotalElements(),
+                roomPage.getTotalPages(),
+                roomPage.isFirst(),
+                roomPage.isLast(),
+                roomPage.hasNext(),
+                roomPage.hasPrevious()
+        );
+        dto.setOverallTotalElements(roomRepository.count());
+        return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getDestinationSuggestions(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return List.of();
+        }
+        
+        List<String> suggestions = new java.util.ArrayList<>();
+        suggestions.addAll(roomRepository.findCitiesByQuery(query));
+        suggestions.addAll(roomRepository.findCountriesByQuery(query));
+        suggestions.addAll(roomRepository.findHotelsByQuery(query));
+        
+        return suggestions.stream()
+                .distinct()
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
     private Room findRoomById(Long id) {
         return roomRepository.findById(id)
                 .orElseThrow(() -> new RoomNotFoundException(id));

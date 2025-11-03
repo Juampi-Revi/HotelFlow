@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -93,5 +94,32 @@ public class RoomController {
     public ResponseEntity<RoomResponseDTO> toggleRoomAvailability(@PathVariable Long id) {
         RoomResponseDTO updatedRoom = roomService.toggleRoomAvailability(id);
         return ResponseEntity.ok(updatedRoom);
+    }
+    
+    @GetMapping("/search")
+    public ResponseEntity<PagedRoomResponseDTO> searchRooms(
+            @RequestParam(required = false) String destination,
+            @RequestParam(required = false) Integer guests,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) RoomType roomType,
+            @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "pricePerNight") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        
+        PagedRoomResponseDTO searchResults = roomService.searchRooms(
+            destination, guests, minPrice, maxPrice, roomType, categoryIds,
+            page, size, sortBy, sortDirection
+        );
+        return ResponseEntity.ok(searchResults);
+    }
+    
+    @GetMapping("/suggestions")
+    public ResponseEntity<List<String>> getDestinationSuggestions(
+            @RequestParam String query) {
+        List<String> suggestions = roomService.getDestinationSuggestions(query);
+        return ResponseEntity.ok(suggestions);
     }
 }

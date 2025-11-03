@@ -147,5 +147,23 @@ Todas las funcionalidades implementadas en el Sprint 2 han sido verificadas y fu
 
 ---
 
+### Actualización Sprint 3 - Inicio y pruebas iniciales
+
+**Fecha**: 02/11/2025
+
+**Resumen de ejecución**:
+- Backend: suite de tests ejecutada sin fallos (exit code 0)
+- Nuevas pruebas de integración: `AdminControllerIT` con autenticación JWT
+- Endpoints validados:
+  - `GET /api/admin/users` → 200 OK (listado de usuarios)
+  - `PUT /api/admin/users/{id}/role` → 200 OK (asignación de rol ADMIN)
+  - `PUT /api/admin/users/{id}/permissions` → 400 Bad Request (operación no permitida según políticas)
+- Preparación de tokens: `JwtService.generateToken` con roles y permisos acorde a cada escenario
+
+**Comando de ejecución**:
+- `./mvnw -q test`
+
+**Estado**: Sprint 3 iniciado, sin fallos en tests iniciales.
+
 **Documento actualizado automáticamente el 02/11/2025**
 **Versión del sistema: Sprint 2 - Enhanced Room Form & Optimizations**
