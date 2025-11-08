@@ -199,6 +199,24 @@
     "popular": "Opciones Populares",
     "newArrivals": "Nuevas Llegadas"
   },
+  "calendar": {
+    "loading": "Cargando disponibilidad...",
+    "selectDates": "Selecciona tus fechas",
+    "error": "Error al cargar la disponibilidad",
+    "checkIn": "Fecha de entrada",
+    "checkOut": "Fecha de salida",
+    "selectCheckIn": "Seleccionar fecha de entrada",
+    "selectCheckOut": "Seleccionar fecha de salida",
+    "available": "Disponible para las fechas seleccionadas",
+    "notAvailable": "No disponible para las fechas seleccionadas",
+    "occupied": "Fechas ocupadas",
+    "selected": "Fechas seleccionadas",
+    "bookNow": "Reservar Ahora",
+    "retry": "Reintentar"
+  },
+  "auth": {
+    "loginToBook": "Inicia sesión para reservar"
+  },
   "admin": {
     "title": "Administración",
     "dashboard": {

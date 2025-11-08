@@ -4,3 +4,4 @@ export { default as ImageUpload } from './ImageUpload/ImageUpload';
 export { default as ImageGallery } from './ImageGallery';
 export { default as IconSelector } from './IconSelector';
 export { default as DateRangePicker } from './DateRangePicker';
+export { default as AvailabilityCalendar } from './AvailabilityCalendar';

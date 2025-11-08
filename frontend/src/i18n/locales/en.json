@@ -197,6 +197,24 @@
     "popular": "Popular Choices",
     "newArrivals": "New Arrivals"
   },
+  "calendar": {
+    "loading": "Loading availability...",
+    "selectDates": "Select your dates",
+    "error": "Error loading availability",
+    "checkIn": "Check-in date",
+    "checkOut": "Check-out date",
+    "selectCheckIn": "Select check-in date",
+    "selectCheckOut": "Select check-out date",
+    "available": "Available for selected dates",
+    "notAvailable": "Not available for selected dates",
+    "occupied": "Occupied dates",
+    "selected": "Selected dates",
+    "bookNow": "Book Now",
+    "retry": "Retry"
+  },
+  "auth": {
+    "loginToBook": "Log in to book"
+  },
   "admin": {
     "title": "Administration",
     "dashboard": {
