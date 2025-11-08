@@ -2,20 +2,24 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRoomDetail } from '../hooks/useRoomDetail';
-import { ImageGallery } from '../components/molecules';
+import { ImageGallery, AvailabilityCalendar } from '../components/molecules';
 import { Header, Footer } from '../components/organisms';
 import LoadingState from '../components/atoms/LoadingState';
 import ErrorState from '../components/atoms/ErrorState';
 import RoomInfo from '../components/molecules/RoomInfo';
 import HotelLocationInfo from '../components/molecules/HotelLocationInfo';
 import RoomAmenities from '../components/molecules/RoomAmenities';
-import BookingSection from '../components/molecules/BookingSection';
 import RoomFeatures from '../components/molecules/RoomFeatures';
 
 const RoomDetail = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const { room, loading, error, handleBackClick, handleBooking } = useRoomDetail(id);
+  
+  const handleDateChange = ({ startDate, endDate }) => {
+    // Handle date selection for potential booking
+    console.log('Selected dates:', { startDate, endDate });
+  };
 
   if (loading) {
     return <LoadingState />;
@@ -106,10 +110,14 @@ const RoomDetail = () => {
                     )}
                   </div>
 
-                  {/* Right: Booking CTA */}
+                  {/* Right: Availability Calendar */}
                   <div className="md:col-span-1">
                     <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg p-4 border border-gray-200/60 dark:border-gray-700/60 md:sticky md:top-24">
-                      <BookingSection room={room} onBooking={handleBooking} />
+                      <AvailabilityCalendar 
+                        roomId={room.id} 
+                        onDateChange={handleDateChange}
+                        showBookingButton={room.isAvailable}
+                      />
                     </div>
                   </div>
                 </div>
