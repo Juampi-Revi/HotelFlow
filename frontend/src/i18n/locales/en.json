@@ -360,7 +360,8 @@
         },
         "errors": {
           "categorySaveFailed": "Failed to save category.",
-          "featureSaveFailed": "Failed to save feature."
+          "featureSaveFailed": "Failed to save feature.",
+          "accessDenied": "You don’t have permission to perform this action."
         }
       }
     },

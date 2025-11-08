@@ -9,6 +9,7 @@ import { IconSelector } from '../../molecules';
 import { useRoomForm } from '../../../hooks';
 import { categoryService } from '../../../services/categoryService';
 import { featureService } from '../../../services/featureService';
+import { useAuth } from '../../../contexts';
 
 const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, isEditMode = false }) => {
   const { t } = useTranslation();
@@ -38,6 +39,7 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
   } = useRoomForm(initialData, onSubmit);
 
   const isFieldDisabled = isLoading;
+  const { isAdmin } = useAuth();
 
   const openCreateCategory = () => {
     setCatForm({ name: '', slug: '', description: '', isActive: true });
@@ -66,7 +68,10 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
       handleInputChange('categoryId')(created?.id ?? null);
       setShowCategoryModal(false);
     } catch (err) {
-      setQuickError(t('admin.room.quickCreate.errors.categorySaveFailed'));
+      const msg = err?.status === 403
+        ? t('admin.room.quickCreate.errors.accessDenied')
+        : t('admin.room.quickCreate.errors.categorySaveFailed');
+      setQuickError(msg);
     } finally {
       setSavingCat(false);
     }
@@ -83,7 +88,10 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
       }
       setShowFeatureModal(false);
     } catch (err) {
-      setQuickError(t('admin.room.quickCreate.errors.featureSaveFailed'));
+      const msg = err?.status === 403
+        ? t('admin.room.quickCreate.errors.accessDenied')
+        : t('admin.room.quickCreate.errors.featureSaveFailed');
+      setQuickError(msg);
     } finally {
       setSavingFeat(false);
     }
@@ -128,14 +136,16 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
             onChange={(e) => handleInputChange('categoryId')(e.target.value ? Number(e.target.value) : null)}
             options={categoryOptions}
             placeholder={t('admin.room.placeholders.category')}
-            error={errors.categoryId}
-            disabled={isFieldDisabled}
+          error={errors.categoryId}
+          disabled={isFieldDisabled}
           />
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" size="small" type="button" onClick={openCreateCategory}>
-              {t('admin.room.quickCreate.addCategory')}
-            </Button>
-          </div>
+          {isAdmin && (
+            <div className="flex items-center gap-2">
+              <Button variant="secondary" size="small" type="button" onClick={openCreateCategory}>
+                {t('admin.room.quickCreate.addCategory')}
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -285,9 +295,11 @@ const RoomForm = ({ onSubmit, onCancel, initialData = null, isLoading = false, i
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               {t('admin.room.sections.roomFeatures')}
             </h3>
-            <Button variant="secondary" size="small" type="button" onClick={openCreateFeature}>
-              {t('admin.room.quickCreate.addFeature')}
-            </Button>
+            {isAdmin && (
+              <Button variant="secondary" size="small" type="button" onClick={openCreateFeature}>
+                {t('admin.room.quickCreate.addFeature')}
+              </Button>
+            )}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

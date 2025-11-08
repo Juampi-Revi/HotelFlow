@@ -36,6 +36,23 @@ export const AuthProvider = ({ children }) => {
     } catch (_) {}
   }, []);
 
+  // Listen for global unauthorized events to force logout when token expires/invalid
+  useEffect(() => {
+    const onUnauthorized = () => {
+      try {
+        logout();
+      } catch (_) {}
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hf:unauthorized', onUnauthorized);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('hf:unauthorized', onUnauthorized);
+      }
+    };
+  }, []);
+
   const login = (payload) => {
     const next = { user: {
       id: payload.id,
