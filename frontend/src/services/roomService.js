@@ -129,5 +129,45 @@ export const roomService = {
       throw new Error('Failed to fetch destination suggestions');
     }
     return response.json();
+  },
+
+  // Availability methods
+  async getRoomAvailability(roomId, startDate, months = 2) {
+    const params = new URLSearchParams({
+      startDate: startDate || new Date().toISOString().split('T')[0],
+      months: months.toString()
+    });
+    
+    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/availability?${params}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch room availability');
+    }
+    return response.json();
+  },
+
+  async checkRoomAvailability(roomId, checkInDate, checkOutDate) {
+    const params = new URLSearchParams({
+      checkInDate,
+      checkOutDate
+    });
+    
+    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/availability/check?${params}`);
+    if (!response.ok) {
+      throw new Error('Failed to check room availability');
+    }
+    return response.json();
+  },
+
+  async getOccupiedDates(roomId, startDate, endDate) {
+    const params = new URLSearchParams({
+      startDate,
+      endDate
+    });
+    
+    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/occupied-dates?${params}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch occupied dates');
+    }
+    return response.json();
   }
 };
