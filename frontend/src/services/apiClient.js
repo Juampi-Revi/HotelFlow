@@ -21,6 +21,12 @@ export const apiFetch = async (path, options = {}) => {
     } catch (_) {}
     const err = new Error(message);
     err.status = resp.status;
+    // Notify app to logout on unauthorized responses
+    if (resp.status === 401 && typeof window !== 'undefined') {
+      try {
+        window.dispatchEvent(new CustomEvent('hf:unauthorized'));
+      } catch (_) {}
+    }
     throw err;
   }
 

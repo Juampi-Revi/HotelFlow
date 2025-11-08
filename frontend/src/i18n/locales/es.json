@@ -362,7 +362,8 @@
         },
         "errors": {
           "categorySaveFailed": "No se pudo guardar la categoría.",
-          "featureSaveFailed": "No se pudo guardar la característica."
+          "featureSaveFailed": "No se pudo guardar la característica.",
+          "accessDenied": "No tienes permisos para realizar esta acción."
         }
       },
       "rooms": {
