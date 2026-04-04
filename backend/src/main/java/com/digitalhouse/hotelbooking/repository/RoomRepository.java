@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     List<Room> findByCategory_Id(Long categoryId);
     List<Room> findByCategory_Slug(String categorySlug);
+    boolean existsByCategory_Id(Long categoryId);
     
     // Added: paginated fetch by multiple category ids
     Page<Room> findByCategory_IdIn(List<Long> categoryIds, Pageable pageable);
@@ -46,6 +48,12 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
            "(:maxPrice IS NULL OR r.pricePerNight <= :maxPrice) AND " +
            "(:roomType IS NULL OR r.roomType = :roomType) AND " +
            "(:categoryIds IS NULL OR r.category.id IN :categoryIds) AND " +
+           "(:checkIn IS NULL OR :checkOut IS NULL OR NOT EXISTS (" +
+           "  SELECT b.id FROM Booking b WHERE b.room = r " +
+           "  AND b.status = 'CONFIRMED' " +
+           "  AND b.checkInDate < :checkOut " +
+           "  AND b.checkOutDate > :checkIn" +
+           ")) AND " +
            "r.isAvailable = true")
     Page<Room> searchRooms(@Param("destination") String destination,
                           @Param("minCapacity") Integer minCapacity,
@@ -53,6 +61,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
                           @Param("maxPrice") BigDecimal maxPrice,
                           @Param("roomType") RoomType roomType,
                           @Param("categoryIds") List<Long> categoryIds,
+                          @Param("checkIn") LocalDate checkIn,
+                          @Param("checkOut") LocalDate checkOut,
                           Pageable pageable);
     
     @Query("SELECT DISTINCT r.city FROM Room r WHERE " +

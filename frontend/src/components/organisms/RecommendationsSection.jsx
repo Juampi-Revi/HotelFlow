@@ -1,46 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { roomService } from '../../services/roomService';
+import RoomGrid from './RoomGrid';
 
-export const RecommendationsSection = () => {
+export const RecommendationsSection = ({ favoriteIds = [], onToggleFavorite }) => {
   const { t } = useTranslation();
+  const [rooms, setRooms] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const load = async () => {
+      try {
+        if (isMounted) {
+          setIsLoading(true);
+        }
+        const data = await roomService.getRoomsForHome();
+        const list = Array.isArray(data) ? data : [];
+        const withImages = list.filter((r) => Array.isArray(r?.images) && r.images.length > 0);
+        const sorted = [...withImages].sort((a, b) => {
+          const aCount = Array.isArray(a?.images) ? a.images.length : 0;
+          const bCount = Array.isArray(b?.images) ? b.images.length : 0;
+          return bCount - aCount;
+        });
+        const uniqueByHotel = [];
+        const seen = new Set();
+        for (const room of sorted) {
+          const key = String(room?.hotelName || '').trim().toLowerCase();
+          if (!key) continue;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          uniqueByHotel.push(room);
+          if (uniqueByHotel.length >= 3) break;
+        }
+        if (isMounted) {
+          setRooms(uniqueByHotel.length > 0 ? uniqueByHotel : sorted.slice(0, 3));
+        }
+      } catch (e) {
+        if (isMounted) {
+          setRooms([]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+    load();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
-          {t('recommendations.title', 'Recommended Hotels')}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[1, 2, 3].map((item) => (
-            <div
-              key={item}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-colors duration-200 hover:shadow-xl"
-            >
-              <div className="h-48 bg-gradient-to-br from-primary-200 to-secondary-200 dark:from-primary-700 dark:to-secondary-700 flex items-center justify-center">
-                <span className="text-white font-bold text-2xl">
-                  {t('recommendations.imagePlaceholder', 'Hotel Image')}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {t(`recommendations.hotel${item}`, `Recommended Hotel ${item}`)}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {t('recommendations.description', 'Hotel description placeholder')}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-primary-600 dark:text-primary-400 font-bold">
-                    {t('recommendations.price', '$99/night')}
-                  </span>
-                  <span className="text-blue-500">
-                    ★★★★☆
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <RoomGrid
+      rooms={rooms}
+      title={t('recommendations.title')}
+      isLoading={isLoading}
+      favoriteIds={favoriteIds}
+      onToggleFavorite={onToggleFavorite}
+    />
   );
 };

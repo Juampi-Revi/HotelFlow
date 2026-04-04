@@ -11,6 +11,7 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [guests, setGuests] = useState(1);
+  const [error, setError] = useState(null);
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -34,8 +35,7 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
     try {
       const results = await roomService.getDestinationSuggestions(query);
       setSuggestions(results);
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
+    } catch (e) {
       setSuggestions([]);
     }
   }, []);
@@ -82,6 +82,7 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsSearching(true);
+    setError(null);
     try {
       const searchParams = {
         destination: destination || undefined,
@@ -95,10 +96,15 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
       };
       const results = await roomService.searchRooms(searchParams);
       if (onSearchResults) {
-        onSearchResults(results, { destination, guests, startDate, endDate });
+        onSearchResults(results, {
+          destination,
+          guests,
+          startDate: formatDate(startDate),
+          endDate: formatDate(endDate)
+        });
       }
-    } catch (error) {
-      console.error('Error searching rooms:', error);
+    } catch (e) {
+      setError(t('search.error'));
     } finally {
       setIsSearching(false);
     }
@@ -115,8 +121,8 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
             onChange={handleDestinationChange}
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-            placeholder={t('search.destinationPlaceholder', 'Where do you want to go?')}
-            aria-label={t('search.destinationPlaceholder', 'Where do you want to go?')}
+            placeholder={t('search.destinationPlaceholder')}
+            aria-label={t('search.destinationPlaceholder')}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
           />
           {showSuggestions && suggestions.length > 0 && (
@@ -156,7 +162,7 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
           >
             {[1,2,3,4,5,6,7,8].map(n => (
               <option key={n} value={n}>
-                {n} {n === 1 ? t('common.guest', 'Guest') : t('common.guests', 'Guests')}
+                {n} {n === 1 ? t('common.guest') : t('common.guests')}
               </option>
             ))}
           </select>
@@ -169,10 +175,15 @@ const CompactFiltersBar = ({ onSearchResults, initialParams }) => {
             disabled={isSearching}
             className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-lg transition-colors duration-200"
           >
-            {isSearching ? t('search.searching', 'Searching...') : t('search.searchButton', 'Search')}
+            {isSearching ? t('search.searching') : t('search.searchButton')}
           </button>
         </div>
       </form>
+      {error && (
+        <div className="mt-3 text-center text-sm text-red-600 dark:text-red-400">
+          {error}
+        </div>
+      )}
     </div>
   );
 };

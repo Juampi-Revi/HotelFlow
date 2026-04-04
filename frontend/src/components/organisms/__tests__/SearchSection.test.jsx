@@ -4,7 +4,7 @@ import { roomService } from '../../../services/roomService';
 
 // Mock useTranslation to avoid I18nextProvider and hooks issues
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key, defaultValue) => defaultValue || key })
+  useTranslation: () => ({ t: (key) => key })
 }));
 
 // Mock the room service with factory returning object functions
@@ -17,16 +17,14 @@ jest.mock('../../../services/roomService', () => ({
 
 // Mock react-datepicker
 jest.mock('react-datepicker', () => {
-  return function MockDatePicker({ selected, onChange, placeholderText, onFocus, onBlur, ...props }) {
+  return function MockDatePicker({ selected, onChange, placeholderText, onFocus, onBlur }) {
     return (
       <input
-        data-testid={props['data-testid']}
         value={selected ? selected.toISOString().split('T')[0] : ''}
         onChange={(e) => onChange(new Date(e.target.value))}
         placeholder={placeholderText}
         onFocus={onFocus}
         onBlur={onBlur}
-        {...props}
       />
     );
   };
@@ -50,10 +48,10 @@ describe('SearchSection', () => {
   test('renders search form elements', () => {
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
-    expect(screen.getByText('Find Your Perfect Hotel')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Where do you want to go?')).toBeInTheDocument();
+    expect(screen.getByText('search.title')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('search.destinationPlaceholder')).toBeInTheDocument();
     expect(screen.getByRole('combobox')).toBeInTheDocument();
-    expect(screen.getByText('Realizar búsqueda')).toBeInTheDocument();
+    expect(screen.getByText('search.searchButton')).toBeInTheDocument();
   });
 
   test('updates destination input and fetches suggestions', async () => {
@@ -62,7 +60,7 @@ describe('SearchSection', () => {
 
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
-    const destinationInput = screen.getByPlaceholderText('Where do you want to go?');
+    const destinationInput = screen.getByPlaceholderText('search.destinationPlaceholder');
     fireEvent.change(destinationInput, { target: { value: 'Par' } });
     
     await waitFor(() => {
@@ -83,14 +81,14 @@ describe('SearchSection', () => {
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
     // No interaction with DateRangePicker in this test; ensure component renders
-    expect(screen.getByText('Realizar búsqueda')).toBeInTheDocument();
+    expect(screen.getByText('search.searchButton')).toBeInTheDocument();
   });
 
   test('updates check-out date', () => {
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
     // No interaction with DateRangePicker in this test; ensure component renders
-    expect(screen.getByText('Realizar búsqueda')).toBeInTheDocument();
+    expect(screen.getByText('search.searchButton')).toBeInTheDocument();
   });
 
   test('performs search when form is submitted', async () => {
@@ -104,11 +102,11 @@ describe('SearchSection', () => {
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
     // Fill form
-    const destinationInput = screen.getByPlaceholderText('Where do you want to go?');
+    const destinationInput = screen.getByPlaceholderText('search.destinationPlaceholder');
     fireEvent.change(destinationInput, { target: { value: 'Paris' } });
     
     // Submit form
-    const searchButton = screen.getByText('Realizar búsqueda');
+    const searchButton = screen.getByText('search.searchButton');
     fireEvent.click(searchButton);
     
     await waitFor(() => {
@@ -122,7 +120,15 @@ describe('SearchSection', () => {
       });
     });
     
-    expect(mockOnSearch).toHaveBeenCalledWith(mockSearchResults);
+    expect(mockOnSearch).toHaveBeenCalledWith(
+      mockSearchResults,
+      {
+        destination: 'Paris',
+        guests: 1,
+        startDate: undefined,
+        endDate: undefined
+      }
+    );
   });
 
   test('shows loading state during search', async () => {
@@ -135,10 +141,10 @@ describe('SearchSection', () => {
 
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
-    const searchButton = screen.getByText('Realizar búsqueda');
+    const searchButton = screen.getByText('search.searchButton');
     fireEvent.click(searchButton);
     
-    expect(screen.getByText('Searching...')).toBeInTheDocument();
+    expect(screen.getByText('search.searching')).toBeInTheDocument();
     
     // Resolve the promise
     resolveSearch({
@@ -148,24 +154,20 @@ describe('SearchSection', () => {
     });
     
     await waitFor(() => {
-      expect(screen.getByText('Realizar búsqueda')).toBeInTheDocument();
+      expect(screen.getByText('search.searchButton')).toBeInTheDocument();
     });
   });
 
   test('handles search error gracefully', async () => {
     roomService.searchRooms.mockRejectedValue(new Error('Search failed'));
-    
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     render(<SearchSection onSearchResults={mockOnSearch} />);
     
-    const searchButton = screen.getByText('Realizar búsqueda');
+    const searchButton = screen.getByText('search.searchButton');
     fireEvent.click(searchButton);
     
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Error searching rooms:', expect.any(Error));
+      expect(screen.getByText('search.error')).toBeInTheDocument();
     });
-    
-    consoleSpy.mockRestore();
   });
 });

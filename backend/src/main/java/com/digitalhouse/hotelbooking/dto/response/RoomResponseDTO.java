@@ -36,6 +36,8 @@ public class RoomResponseDTO {
     private String categorySlug;
     private String categoryName;
     private java.util.List<FeatureResponseDTO> features;
+    private BigDecimal averageRating;
+    private Long totalRatings;
     
     public RoomResponseDTO() {}
     
@@ -288,5 +290,21 @@ public class RoomResponseDTO {
 
     public void setHasAirConditioning(Boolean hasAirConditioning) {
         this.hasAirConditioning = hasAirConditioning;
+    }
+
+    public BigDecimal getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(BigDecimal averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Long getTotalRatings() {
+        return totalRatings;
+    }
+
+    public void setTotalRatings(Long totalRatings) {
+        this.totalRatings = totalRatings;
     }
 }

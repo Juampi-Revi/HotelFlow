@@ -47,3 +47,4 @@ public class ErrorResponse {
         this.timestamp = timestamp;
     }
 }
+

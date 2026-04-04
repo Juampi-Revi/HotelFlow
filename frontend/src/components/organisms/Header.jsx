@@ -7,7 +7,7 @@ import { useAuth } from '../../contexts';
 const Header = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, isAdmin } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -16,7 +16,7 @@ const Header = () => {
   };
 
   const goToAdmin = () => navigate('/admin');
-  const goToProfile = () => navigate('/admin/profile');
+  const goToProfile = () => navigate(isAdmin ? '/admin/profile' : '/profile');
   const handleLogout = () => { try { logout(); } catch (_) {} navigate('/'); setMenuOpen(false); };
 
   useEffect(() => {
@@ -46,20 +46,38 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Center - Navigation */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
             >
-              {t('nav.home')}
+              {t('header.home')}
             </Link>
             <Link 
               to="/rooms" 
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
             >
-              {t('nav.rooms')}
+              {t('header.hotels')}
             </Link>
+
+            {isAuthenticated && (
+              <Link 
+                to="/favorites" 
+                className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              >
+                {t('header.favorites')}
+              </Link>
+            )}
+
+            {isAuthenticated && isAdmin && (
+              <Link 
+                to="/admin" 
+                className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              >
+                {t('header.admin')}
+              </Link>
+            )}
           </nav>
 
           {/* Right side - Controls and Navigation */}

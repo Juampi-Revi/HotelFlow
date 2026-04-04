@@ -30,3 +30,4 @@ export const useToast = (defaultDuration = 2500) => {
 };
 
 export default useToast;
+

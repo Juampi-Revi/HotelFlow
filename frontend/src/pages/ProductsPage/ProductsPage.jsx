@@ -1,19 +1,21 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Pagination } from '../../components/atoms';
 import { Header, Footer, CompactFiltersBar } from '../../components/organisms';
-import { ImageGallery } from '../../components/molecules';
 import useRoomsPagination from '../../hooks/useRoomsPagination';
-import { formatPrice, getRoomTypeColor, getAvailabilityColor, formatGuestCount } from '../../utils/roomUtils';
+import { formatPrice, getRoomTypeColor } from '../../utils/roomUtils';
 import { categoryService } from '../../services/categoryService';
+import { useAuth } from '../../contexts/AuthContext';
+import { favoriteService } from '../../services/favoriteService';
 
 const ProductsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { isAuthenticated } = useAuth();
   const [searchOverride, setSearchOverride] = useState(null);
+  const [favoriteIds, setFavoriteIds] = useState([]);
   
   const {
     rooms,
@@ -36,9 +38,6 @@ const ProductsPage = () => {
   } = useRoomsPagination();
 
   const [categories, setCategories] = useState([]);
-  // Dropdown state
-  const [isCatOpen, setIsCatOpen] = useState(false);
-  const catDropdownRef = useRef(null);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -63,18 +62,6 @@ const ProductsPage = () => {
     loadCategories();
   }, [location.search]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isCatOpen && catDropdownRef.current && !catDropdownRef.current.contains(event.target)) {
-        setIsCatOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isCatOpen]);
-
   const handleRoomClick = (roomId) => {
     navigate(`/room/${roomId}`);
   };
@@ -82,6 +69,47 @@ const ProductsPage = () => {
   const handleSearchResults = (results) => {
     // Override current rooms with search results (compact UX)
     setSearchOverride(results);
+  };
+
+  // Favorites: load for authenticated users
+  useEffect(() => {
+    const loadFavorites = async () => {
+      if (!isAuthenticated) {
+        setFavoriteIds([]);
+        return;
+      }
+      try {
+        const ids = await favoriteService.getFavorites();
+        if (Array.isArray(ids)) {
+          setFavoriteIds(ids);
+        }
+      } catch (_) {
+        // ignore
+      }
+    };
+    loadFavorites();
+  }, [isAuthenticated]);
+
+  const isFavorite = (roomId) => favoriteIds.includes(roomId);
+
+  const toggleFavorite = async (e, roomId) => {
+    e.stopPropagation();
+    if (!isAuthenticated) return;
+    try {
+      if (isFavorite(roomId)) {
+        setFavoriteIds(prev => prev.filter(id => id !== roomId));
+        await favoriteService.removeFavorite(roomId);
+      } else {
+        setFavoriteIds(prev => [...prev, roomId]);
+        await favoriteService.addFavorite(roomId);
+      }
+    } catch (_) {
+      // revert optimistic change
+      setFavoriteIds(prev => {
+        const has = prev.includes(roomId);
+        return has ? prev.filter(id => id !== roomId) : [...prev, roomId];
+      });
+    }
   };
 
   // Check if we have search results from navigation
@@ -137,6 +165,45 @@ const ProductsPage = () => {
             <CompactFiltersBar onSearchResults={handleSearchResults} initialParams={location.state?.searchParams} />
           </div>
 
+          {categories.length > 0 && (
+            <div className="mb-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50 p-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                  {t('categories.title')}
+                </div>
+                {selectedCategoryIds.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={clearCategoryFilters}
+                    className="text-sm font-medium text-blue-700 dark:text-blue-300 hover:underline self-start sm:self-auto"
+                  >
+                    {t('categories.clearFilters')}
+                  </button>
+                )}
+              </div>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {categories.map((cat) => {
+                  const isSelected = selectedCategoryIds.includes(cat.id);
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => handleCategoryToggle(cat.id)}
+                      className={
+                        isSelected
+                          ? 'px-3 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700'
+                          : 'px-3 py-1.5 rounded-full text-sm font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600'
+                      }
+                    >
+                      {cat.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Results Info */}
           <div className="flex justify-between items-center mb-6">
             <p className="text-gray-600 dark:text-gray-300">
@@ -180,6 +247,17 @@ const ProductsPage = () => {
                         {room.roomType}
                       </span>
                     </div>
+                    <button
+                      type="button"
+                      onClick={(e) => toggleFavorite(e, room.id)}
+                      aria-label={isFavorite(room.id) ? t('favorites.remove') : t('favorites.add')}
+                      title={!isAuthenticated ? t('favorites.loginToFavorite') : (isFavorite(room.id) ? t('favorites.remove') : t('favorites.add'))}
+                      className="absolute bottom-3 right-3 bg-white/80 dark:bg-gray-900/60 text-red-600 dark:text-red-400 hover:bg-white dark:hover:bg-gray-900 rounded-full p-2 shadow-sm border border-gray-200 dark:border-gray-700"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={isFavorite(room.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.878 0-3.5 1.09-4.312 2.667C11.188 4.84 9.566 3.75 7.688 3.75 5.099 3.75 3 5.765 3 8.25c0 5.25 9 11.25 9 11.25s9-6 9-11.25z" />
+                      </svg>
+                    </button>
                     {room.hotelRating && (
                       <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white px-2 py-1 rounded-lg text-xs font-medium">
                         ⭐ {room.hotelRating}

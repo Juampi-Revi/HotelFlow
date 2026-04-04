@@ -2,10 +2,12 @@ package com.digitalhouse.hotelbooking.service;
 
 import com.digitalhouse.hotelbooking.dto.request.CategoryRequestDTO;
 import com.digitalhouse.hotelbooking.dto.response.CategoryResponseDTO;
+import com.digitalhouse.hotelbooking.exception.AdminOperationNotAllowedException;
 import com.digitalhouse.hotelbooking.exception.CategoryNotFoundException;
 import com.digitalhouse.hotelbooking.exception.DuplicateCategoryException;
 import com.digitalhouse.hotelbooking.model.Category;
 import com.digitalhouse.hotelbooking.repository.CategoryRepository;
+import com.digitalhouse.hotelbooking.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +20,12 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final RoomRepository roomRepository;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, RoomRepository roomRepository) {
         this.categoryRepository = categoryRepository;
+        this.roomRepository = roomRepository;
     }
 
     public CategoryResponseDTO create(CategoryRequestDTO dto) {
@@ -90,6 +94,9 @@ public class CategoryService {
     public void delete(Long id) {
         Category existing = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));
+        if (roomRepository.existsByCategory_Id(existing.getId())) {
+            throw new AdminOperationNotAllowedException("Cannot delete category with associated rooms.");
+        }
         categoryRepository.delete(existing);
     }
 

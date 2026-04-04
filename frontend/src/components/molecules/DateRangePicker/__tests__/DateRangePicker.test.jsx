@@ -4,30 +4,28 @@ import DateRangePicker from '../DateRangePicker';
 // Mock useTranslation to avoid I18nextProvider and hooks issues
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ 
-    t: (key) => {
+    t: (key, defaultValue) => {
       const translations = {
         'search.checkIn': 'Check-in',
         'search.checkOut': 'Check-out',
         'search.selectCheckIn': 'Select check-in date',
         'search.selectCheckOut': 'Select check-out date'
       };
-      return translations[key] || key;
+      return translations[key] || defaultValue || key;
     }
   })
 }));
 
 // Mock react-datepicker
 jest.mock('react-datepicker', () => {
-  return function MockDatePicker({ selected, onChange, placeholderText, onFocus, onBlur, ...props }) {
+  return function MockDatePicker({ selected, onChange, placeholderText, onFocus, onBlur }) {
     return (
       <input
-        data-testid={props['data-testid']}
         value={selected ? selected.toISOString().split('T')[0] : ''}
         onChange={(e) => onChange(new Date(e.target.value))}
         placeholder={placeholderText}
         onFocus={onFocus}
         onBlur={onBlur}
-        {...props}
       />
     );
   };

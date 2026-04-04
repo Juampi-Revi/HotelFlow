@@ -61,8 +61,7 @@ const AvailabilityCalendar = ({
         const start = new Date(range.startDate);
         const end = new Date(range.endDate);
         
-        // Add all dates in the range
-        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
           occupiedDateObjects.push(new Date(d));
         }
       });
@@ -70,7 +69,6 @@ const AvailabilityCalendar = ({
       setOccupiedDates(occupiedDateObjects);
     } catch (err) {
       setError(err.message);
-      console.error('Error fetching occupied dates:', err);
     } finally {
       setLoading(false);
     }
@@ -86,7 +84,6 @@ const AvailabilityCalendar = ({
       const data = await roomService.checkRoomAvailability(roomId, checkIn, checkOut);
       setIsAvailable(Boolean(data?.isAvailable));
     } catch (err) {
-      console.error('Error checking availability:', err);
       setIsAvailable(false);
     }
   };
@@ -148,9 +145,6 @@ const AvailabilityCalendar = ({
       navigate(`/login?returnTo=${returnTo}&checkIn=${checkIn}&checkOut=${checkOut}`);
       return;
     }
-
-    // TODO: navigate to booking flow/page when implemented
-    console.log('Proceed to booking:', { roomId, checkIn, checkOut });
   };
 
   if (loading) {

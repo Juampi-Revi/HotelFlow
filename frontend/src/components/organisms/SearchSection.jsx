@@ -15,8 +15,8 @@ export const SearchSection = ({ onSearchResults }) => {
   
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchSuggestions = useCallback(async (query) => {
     if (query.length < 2) {
@@ -27,8 +27,7 @@ export const SearchSection = ({ onSearchResults }) => {
     try {
       const results = await roomService.getDestinationSuggestions(query);
       setSuggestions(results);
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
+    } catch (_) {
       setSuggestions([]);
     }
   }, []);
@@ -66,8 +65,11 @@ export const SearchSection = ({ onSearchResults }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsSearching(true);
+    setError(null);
     
     try {
+      const formatISODate = (date) => (date ? date.toISOString().split('T')[0] : undefined);
+
       const searchParams = {
         destination: searchData.destination || undefined,
         guests: searchData.guests,
@@ -76,14 +78,25 @@ export const SearchSection = ({ onSearchResults }) => {
         sortBy: 'pricePerNight',
         sortDirection: 'asc'
       };
+      const checkIn = formatISODate(searchData.startDate);
+      const checkOut = formatISODate(searchData.endDate);
+      if (checkIn && checkOut) {
+        searchParams.checkIn = checkIn;
+        searchParams.checkOut = checkOut;
+      }
 
       const results = await roomService.searchRooms(searchParams);
       
       if (onSearchResults) {
-        onSearchResults(results);
+        onSearchResults(results, {
+          destination: searchData.destination || '',
+          guests: searchData.guests,
+          startDate: checkIn,
+          endDate: checkOut
+        });
       }
-    } catch (error) {
-      console.error('Error searching rooms:', error);
+    } catch (e) {
+      setError(t('search.error'));
     } finally {
       setIsSearching(false);
     }
@@ -93,19 +106,18 @@ export const SearchSection = ({ onSearchResults }) => {
     <section className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-          {t('search.title', 'Find Your Perfect Hotel')}
+          {t('search.title')}
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-          {t('search.description', 'Discover amazing accommodations for your next adventure')}
+          {t('search.description')}
         </p>
         
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 transition-colors duration-200">
           <form onSubmit={handleSearch} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Destination Input */}
               <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {t('search.destination', 'Destination')}
+                  {t('search.destination')}
                 </label>
                 <input
                   type="text"
@@ -113,11 +125,10 @@ export const SearchSection = ({ onSearchResults }) => {
                   onChange={handleDestinationChange}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  placeholder={t('search.destinationPlaceholder', 'Where do you want to go?')}
+                  placeholder={t('search.destinationPlaceholder')}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                 />
                 
-                {/* Suggestions Dropdown */}
                 {showSuggestions && suggestions.length > 0 && (
                   <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                     {suggestions.map((suggestion, index) => (
@@ -134,7 +145,6 @@ export const SearchSection = ({ onSearchResults }) => {
                 )}
               </div>
 
-              {/* Date Range Picker */}
               <div className="md:col-span-2">
                 <DateRangePicker
                   startDate={searchData.startDate}
@@ -143,10 +153,9 @@ export const SearchSection = ({ onSearchResults }) => {
                 />
               </div>
 
-              {/* Guests Input */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {t('search.guests', 'Huéspedes')}
+                  {t('search.guests')}
                 </label>
                 <select
                   value={searchData.guests}
@@ -155,14 +164,13 @@ export const SearchSection = ({ onSearchResults }) => {
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
                     <option key={num} value={num}>
-                      {num} {num === 1 ? 'Huésped' : 'Huéspedes'}
+                      {num} {num === 1 ? t('search.guest') : t('search.guestsPlural')}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
 
-            {/* Search Button */}
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -172,13 +180,18 @@ export const SearchSection = ({ onSearchResults }) => {
                 {isSearching ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>{t('search.searching', 'Searching...')}</span>
+                    <span>{t('search.searching')}</span>
                   </>
                 ) : (
-                  <span>{t('search.searchButton', 'Realizar búsqueda')}</span>
+                  <span>{t('search.searchButton')}</span>
                 )}
               </button>
             </div>
+            {error && (
+              <div className="text-center text-sm text-red-600 dark:text-red-400">
+                {error}
+              </div>
+            )}
           </form>
         </div>
       </div>

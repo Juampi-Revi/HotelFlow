@@ -59,3 +59,4 @@ public class UserResponseDTO {
         this.createdAt = createdAt;
     }
 }
+

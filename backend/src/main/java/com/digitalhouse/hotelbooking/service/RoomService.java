@@ -13,6 +13,7 @@ import com.digitalhouse.hotelbooking.model.Category;
 import com.digitalhouse.hotelbooking.repository.FeatureRepository;
 import com.digitalhouse.hotelbooking.model.Feature;
 import com.digitalhouse.hotelbooking.dto.response.FeatureResponseDTO;
+import com.digitalhouse.hotelbooking.repository.RoomReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,12 +35,17 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final CategoryRepository categoryRepository;
     private final FeatureRepository featureRepository;
+    private final RoomReviewRepository roomReviewRepository;
     
     @Autowired
-    public RoomService(RoomRepository roomRepository, CategoryRepository categoryRepository, FeatureRepository featureRepository) {
+    public RoomService(RoomRepository roomRepository,
+                       CategoryRepository categoryRepository,
+                       FeatureRepository featureRepository,
+                       RoomReviewRepository roomReviewRepository) {
         this.roomRepository = roomRepository;
         this.categoryRepository = categoryRepository;
         this.featureRepository = featureRepository;
+        this.roomReviewRepository = roomReviewRepository;
     }
     
     public RoomResponseDTO createRoom(RoomRequestDTO roomRequestDTO) {
@@ -159,13 +167,14 @@ public class RoomService {
     public PagedRoomResponseDTO searchRooms(String destination, Integer guests, 
                                           BigDecimal minPrice, BigDecimal maxPrice, 
                                           RoomType roomType, List<Long> categoryIds,
+                                          LocalDate checkIn, LocalDate checkOut,
                                           int page, int size, String sortBy, String sortDirection) {
         Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         
         Page<Room> roomPage = roomRepository.searchRooms(
-            destination, guests, minPrice, maxPrice, roomType, categoryIds, pageable
+            destination, guests, minPrice, maxPrice, roomType, categoryIds, checkIn, checkOut, pageable
         );
         
         List<RoomResponseDTO> roomDTOs = roomPage.getContent()
@@ -335,6 +344,16 @@ public class RoomService {
                             .map(f -> new FeatureResponseDTO(f.getId(), f.getName(), f.getIcon(), f.getIsActive()))
                             .collect(java.util.stream.Collectors.toList())
             );
+        }
+
+        RoomReviewRepository.RoomRatingSummary summary = roomReviewRepository.getRatingSummary(room.getId());
+        if (summary != null) {
+            if (summary.getAverageRating() != null) {
+                dto.setAverageRating(BigDecimal.valueOf(summary.getAverageRating()).setScale(2, RoundingMode.HALF_UP));
+            }
+            if (summary.getTotalRatings() != null) {
+                dto.setTotalRatings(summary.getTotalRatings());
+            }
         }
         return dto;
     }

@@ -5,12 +5,15 @@
   },
   "header": {
     "home": "Home",
+    "hotels": "Hotels",
+    "favorites": "Favorites",
     "rooms": "Rooms",
     "about": "About",
     "contact": "Contact",
     "login": "Login",
     "signup": "Sign Up",
-    "createAccount": "Create Account"
+    "createAccount": "Create Account",
+    "admin": "Admin"
   },
   "nav": {
     "home": "Home",
@@ -76,6 +79,9 @@
     "noImages": "No images available",
     "hotelInformation": "Hotel Information",
     "hotelChain": "Hotel Chain",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
     "location": "Location",
     "address": "Address",
     "size": "Size",
@@ -154,6 +160,21 @@
     "sections": {
       "whatOffers": "What this place offers",
       "keyDetails": "Key Details"
+    },
+    "policies": {
+      "title": "Policies",
+      "houseRules": {
+        "title": "House rules",
+        "description": "Respect check-in/check-out times and keep the space in good condition."
+      },
+      "healthSafety": {
+        "title": "Health & safety",
+        "description": "We follow cleaning and safety standards for a comfortable stay."
+      },
+      "cancellation": {
+        "title": "Cancellation",
+        "description": "Check cancellation and refund policies before confirming."
+      }
     }
   },
   "search": {
@@ -165,10 +186,13 @@
     "filters": "Filters",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
+    "checkInPlaceholder": "Select check-in date",
+    "checkOutPlaceholder": "Select check-out date",
     "selectCheckIn": "Select check-in date",
     "selectCheckOut": "Select check-out date",
     "guests": "Guests",
     "guest": "Guest",
+    "guestsPlural": "Guests",
     "roomType": "Room Type",
     "priceRange": "Price Range",
     "amenities": "Amenities",
@@ -176,11 +200,17 @@
     "clear": "Clear Filters",
     "searchButton": "Search Hotels",
     "searching": "Searching...",
+    "error": "We couldn't run your search. Please try again.",
+    "resultsTitle": "Search results",
     "results": "{{count}} rooms found",
     "noResults": "No rooms found",
     "noResultsDescription": "Try adjusting your search criteria"
   },
+  "booking": {
+    "comingSoon": "Booking will be available soon."
+  },
   "categories": {
+    "title": "Categories",
     "all": "All Rooms",
     "single": "Single",
     "double": "Double",
@@ -214,6 +244,11 @@
   },
   "auth": {
     "loginToBook": "Log in to book"
+  },
+  "favorites": {
+    "add": "Add to favorites",
+    "remove": "Remove from favorites",
+    "loginToFavorite": "Log in to mark favorites"
   },
   "admin": {
     "title": "Administration",
@@ -588,7 +623,15 @@
           "deleteFailed": "Failed to delete category.",
           "toggleFailed": "Failed to toggle category."
         },
-        "confirmDelete": "Are you sure you want to delete this category?"
+        "confirmDelete": "Are you sure you want to delete this category?",
+        "deleteModal": {
+          "title": "Delete category",
+          "message": "Are you sure you want to delete this category?",
+          "warning": "This may affect associated products. This action cannot be undone.",
+          "cancel": "Cancel",
+          "confirm": "Delete",
+          "deleting": "Deleting..."
+        }
       }
       ,
       "features": {
@@ -759,5 +802,38 @@
         "emailRequired": "Email is required"
       }
     }
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share product",
+    "link": "Link",
+    "message": "Message",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "copied": "Copied to clipboard",
+    "tooltips": {
+      "facebook": "Share on Facebook",
+      "twitter": "Share on Twitter",
+      "instagram": "Open Instagram and copy",
+      "copyLink": "Copy link"
+    },
+    "instagramHint": "For Instagram we open the site/app and copy the text+link so you can paste it."
+  },
+  "reviews": {
+    "title": "Reviews",
+    "loading": "Loading...",
+    "loadError": "Could not load reviews.",
+    "empty": "No reviews yet.",
+    "count": "{{count}} reviews",
+    "yourRating": "Your rating",
+    "selectRating": "Select a rating.",
+    "comment": "Review (optional)",
+    "commentPlaceholder": "Tell us about your experience...",
+    "submit": "Publish",
+    "saving": "Saving...",
+    "saved": "Thanks for your review!",
+    "saveError": "Could not save your review.",
+    "onlyAfterStay": "You can review only after completing a booking for this accommodation.",
+    "anonymous": "User"
   }
 }

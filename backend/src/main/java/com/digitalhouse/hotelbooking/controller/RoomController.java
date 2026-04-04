@@ -7,11 +7,13 @@ import com.digitalhouse.hotelbooking.model.enums.RoomType;
 import com.digitalhouse.hotelbooking.service.RoomService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -104,6 +106,8 @@ public class RoomController {
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) RoomType roomType,
             @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkIn,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOut,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "pricePerNight") String sortBy,
@@ -111,7 +115,7 @@ public class RoomController {
         
         PagedRoomResponseDTO searchResults = roomService.searchRooms(
             destination, guests, minPrice, maxPrice, roomType, categoryIds,
-            page, size, sortBy, sortDirection
+            checkIn, checkOut, page, size, sortBy, sortDirection
         );
         return ResponseEntity.ok(searchResults);
     }
