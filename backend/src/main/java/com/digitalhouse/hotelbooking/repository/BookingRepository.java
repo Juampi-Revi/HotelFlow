@@ -89,4 +89,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
            "ORDER BY b.checkInDate")
     List<Booking> findUpcomingBookingsByUser(@Param("userId") Long userId, 
                                             @Param("currentDate") LocalDate currentDate);
+
+    @Query("SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END FROM Booking b " +
+            "WHERE b.room.id = :roomId " +
+            "AND b.user.id = :userId " +
+            "AND b.status <> 'CANCELLED' " +
+            "AND b.checkOutDate < :today")
+    boolean hasCompletedStay(@Param("roomId") Long roomId,
+                             @Param("userId") Long userId,
+                             @Param("today") LocalDate today);
 }

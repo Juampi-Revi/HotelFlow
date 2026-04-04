@@ -59,37 +59,42 @@ const RoomAmenities = ({ room }) => {
   });
 
   return (
-    <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-5 mb-6">
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">{t('common.included')}</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Basic Amenities */}
+    <div className="p-0 m-0">
+      <div className="space-y-4">
         <div>
+          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t('common.included')}</h4>
           <div className="flex flex-wrap gap-2">
             {room.hasWifi && (
-              <span className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 rounded-full text-sm">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M16.704 7.696a9 9 0 00-13.408 0l1.12 1.12a7.5 7.5 0 0111.168 0l1.12-1.12zM5.88 10.12a4.5 4.5 0 018.24 0l1.12-1.12a6 6 0 00-10.48 0l1.12 1.12zM7.75 12.25a2 2 0 012.5 0l-1.25 1.25-1.25-1.25z"/></svg>
                 WiFi
               </span>
             )}
             {room.hasAirConditioning && (
-              <span className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 px-3 py-1 rounded-full text-sm">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M3 12h18M5 5l14 14M19 5L5 19"/></svg>
                 {t('common.airConditioning')}
               </span>
             )}
             {room.hasBalcony && (
-              <span className="bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 px-3 py-1 rounded-full text-sm">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path strokeLinecap="round" strokeLinejoin="round" d="M4 12h16M6 7h12M6 17h12"/></svg>
                 {t('common.balcony')}
               </span>
             )}
           </div>
         </div>
-        
-        {/* Additional Amenities */}
+
         {filteredAmenities.length > 0 && (
           <div>
-            <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">{t('common.additional')}</h4>
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t('common.additional')}</h4>
             <div className="flex flex-wrap gap-2">
               {filteredAmenities.map((amenity, index) => (
-                <span key={index} className="bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">
+                <span
+                  key={index}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14M5 12h14"/></svg>
                   {translateAmenity(amenity)}
                 </span>
               ))}

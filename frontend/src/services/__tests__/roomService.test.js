@@ -1,4 +1,9 @@
+jest.mock('../apiClient', () => ({
+  apiFetch: jest.fn()
+}));
+
 import { roomService } from '../roomService';
+import { apiFetch } from '../apiClient';
 
 // Mock fetch
 global.fetch = jest.fn();
@@ -6,6 +11,7 @@ global.fetch = jest.fn();
 describe('roomService', () => {
   beforeEach(() => {
     fetch.mockClear();
+    apiFetch.mockClear();
   });
 
   describe('searchRooms', () => {
@@ -137,6 +143,45 @@ describe('roomService', () => {
       await expect(roomService.getDestinationSuggestions('Par'))
         .rejects
         .toThrow('Network error');
+    });
+  });
+
+  describe('reviews', () => {
+    test('getRoomReviews makes correct API call', async () => {
+      const mockResponse = { roomId: 1, averageRating: 4.5, totalRatings: 2, reviews: [] };
+
+      fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      });
+
+      const result = await roomService.getRoomReviews(1);
+
+      expect(fetch).toHaveBeenCalledWith('http://localhost:8082/api/rooms/1/reviews');
+      expect(result).toEqual(mockResponse);
+    });
+
+    test('canCurrentUserReviewRoom calls apiFetch with correct path', async () => {
+      apiFetch.mockResolvedValueOnce({ roomId: 1, canReview: true });
+
+      const result = await roomService.canCurrentUserReviewRoom(1);
+
+      expect(apiFetch).toHaveBeenCalledWith('/reviews/rooms/1/eligibility', { method: 'GET' });
+      expect(result).toEqual({ roomId: 1, canReview: true });
+    });
+
+    test('createOrUpdateRoomReview calls apiFetch with correct payload', async () => {
+      const mockResponse = { roomId: 1, averageRating: 5, totalRatings: 1, reviews: [] };
+      apiFetch.mockResolvedValueOnce(mockResponse);
+
+      const result = await roomService.createOrUpdateRoomReview({ roomId: 1, rating: 5, comment: 'Excellent' });
+
+      expect(apiFetch).toHaveBeenCalledWith('/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: 1, rating: 5, comment: 'Excellent' })
+      });
+      expect(result).toEqual(mockResponse);
     });
   });
 });

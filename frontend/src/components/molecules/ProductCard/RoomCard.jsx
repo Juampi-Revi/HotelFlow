@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
 
-const RoomCard = ({ room }) => {
+const RoomCard = ({ room, isFavorite = false, onToggleFavorite }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
@@ -48,6 +50,24 @@ const RoomCard = ({ room }) => {
           <span className={`absolute top-3 left-3 ${statusClasses}`}>
             {room.isAvailable ? t('room.available') : t('room.unavailable')}
           </span>
+          {onToggleFavorite && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!isAuthenticated) return;
+                onToggleFavorite(room.id);
+              }}
+              aria-label={isFavorite ? t('favorites.remove') : t('favorites.add')}
+              title={!isAuthenticated ? t('favorites.loginToFavorite') : (isFavorite ? t('favorites.remove') : t('favorites.add'))}
+              className="absolute bottom-3 right-3 bg-white/85 dark:bg-gray-900/70 text-red-600 dark:text-red-400 hover:bg-white dark:hover:bg-gray-900 rounded-full p-2 shadow-sm border border-gray-200 dark:border-gray-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={isFavorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.878 0-3.5 1.09-4.312 2.667C11.188 4.84 9.566 3.75 7.688 3.75 5.099 3.75 3 5.765 3 8.25c0 5.25 9 11.25 9 11.25s9-6 9-11.25z" />
+              </svg>
+            </button>
+          )}
         </div>
       )}
 
@@ -57,6 +77,18 @@ const RoomCard = ({ room }) => {
             {t('room.roomNumber', { number: room.roomNumber })}
           </h3>
         </div>
+
+        {(room?.averageRating || room?.totalRatings) && (
+          <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200 mb-3">
+            <svg className="w-4 h-4 text-amber-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.802-2.036a1 1 0 00-1.175 0l-2.802 2.036c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.88 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <span className="font-semibold">
+              {room?.averageRating ? Number(room.averageRating).toFixed(1) : '0.0'}
+            </span>
+            <span className="text-gray-500 dark:text-gray-400">
+              ({room?.totalRatings ?? 0})
+            </span>
+          </div>
+        )}
 
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-relaxed">
           {room.description}

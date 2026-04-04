@@ -5,12 +5,15 @@
   },
   "header": {
     "home": "Inicio",
+    "hotels": "Hoteles",
+    "favorites": "Favoritos",
     "rooms": "Habitaciones",
     "about": "Acerca de",
     "contact": "Contacto",
     "login": "Iniciar Sesión",
     "signup": "Registrarse",
-    "createAccount": "Crear Cuenta"
+    "createAccount": "Crear Cuenta",
+    "admin": "Admin"
   },
   "nav": {
     "home": "Inicio",
@@ -76,6 +79,9 @@
     "noImages": "No hay imágenes disponibles",
     "hotelInformation": "Información del Hotel",
     "hotelChain": "Cadena Hotelera",
+    "share": "Compartir",
+    "copyLink": "Copiar enlace",
+    "linkCopied": "Enlace copiado",
     "rating": "Calificación",
     "location": "Ubicación",
     "address": "Dirección",
@@ -156,6 +162,21 @@
     "sections": {
       "whatOffers": "¿Qué ofrece este lugar?",
       "keyDetails": "Detalles clave"
+    },
+    "policies": {
+      "title": "Políticas",
+      "houseRules": {
+        "title": "Reglas de la casa",
+        "description": "Respetá los horarios de check-in/check-out y mantené el espacio en buenas condiciones."
+      },
+      "healthSafety": {
+        "title": "Salud y seguridad",
+        "description": "Cumplimos estándares de limpieza y seguridad para una estadía cómoda."
+      },
+      "cancellation": {
+        "title": "Cancelación",
+        "description": "Consultá condiciones de cancelación y reembolsos antes de confirmar."
+      }
     }
   },
   "search": {
@@ -167,10 +188,13 @@
     "filters": "Filtros",
     "checkIn": "Entrada",
     "checkOut": "Salida",
+    "checkInPlaceholder": "Seleccionar fecha de entrada",
+    "checkOutPlaceholder": "Seleccionar fecha de salida",
     "selectCheckIn": "Seleccionar fecha de entrada",
     "selectCheckOut": "Seleccionar fecha de salida",
     "guests": "Huéspedes",
     "guest": "Huésped",
+    "guestsPlural": "Huéspedes",
     "roomType": "Tipo de Habitación",
     "priceRange": "Rango de Precio",
     "amenities": "Amenidades",
@@ -178,11 +202,17 @@
     "clear": "Limpiar Filtros",
     "searchButton": "Realizar búsqueda",
     "searching": "Buscando...",
+    "error": "No se pudo realizar la búsqueda. Intentá nuevamente.",
+    "resultsTitle": "Resultados de la búsqueda",
     "results": "{{count}} habitaciones encontradas",
     "noResults": "No se encontraron habitaciones",
     "noResultsDescription": "Intenta ajustar tus criterios de búsqueda"
   },
+  "booking": {
+    "comingSoon": "Funcionalidad de reserva próximamente."
+  },
   "categories": {
+    "title": "Categorías",
     "all": "Todas las Habitaciones",
     "single": "Individual",
     "double": "Doble",
@@ -216,6 +246,11 @@
   },
   "auth": {
     "loginToBook": "Inicia sesión para reservar"
+  },
+  "favorites": {
+    "add": "Agregar a favoritos",
+    "remove": "Quitar de favoritos",
+    "loginToFavorite": "Inicia sesión para marcar favoritos"
   },
   "admin": {
     "title": "Administración",
@@ -566,7 +601,15 @@
         "deleteFailed": "Error al eliminar la categoría.",
         "toggleFailed": "Error al alternar el estado de la categoría."
       },
-      "confirmDelete": "¿Estás seguro de eliminar esta categoría?"
+      "confirmDelete": "¿Estás seguro de eliminar esta categoría?",
+      "deleteModal": {
+        "title": "Eliminar categoría",
+        "message": "¿Confirmás que querés eliminar esta categoría?",
+        "warning": "Esto puede afectar a los productos asociados. Esta acción no se puede deshacer.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "Eliminando..."
+      }
     },
     "features": {
       "title": "Gestión de Características",
@@ -735,5 +778,38 @@
         "emailRequired": "El email es requerido"
       }
     }
+  },
+  "share": {
+    "button": "Compartir",
+    "title": "Compartir producto",
+    "link": "Enlace",
+    "message": "Mensaje",
+    "copyLink": "Copiar link",
+    "linkCopied": "Link copiado",
+    "copied": "Copiado al portapapeles",
+    "tooltips": {
+      "facebook": "Compartir en Facebook",
+      "twitter": "Compartir en Twitter",
+      "instagram": "Abrir Instagram y copiar",
+      "copyLink": "Copiar enlace"
+    },
+    "instagramHint": "En Instagram se abrirá la app/sitio y se copiará el texto+link para pegarlo."
+  },
+  "reviews": {
+    "title": "Valoraciones",
+    "loading": "Cargando...",
+    "loadError": "No se pudieron cargar las valoraciones.",
+    "empty": "Todavía no hay valoraciones.",
+    "count": "{{count}} valoraciones",
+    "yourRating": "Tu puntuación",
+    "selectRating": "Seleccioná una puntuación.",
+    "comment": "Reseña (opcional)",
+    "commentPlaceholder": "Contanos tu experiencia...",
+    "submit": "Publicar",
+    "saving": "Guardando...",
+    "saved": "¡Gracias por tu valoración!",
+    "saveError": "No se pudo guardar tu valoración.",
+    "onlyAfterStay": "Solo podés valorar si ya finalizaste una reserva en este alojamiento.",
+    "anonymous": "Usuario"
   }
 }

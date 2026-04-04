@@ -30,15 +30,10 @@ export const useRoomDetail = (roomId) => {
     navigate('/');
   };
 
-  const handleBooking = () => {
-    alert(`Booking room ${roomNumber}`);
-  };
-
   return {
     room,
     loading,
     error,
     handleBackClick,
-    handleBooking
   };
 };

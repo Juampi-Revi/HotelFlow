@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import RoomCard from '../molecules/ProductCard/RoomCard';
 
-const RoomGrid = ({ rooms = [], title, isLoading = false }) => {
+const RoomGrid = ({ rooms = [], title, isLoading = false, favoriteIds = [], onToggleFavorite }) => {
   const { t } = useTranslation();
 
   if (isLoading) {
@@ -64,6 +64,9 @@ const RoomGrid = ({ rooms = [], title, isLoading = false }) => {
             <RoomCard
               key={room.id}
               room={room}
+              canEdit={false} // Disable edit mode in grid
+              isFavorite={favoriteIds.includes(room.id)}
+              onToggleFavorite={onToggleFavorite}
             />
           ))}
         </div>

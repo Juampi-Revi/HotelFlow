@@ -1,8 +1,18 @@
 import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
+import { useAuth } from '../../../contexts/AuthContext';
 
-const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability, canEdit = true }) => {
+const RoomCard = ({ 
+  room, 
+  onEdit, 
+  onDelete, 
+  onToggleAvailability, 
+  canEdit = true,
+  isFavorite = false,
+  onToggleFavorite
+}) => {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
@@ -42,13 +52,39 @@ const RoomCard = ({ room, onEdit, onDelete, onToggleAvailability, canEdit = true
               {room.images.length} {t('rooms.images')}
             </div>
           )}
+          
+          {/* Favorite Button */}
+          {isAuthenticated && onToggleFavorite && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleFavorite(room.id);
+              }}
+              className="absolute top-3 left-3 p-2 rounded-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-900 transition-colors duration-200 shadow-sm group/fav"
+              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className={`w-5 h-5 transition-colors duration-200 ${
+                  isFavorite 
+                    ? 'fill-red-500 text-red-500' 
+                    : 'fill-transparent text-gray-600 dark:text-gray-300 group-hover/fav:text-red-500'
+                }`}
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+          )}
         </div>
       )}
 
       <div className="p-4">
         <div className="space-y-2 mb-4">
           <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-            {t(`admin.room.types.${room.roomType.toLowerCase()}`)}
+            {room.roomType ? t(`admin.room.types.${room.roomType.toLowerCase()}`) : t('admin.room.types.unknown')}
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {t('admin.room.capacity', { capacity: room.capacity })}

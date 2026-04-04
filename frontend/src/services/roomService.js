@@ -169,5 +169,25 @@ export const roomService = {
       throw new Error('Failed to fetch occupied dates');
     }
     return response.json();
+  },
+
+  async getRoomReviews(roomId) {
+    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/reviews`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch room reviews');
+    }
+    return response.json();
+  },
+
+  async canCurrentUserReviewRoom(roomId) {
+    return apiFetch(`/reviews/rooms/${roomId}/eligibility`, { method: 'GET' });
+  },
+
+  async createOrUpdateRoomReview({ roomId, rating, comment }) {
+    return apiFetch('/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roomId, rating, comment })
+    });
   }
 };

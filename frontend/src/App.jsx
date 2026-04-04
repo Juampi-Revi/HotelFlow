@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Header, Hero, Footer, SimpleSearchSection } from './components';
+import { Header, Hero, Footer, SearchSection, RecommendationsSection } from './components';
 import RoomGrid from './components/organisms/RoomGrid';
 import { ThemeProvider, useAuth } from './contexts';
 import { roomService } from './services/roomService';
+import { favoriteService } from './services/favoriteService';
 import Admin from './pages/Admin/Admin';
 import AdminRooms from './pages/AdminRooms/AdminRooms';
 import AdminAnalytics from './pages/AdminAnalytics/AdminAnalytics';
@@ -19,13 +20,16 @@ import AdminUsers from './pages/AdminUsers/AdminUsers';
 import RoomDetail from './pages/RoomDetail';
 import Auth from './pages/Auth/Auth';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
+import FavoritesPage from './pages/FavoritesPage/FavoritesPage';
 import AdminFeatures from './pages/AdminFeatures/AdminFeatures';
 
 function HomePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [favoriteIds, setFavoriteIds] = useState([]);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -43,14 +47,67 @@ function HomePage() {
     fetchRooms();
   }, []);
 
-  const handleSearchResults = (searchResults, searchParams) => {
-    // Navigate to rooms page with search results and parameters
-    navigate('/rooms', { 
-      state: { 
-        searchResults,
-        searchParams,
-        fromSearch: true 
-      } 
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (isAuthenticated) {
+        try {
+          const ids = await favoriteService.getFavorites();
+          setFavoriteIds(Array.isArray(ids) ? ids : []);
+        } catch (_) {}
+      } else {
+        setFavoriteIds([]);
+      }
+    };
+
+    fetchFavorites();
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    const onFavoritesChanged = (e) => {
+      const detail = e?.detail;
+      const roomId = Number(detail?.roomId);
+      if (!roomId || !isAuthenticated) return;
+      setFavoriteIds((prev) => {
+        if (detail?.action === 'add') {
+          return prev.includes(roomId) ? prev : [...prev, roomId];
+        }
+        if (detail?.action === 'remove') {
+          return prev.filter((id) => id !== roomId);
+        }
+        return prev;
+      });
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hf:favoritesChanged', onFavoritesChanged);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('hf:favoritesChanged', onFavoritesChanged);
+      }
+    };
+  }, [isAuthenticated]);
+
+  const handleToggleFavorite = async (roomId) => {
+    if (!isAuthenticated) return;
+
+    try {
+      if (favoriteIds.includes(roomId)) {
+        await favoriteService.removeFavorite(roomId);
+        setFavoriteIds(prev => prev.filter(id => id !== roomId));
+      } else {
+        await favoriteService.addFavorite(roomId);
+        setFavoriteIds(prev => [...prev, roomId]);
+      }
+    } catch (_) {}
+  };
+
+  const handleSearchResults = (results, searchParams) => {
+    navigate('/rooms', {
+      state: {
+        fromSearch: true,
+        searchResults: results,
+        searchParams
+      }
     });
   };
 
@@ -60,11 +117,14 @@ function HomePage() {
       
       <main className="pt-16 flex-grow">
         <Hero />
-        <SimpleSearchSection onSearchResults={handleSearchResults} />
+        <SearchSection onSearchResults={handleSearchResults} />
+        <RecommendationsSection favoriteIds={favoriteIds} onToggleFavorite={handleToggleFavorite} />
         <RoomGrid 
           rooms={rooms}
           title={t('home.featuredRooms')}
           isLoading={isLoading}
+          favoriteIds={favoriteIds}
+          onToggleFavorite={handleToggleFavorite}
         />
       </main>
       
@@ -113,6 +173,8 @@ function App() {
           <Route path="/room/:id" element={<RoomDetail />} />
           <Route path="/register" element={<Auth />} />
           <Route path="/login" element={<Auth />} />
+          <Route path="/favorites" element={<RequireAuth><FavoritesPage /></RequireAuth>} />
+          <Route path="/profile" element={<RequireAuth><AdminProfile /></RequireAuth>} />
           <Route path="/admin" element={<RequireAdmin><Admin /></RequireAdmin>} />
           <Route path="/admin/rooms" element={<RequireAdmin><AdminRooms /></RequireAdmin>} />
           <Route path="/admin/analytics" element={<RequireAdmin><AdminAnalytics /></RequireAdmin>} />

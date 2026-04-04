@@ -19,3 +19,4 @@ public class ValidationErrorResponse extends ErrorResponse {
         this.fieldErrors = fieldErrors;
     }
 }
+

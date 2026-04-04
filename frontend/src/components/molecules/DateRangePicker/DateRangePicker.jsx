@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +11,6 @@ const DateRangePicker = ({
   showLabels = true,
 }) => {
   const { t } = useTranslation();
-  const [focusedInput, setFocusedInput] = useState(null);
 
   const inputClasses = showLabels
     ? 'w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
@@ -31,7 +29,6 @@ const DateRangePicker = ({
 
   const today = new Date();
 
-  // Ensure popper renders above everything and avoid clipping issues
   const popperContainer = ({ children }) => (
     <div style={{ zIndex: 2147483647 }}>
       {children}
@@ -43,7 +40,7 @@ const DateRangePicker = ({
       <div>
         {showLabels && (
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Entrada
+            {t('search.checkIn', 'Check-in')}
           </label>
         )}
         <DatePicker
@@ -53,12 +50,11 @@ const DateRangePicker = ({
           startDate={startDate}
           endDate={endDate}
           minDate={today}
-          placeholderText={showLabels ? 'Seleccionar fecha de entrada' : t('search.checkIn', 'Entrada')}
+          placeholderText={showLabels ? t('search.checkInPlaceholder', 'Select check-in date') : t('search.checkIn', 'Check-in')}
           className={inputClasses}
           dateFormat="dd/MM/yyyy"
           disabled={disabled}
-          onFocus={() => setFocusedInput('startDate')}
-          onBlur={() => setFocusedInput(null)}
+          monthsShown={2}
           withPortal
           portalId="datepicker-portal-root"
           popperProps={{ strategy: 'fixed' }}
@@ -73,7 +69,7 @@ const DateRangePicker = ({
       <div className="flex-1">
         {showLabels && (
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Salida
+            {t('search.checkOut', 'Check-out')}
           </label>
         )}
         <DatePicker
@@ -83,12 +79,11 @@ const DateRangePicker = ({
           startDate={startDate}
           endDate={endDate}
           minDate={startDate || today}
-          placeholderText={showLabels ? 'Seleccionar fecha de salida' : t('search.checkOut', 'Salida')}
+          placeholderText={showLabels ? t('search.checkOutPlaceholder', 'Select check-out date') : t('search.checkOut', 'Check-out')}
           className={inputClasses}
           dateFormat="dd/MM/yyyy"
           disabled={disabled}
-          onFocus={() => setFocusedInput('endDate')}
-          onBlur={() => setFocusedInput(null)}
+          monthsShown={2}
           withPortal
           portalId="datepicker-portal-root"
           popperProps={{ strategy: 'fixed' }}

@@ -17,6 +17,8 @@ const AdminCategories = () => {
   const [form, setForm] = useState(initialForm);
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -90,14 +92,31 @@ const AdminCategories = () => {
     }
   };
 
-  const deleteCategory = async (id) => {
-    if (!window.confirm(t('admin.categories.confirmDelete'))) return;
+  const openDeleteConfirm = (cat) => {
+    setCategoryToDelete(cat);
+    setShowDeleteConfirm(true);
+  };
+
+  const closeDeleteConfirm = () => {
+    setShowDeleteConfirm(false);
+    setCategoryToDelete(null);
+  };
+
+  const confirmDeleteCategory = async () => {
+    const id = categoryToDelete?.id;
+    if (!id) return;
     try {
       setDeletingId(id);
       await categoryService.deleteCategory(id);
       await loadCategories();
+      closeDeleteConfirm();
     } catch (e) {
-      setError(t('admin.categories.errors.deleteFailed'));
+      let serverMessage = '';
+      try {
+        const parsed = JSON.parse(e?.message || '');
+        serverMessage = parsed?.message || '';
+      } catch (_) {}
+      setError(serverMessage || t('admin.categories.errors.deleteFailed'));
     } finally {
       setDeletingId(null);
     }
@@ -189,7 +208,7 @@ const AdminCategories = () => {
                             <Button variant="secondary" size="small" onClick={() => toggleActive(cat.id)}>
                               {t('admin.categories.actions.toggle')}
                             </Button>
-                            <Button variant="danger" size="small" onClick={() => deleteCategory(cat.id)} disabled={deletingId === cat.id}>
+                            <Button variant="danger" size="small" onClick={() => openDeleteConfirm(cat)} disabled={deletingId === cat.id}>
                               {t('admin.categories.actions.delete')}
                             </Button>
                           </div>
@@ -237,6 +256,38 @@ const AdminCategories = () => {
                     <Button variant="primary" type="submit" disabled={saving}>{saving ? t('admin.categories.form.saving') : t('admin.categories.form.save')}</Button>
                   </div>
                 </form>
+              </div>
+            </div>
+          )}
+
+          {showDeleteConfirm && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={(e) => { if (e.target === e.currentTarget) closeDeleteConfirm(); }}>
+              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full max-w-md border border-gray-200 dark:border-gray-700 mx-4">
+                <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    {t('admin.categories.deleteModal.title')}
+                  </h2>
+                  <Button variant="secondary" size="small" onClick={closeDeleteConfirm} disabled={deletingId === categoryToDelete?.id}>✕</Button>
+                </div>
+                <div className="px-6 py-4 space-y-3">
+                  <div className="text-gray-700 dark:text-gray-300">
+                    {t('admin.categories.deleteModal.message')}
+                  </div>
+                  <div className="text-gray-900 dark:text-white font-semibold">
+                    {categoryToDelete?.name}
+                  </div>
+                  <div className="text-sm text-red-700 dark:text-red-300">
+                    {t('admin.categories.deleteModal.warning')}
+                  </div>
+                </div>
+                <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+                  <Button variant="outline" onClick={closeDeleteConfirm} disabled={deletingId === categoryToDelete?.id}>
+                    {t('admin.categories.deleteModal.cancel')}
+                  </Button>
+                  <Button variant="danger" onClick={confirmDeleteCategory} disabled={deletingId === categoryToDelete?.id}>
+                    {deletingId === categoryToDelete?.id ? t('admin.categories.deleteModal.deleting') : t('admin.categories.deleteModal.confirm')}
+                  </Button>
+                </div>
               </div>
             </div>
           )}
