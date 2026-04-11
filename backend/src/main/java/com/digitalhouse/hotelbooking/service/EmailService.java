@@ -2,6 +2,7 @@ package com.digitalhouse.hotelbooking.service;
 
 import com.digitalhouse.hotelbooking.dto.request.EmailRequestDTO;
 import com.digitalhouse.hotelbooking.dto.response.EmailResponseDTO;
+import com.digitalhouse.hotelbooking.model.Booking;
 
 public interface EmailService {
     
@@ -19,6 +20,8 @@ public interface EmailService {
      * @return EmailResponseDTO con el resultado del reenvío
      */
     EmailResponseDTO resendRegistrationConfirmationEmail(String userEmail, String userName);
+
+    EmailResponseDTO sendBookingConfirmationEmail(Booking booking);
     
     /**
      * Envía un email genérico

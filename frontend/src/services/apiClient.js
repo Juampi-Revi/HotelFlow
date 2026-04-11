@@ -15,12 +15,20 @@ export const apiFetch = async (path, options = {}) => {
   const resp = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
   if (!resp.ok) {
     let message = `Request failed (${resp.status})`;
+    let data = null;
     try {
-      const text = await resp.text();
-      message = text || message;
+      const contentType = resp.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await resp.json();
+        message = data?.message || data?.error || message;
+      } else {
+        const text = await resp.text();
+        message = text || message;
+      }
     } catch (_) {}
     const err = new Error(message);
     err.status = resp.status;
+    err.data = data;
     // Notify app to logout on unauthorized responses
     if (resp.status === 401 && typeof window !== 'undefined') {
       try {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import DateRangePicker from '../molecules/DateRangePicker';
 import { roomService } from '../../services/roomService';
+import { formatDateYMD } from '../../utils/roomUtils';
 
 export const SearchSection = ({ onSearchResults }) => {
   const { t } = useTranslation();
@@ -68,8 +69,6 @@ export const SearchSection = ({ onSearchResults }) => {
     setError(null);
     
     try {
-      const formatISODate = (date) => (date ? date.toISOString().split('T')[0] : undefined);
-
       const searchParams = {
         destination: searchData.destination || undefined,
         guests: searchData.guests,
@@ -78,8 +77,8 @@ export const SearchSection = ({ onSearchResults }) => {
         sortBy: 'pricePerNight',
         sortDirection: 'asc'
       };
-      const checkIn = formatISODate(searchData.startDate);
-      const checkOut = formatISODate(searchData.endDate);
+      const checkIn = formatDateYMD(searchData.startDate);
+      const checkOut = formatDateYMD(searchData.endDate);
       if (checkIn && checkOut) {
         searchParams.checkIn = checkIn;
         searchParams.checkOut = checkOut;

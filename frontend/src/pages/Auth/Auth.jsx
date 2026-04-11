@@ -15,6 +15,26 @@ const Auth = () => {
   const { t } = useTranslation();
   const mode = location.pathname.includes('/login') ? 'login' : 'register';
   const { login: setAuthSession } = useAuth();
+  const searchParams = new URLSearchParams(location.search);
+  const returnToParam = searchParams.get('returnTo');
+  const checkInParam = searchParams.get('checkIn');
+  const checkOutParam = searchParams.get('checkOut');
+  const showLoginRequiredBanner = mode === 'login' && (returnToParam || checkInParam || checkOutParam);
+
+  const decodeReturnTo = (value) => {
+    if (!value) return null;
+    let current = value;
+    for (let i = 0; i < 2; i += 1) {
+      try {
+        const next = decodeURIComponent(current);
+        if (next === current) break;
+        current = next;
+      } catch (_) {
+        break;
+      }
+    }
+    return current;
+  };
 
   const [form, setForm] = useState({
     firstName: '',
@@ -57,7 +77,19 @@ const Auth = () => {
         const auth = await authService.login({ email: form.email, password: form.password });
         setAuthSession(auth);
         showNotification('success', t('auth.login.actions.submitting'));
-        navigate('/admin');
+        const decodedReturnTo = decodeReturnTo(returnToParam);
+        const roomMatch = decodedReturnTo?.match(/^\/room\/(\d+)(?:\/)?$/);
+        if (roomMatch && (checkInParam || checkOutParam)) {
+          const params = new URLSearchParams();
+          if (checkInParam) params.set('checkIn', checkInParam);
+          if (checkOutParam) params.set('checkOut', checkOutParam);
+          const qs = params.toString();
+          navigate(`/booking/${roomMatch[1]}${qs ? `?${qs}` : ''}`);
+        } else if (decodedReturnTo) {
+          navigate(decodedReturnTo);
+        } else {
+          navigate('/admin');
+        }
         return auth;
       }
     } catch (err) {
@@ -65,7 +97,7 @@ const Auth = () => {
         showNotification('error', t('auth.register.errors.duplicateEmail'));
         setErrors(prev => ({ ...prev, email: t('auth.register.errors.duplicateEmail') }));
       } else if (err?.code === 'INVALID_CREDENTIALS') {
-        showNotification('error', 'Invalid email or password');
+        showNotification('error', t('auth.login.errors.invalidCredentials'));
       } else {
         showNotification('error', t('auth.register.errors.generic'));
       }
@@ -88,6 +120,12 @@ const Auth = () => {
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 text-center">
               {mode === 'login' ? t('auth.login.title') : t('auth.register.title')}
             </h1>
+            {showLoginRequiredBanner && (
+              <div className="mb-4 p-3 rounded border border-amber-300 bg-amber-50 text-amber-900 text-sm">
+                <div className="font-semibold">{t('auth.login.required.title')}</div>
+                <div className="mt-1">{t('auth.login.required.subtitle')}</div>
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-5">
               {mode === 'register' && (
                 <>

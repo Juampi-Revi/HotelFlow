@@ -23,7 +23,7 @@ const HotelLocationInfo = ({ room }) => {
       </div>
 
       <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
-        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('room.sections.keyDetails', 'Detalles clave')}</h4>
+        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">{t('room.sections.keyDetails')}</h4>
         <div className="space-y-2">
           {room.sizeSqm && (
             <div className="flex justify-between">
@@ -40,7 +40,7 @@ const HotelLocationInfo = ({ room }) => {
           {room.viewType && (
             <div className="flex justify-between">
               <span className="text-gray-600 dark:text-gray-300">{t('common.view')}:</span>
-              <span className="font-medium text-gray-900 dark:text-white">{room.viewType} {t('common.viewType')}</span>
+              <span className="font-medium text-gray-900 dark:text-white">{room.viewType}</span>
             </div>
           )}
         </div>

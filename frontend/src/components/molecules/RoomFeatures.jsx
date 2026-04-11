@@ -12,7 +12,7 @@ const RoomFeatures = ({ features = [], showTitle = true }) => {
     <div className="p-0 m-0">
       {showTitle && (
         <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
-          {t('room.sections.whatOffers', '¿Qué ofrece este lugar?')}
+          {t('room.sections.whatOffers')}
         </h3>
       )}
       <div className="flex flex-wrap gap-2">

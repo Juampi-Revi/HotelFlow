@@ -8,6 +8,10 @@ const Admin = () => {
   const { isOwner } = useAuth();
   const locale = i18n.language === 'es' ? 'es-ES' : 'en-US';
 
+  const formatMinutesAgo = (count) => (count === 1
+    ? t('time.minuteAgo')
+    : t('time.minutesAgo', { count }));
+
   const dashboardCards = [
     {
       title: t('admin.rooms.title'),
@@ -21,7 +25,7 @@ const Admin = () => {
       color: 'from-slate-600 to-slate-700',
       bgColor: 'bg-slate-50 dark:bg-slate-800/50',
       borderColor: 'border-slate-200 dark:border-slate-700',
-      stats: '12 rooms'
+      stats: t('admin.dashboard.cardStats.rooms', { count: 12 })
     },
     {
       title: t('admin.categories.title'),
@@ -63,7 +67,7 @@ const Admin = () => {
       color: 'from-emerald-600 to-emerald-700',
       bgColor: 'bg-emerald-50 dark:bg-emerald-900/20',
       borderColor: 'border-emerald-200 dark:border-emerald-800',
-      stats: '156 users'
+      stats: t('admin.dashboard.cardStats.users', { count: 156 })
     },
     {
       title: t('admin.dashboard.items.analytics'),
@@ -77,7 +81,7 @@ const Admin = () => {
       color: 'from-indigo-600 to-indigo-700',
       bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
       borderColor: 'border-indigo-200 dark:border-indigo-800',
-      stats: '85% occupancy'
+      stats: t('admin.dashboard.cardStats.occupancy', { percent: 85 })
     }
   ];
 
@@ -85,8 +89,8 @@ const Admin = () => {
     {
       id: 1,
       type: 'booking',
-      message: 'New booking for room 101',
-      time: '5 minutes ago',
+      message: t('admin.dashboard.activity.bookingCreated', { roomNumber: 101 }),
+      time: formatMinutesAgo(5),
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -96,8 +100,8 @@ const Admin = () => {
     {
       id: 2,
       type: 'room',
-      message: 'Room 205 marked as available',
-      time: '15 minutes ago',
+      message: t('admin.dashboard.activity.roomAvailable', { roomNumber: 205 }),
+      time: formatMinutesAgo(15),
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -107,8 +111,8 @@ const Admin = () => {
     {
       id: 3,
       type: 'user',
-      message: 'New user registered',
-      time: '30 minutes ago',
+      message: t('admin.dashboard.activity.userRegistered'),
+      time: formatMinutesAgo(30),
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

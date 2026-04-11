@@ -8,6 +8,8 @@ jest.mock('react-i18next', () => ({
       const translations = {
         'search.checkIn': 'Check-in',
         'search.checkOut': 'Check-out',
+        'search.checkInPlaceholder': 'Select check-in date',
+        'search.checkOutPlaceholder': 'Select check-out date',
         'search.selectCheckIn': 'Select check-in date',
         'search.selectCheckOut': 'Select check-out date'
       };

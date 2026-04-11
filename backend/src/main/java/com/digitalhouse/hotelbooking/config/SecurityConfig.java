@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/features/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER", "FEATURES_EDIT")
                         .requestMatchers(HttpMethod.DELETE, "/api/rooms/**", "/api/categories/**", "/api/features/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER")
                         .requestMatchers("/api/favorites/**").authenticated()
+                        .requestMatchers("/api/admin/users/**").hasAuthority("ROLE_OWNER")
+                        .requestMatchers("/api/admin/bookings/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OWNER")
                         .requestMatchers("/api/admin/**").hasAuthority("ROLE_OWNER")
                         .anyRequest().authenticated()
                 )

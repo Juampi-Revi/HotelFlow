@@ -18,7 +18,7 @@ const LanguageToggle = ({ className = '' }) => {
       className={`px-3 py-1 text-sm font-medium rounded-md transition-colors duration-200 
         bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 
         text-gray-700 dark:text-gray-300 ${className}`}
-      aria-label={`Switch to ${nextLang}`}
+      aria-label={t('common.switchTo', { language: nextLang })}
       title={`${t('common.language')}: ${nextLang}`}
     >
       {currentLang}

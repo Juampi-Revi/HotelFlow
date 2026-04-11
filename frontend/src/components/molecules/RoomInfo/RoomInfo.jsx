@@ -4,13 +4,16 @@ import { formatPrice } from '../../../utils/roomUtils';
 
 const RoomInfo = ({ room }) => {
   const { t } = useTranslation();
+  const roomTypeKey = room?.roomType ? `room.types.${String(room.roomType).toLowerCase()}` : null;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <div className="bg-white/60 dark:bg-gray-800/60 rounded-lg p-4">
         <div className="text-center">
           <span className="text-gray-600 dark:text-gray-300 font-medium text-sm">{t('common.roomType')}</span>
-          <div className="font-bold text-gray-900 dark:text-white text-lg mt-1">{room.roomType}</div>
+          <div className="font-bold text-gray-900 dark:text-white text-lg mt-1">
+            {roomTypeKey ? t(roomTypeKey) : room?.roomType}
+          </div>
         </div>
       </div>
 

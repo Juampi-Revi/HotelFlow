@@ -5,20 +5,23 @@ import { useTranslation } from 'react-i18next';
 import LoadingState from '../../atoms/LoadingState';
 import { roomService } from '../../../services/roomService';
 import { useAuth } from '../../../contexts';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { formatDateYMD } from '../../../utils/roomUtils';
 
 const AvailabilityCalendar = ({ 
   roomId,
   onDateChange,
+  onAvailabilityChange,
+  initialStartDate = null,
+  initialEndDate = null,
   className = '',
   showBookingButton = true,
 }) => {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(initialStartDate);
+  const [endDate, setEndDate] = useState(initialEndDate);
   const [occupiedDates, setOccupiedDates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -40,6 +43,24 @@ const AvailabilityCalendar = ({
     }
   }, [startDate, endDate, roomId]);
 
+  useEffect(() => {
+    if (typeof onAvailabilityChange === 'function') {
+      onAvailabilityChange(isAvailable);
+    }
+  }, [isAvailable, onAvailabilityChange]);
+
+  useEffect(() => {
+    if (initialStartDate) {
+      setStartDate(initialStartDate);
+    }
+    if (initialEndDate) {
+      setEndDate(initialEndDate);
+    }
+    if (onDateChange) {
+      onDateChange({ startDate: initialStartDate, endDate: initialEndDate });
+    }
+  }, [initialStartDate, initialEndDate, onDateChange]);
+
   const fetchOccupiedDates = async () => {
     setLoading(true);
     setError(null);
@@ -50,8 +71,8 @@ const AvailabilityCalendar = ({
       
       const data = await roomService.getOccupiedDates(
         roomId,
-        today.toISOString().split('T')[0],
-        endOfYear.toISOString().split('T')[0]
+        formatDateYMD(today),
+        formatDateYMD(endOfYear)
       );
       
       // Convert date strings to Date objects for react-datepicker
@@ -78,8 +99,8 @@ const AvailabilityCalendar = ({
     if (!startDate || !endDate || !roomId) return;
     
     try {
-      const checkIn = startDate.toISOString().split('T')[0];
-      const checkOut = endDate.toISOString().split('T')[0];
+      const checkIn = formatDateYMD(startDate);
+      const checkOut = formatDateYMD(endDate);
       
       const data = await roomService.checkRoomAvailability(roomId, checkIn, checkOut);
       setIsAvailable(Boolean(data?.isAvailable));
@@ -135,22 +156,20 @@ const AvailabilityCalendar = ({
     </div>
   );
 
-  const handleBookNow = () => {
-    if (!(startDate && endDate && isAvailable)) return;
-    const checkIn = startDate.toISOString().split('T')[0];
-    const checkOut = endDate.toISOString().split('T')[0];
-
-    if (!isAuthenticated) {
-      const returnTo = encodeURIComponent(location?.pathname || `/room/${roomId}`);
-      navigate(`/login?returnTo=${returnTo}&checkIn=${checkIn}&checkOut=${checkOut}`);
-      return;
-    }
-  };
+  const checkIn = startDate ? formatDateYMD(startDate) : undefined;
+  const checkOut = endDate ? formatDateYMD(endDate) : undefined;
+  const bookingTo = checkIn && checkOut ? `/booking/${roomId}?checkIn=${checkIn}&checkOut=${checkOut}` : `/booking/${roomId}`;
+  const loginParams = new URLSearchParams();
+  loginParams.set('returnTo', location?.pathname || `/room/${roomId}`);
+  if (checkIn) loginParams.set('checkIn', checkIn);
+  if (checkOut) loginParams.set('checkOut', checkOut);
+  const loginTo = `/login?${loginParams.toString()}`;
+  const ctaTo = isAuthenticated ? bookingTo : loginTo;
 
   if (loading) {
     return (
       <div className={`availability-calendar ${className}`}>
-        <LoadingState message={t('calendar.loading', 'Loading availability...')} />
+        <LoadingState message={t('calendar.loading')} />
       </div>
     );
   }
@@ -216,13 +235,13 @@ const AvailabilityCalendar = ({
       
       <div className="mb-6">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          {t('calendar.selectDates', 'Select your dates')}
+          {t('calendar.selectDates')}
         </h3>
         
         {error && (
           <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded flex items-center justify-between gap-3">
             <span>
-              {t('calendar.error', 'Error loading availability')}: {error}
+              {t('calendar.error')}: {error}
             </span>
             <button
               type="button"
@@ -230,7 +249,7 @@ const AvailabilityCalendar = ({
               disabled={loading}
               className="bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white px-3 py-1.5 rounded-md text-sm"
             >
-              {t('calendar.retry', 'Retry')}
+              {t('calendar.retry')}
             </button>
           </div>
         )}
@@ -238,7 +257,7 @@ const AvailabilityCalendar = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('calendar.checkIn', 'Check-in date')}
+              {t('calendar.checkIn')}
             </label>
             <DatePicker
               selected={startDate}
@@ -253,7 +272,7 @@ const AvailabilityCalendar = ({
                 if (cls) return cls;
                 return date >= today ? 'available-date' : '';
               }}
-              placeholderText={t('calendar.selectCheckIn', 'Select check-in date')}
+              placeholderText={t('calendar.selectCheckIn')}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
               dateFormat="dd/MM/yyyy"
               withPortal
@@ -271,7 +290,7 @@ const AvailabilityCalendar = ({
           
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('calendar.checkOut', 'Check-out date')}
+              {t('calendar.checkOut')}
             </label>
             <DatePicker
               selected={endDate}
@@ -287,7 +306,7 @@ const AvailabilityCalendar = ({
                 const min = startDate || today;
                 return date >= min ? 'available-date' : '';
               }}
-              placeholderText={t('calendar.selectCheckOut', 'Select check-out date')}
+              placeholderText={t('calendar.selectCheckOut')}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
               dateFormat="dd/MM/yyyy"
               withPortal
@@ -312,7 +331,7 @@ const AvailabilityCalendar = ({
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                {t('calendar.available', 'Available for selected dates')}
+                {t('calendar.available')}
               </div>
             )}
             
@@ -321,7 +340,7 @@ const AvailabilityCalendar = ({
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
-                {t('calendar.notAvailable', 'Not available for selected dates')}
+                {t('calendar.notAvailable')}
               </div>
             )}
           </div>
@@ -331,22 +350,22 @@ const AvailabilityCalendar = ({
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
           <div className="flex items-center">
             <div className="w-4 h-4 bg-red-500 rounded mr-2"></div>
-            {t('calendar.occupied', 'Occupied dates')}
+            {t('calendar.occupied')}
           </div>
           <div className="flex items-center">
             <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-            {t('calendar.selected', 'Selected dates')}
+            {t('calendar.selected')}
           </div>
         </div>
         
         {/* Book Now / Login CTA */}
         {showBookingButton && startDate && endDate && isAvailable && (
-          <button
-            onClick={handleBookNow}
+          <Link
+            to={ctaTo}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            {isAuthenticated ? t('calendar.bookNow', 'Book Now') : t('auth.loginToBook', 'Log in to book')}
-          </button>
+            {isAuthenticated ? t('calendar.bookNow') : t('auth.loginToBook')}
+          </Link>
         )}
       </div>
     </div>
