@@ -1,12 +1,16 @@
 package com.digitalhouse.hotelbooking.controller;
 
+import com.digitalhouse.hotelbooking.dto.request.BookingCreateRequestDTO;
+import com.digitalhouse.hotelbooking.dto.response.BookingResponseDTO;
 import com.digitalhouse.hotelbooking.service.BookingService;
 import com.digitalhouse.hotelbooking.service.BookingService.RoomAvailability;
 import com.digitalhouse.hotelbooking.service.BookingService.DateRange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -115,5 +119,32 @@ public class BookingController {
         response.put("occupiedRanges", ranges);
         
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/bookings")
+    public ResponseEntity<BookingResponseDTO> createBooking(@Valid @RequestBody BookingCreateRequestDTO dto) {
+        BookingResponseDTO created = bookingService.createBookingForCurrentUser(dto);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/bookings/me")
+    public ResponseEntity<List<BookingResponseDTO>> listMyBookings() {
+        return ResponseEntity.ok(bookingService.listBookingsForCurrentUser());
+    }
+
+    @GetMapping("/bookings/{bookingId}")
+    public ResponseEntity<BookingResponseDTO> getMyBooking(@PathVariable Long bookingId) {
+        return ResponseEntity.ok(bookingService.getBookingForCurrentUser(bookingId));
+    }
+
+    @PatchMapping("/bookings/{bookingId}/cancel")
+    public ResponseEntity<BookingResponseDTO> cancelMyBooking(@PathVariable Long bookingId) {
+        return ResponseEntity.ok(bookingService.cancelBookingForCurrentUser(bookingId));
+    }
+
+    @DeleteMapping("/bookings/{bookingId}")
+    public ResponseEntity<Void> deleteMyBooking(@PathVariable Long bookingId) {
+        bookingService.deleteBookingForCurrentUser(bookingId);
+        return ResponseEntity.noContent().build();
     }
 }

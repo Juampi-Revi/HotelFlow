@@ -1,28 +1,33 @@
 import React, { useEffect } from 'react';
 
 const Toast = ({ 
+  notification,
   message, 
   type = 'success', 
   isVisible, 
   onClose, 
   duration = 3000 
 }) => {
+  const resolvedMessage = typeof notification?.message === 'string' ? notification.message : message;
+  const resolvedType = typeof notification?.type === 'string' ? notification.type : type;
+  const resolvedVisible = typeof notification?.show === 'boolean' ? notification.show : isVisible;
+
   useEffect(() => {
-    if (isVisible && duration > 0) {
+    if (resolvedVisible && duration > 0) {
       const timer = setTimeout(() => {
         onClose();
       }, duration);
       
       return () => clearTimeout(timer);
     }
-  }, [isVisible, duration, onClose]);
+  }, [resolvedVisible, duration, onClose]);
 
-  if (!isVisible) return null;
+  if (!resolvedVisible) return null;
 
   const getToastStyles = () => {
     const baseStyles = "fixed top-4 right-4 z-50 flex items-center p-4 rounded-lg shadow-lg backdrop-blur-sm border transition-all duration-300 transform";
     
-    switch (type) {
+    switch (resolvedType) {
       case 'success':
         return `${baseStyles} bg-green-50/90 dark:bg-green-900/90 border-green-200 dark:border-green-700 text-green-800 dark:text-green-200`;
       case 'error':
@@ -37,7 +42,7 @@ const Toast = ({
   };
 
   const getIcon = () => {
-    switch (type) {
+    switch (resolvedType) {
       case 'success':
         return (
           <svg className="w-5 h-5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -70,7 +75,7 @@ const Toast = ({
   return (
     <div className={getToastStyles()}>
       {getIcon()}
-      <span className="text-sm font-medium flex-1">{message}</span>
+      <span className="text-sm font-medium flex-1">{resolvedMessage}</span>
       <button
         onClick={onClose}
         className="ml-3 text-current opacity-70 hover:opacity-100 transition-opacity"

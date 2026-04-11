@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
@@ -22,6 +23,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
      * Find all bookings for a specific user
      */
     List<Booking> findByUser_Id(Long userId);
+
+    List<Booking> findByUser_IdOrderByCheckInDateDesc(Long userId);
+
+    Optional<Booking> findByIdAndUser_Id(Long id, Long userId);
     
     /**
      * Find bookings by status

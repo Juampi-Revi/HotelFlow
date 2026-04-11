@@ -40,7 +40,7 @@ const DateRangePicker = ({
       <div>
         {showLabels && (
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {t('search.checkIn', 'Check-in')}
+            {t('search.checkIn')}
           </label>
         )}
         <DatePicker
@@ -50,7 +50,7 @@ const DateRangePicker = ({
           startDate={startDate}
           endDate={endDate}
           minDate={today}
-          placeholderText={showLabels ? t('search.checkInPlaceholder', 'Select check-in date') : t('search.checkIn', 'Check-in')}
+          placeholderText={showLabels ? t('search.checkInPlaceholder') : t('search.checkIn')}
           className={inputClasses}
           dateFormat="dd/MM/yyyy"
           disabled={disabled}
@@ -69,7 +69,7 @@ const DateRangePicker = ({
       <div className="flex-1">
         {showLabels && (
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {t('search.checkOut', 'Check-out')}
+            {t('search.checkOut')}
           </label>
         )}
         <DatePicker
@@ -79,7 +79,7 @@ const DateRangePicker = ({
           startDate={startDate}
           endDate={endDate}
           minDate={startDate || today}
-          placeholderText={showLabels ? t('search.checkOutPlaceholder', 'Select check-out date') : t('search.checkOut', 'Check-out')}
+          placeholderText={showLabels ? t('search.checkOutPlaceholder') : t('search.checkOut')}
           className={inputClasses}
           dateFormat="dd/MM/yyyy"
           disabled={disabled}

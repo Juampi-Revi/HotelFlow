@@ -62,3 +62,13 @@ export const truncateText = (text, maxLength = 100) => {
 export const formatGuestCount = (count, t) => {
   return count === 1 ? `${count} ${t('common.guest')}` : `${count} ${t('common.guests')}`;
 };
+
+export const formatDateYMD = (date) => {
+  if (!date) return undefined;
+  const d = date instanceof Date ? date : new Date(date);
+  if (Number.isNaN(d.getTime())) return undefined;
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};

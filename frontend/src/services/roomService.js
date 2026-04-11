@@ -1,4 +1,5 @@
 import { apiFetch } from './apiClient';
+import { formatDateYMD } from '../utils/roomUtils';
 const API_BASE_URL = 'http://localhost:8082/api';
 
 export const roomService = {
@@ -134,7 +135,7 @@ export const roomService = {
   // Availability methods
   async getRoomAvailability(roomId, startDate, months = 2) {
     const params = new URLSearchParams({
-      startDate: startDate || new Date().toISOString().split('T')[0],
+      startDate: startDate || formatDateYMD(new Date()),
       months: months.toString()
     });
     

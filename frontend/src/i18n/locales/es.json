@@ -7,6 +7,7 @@
     "home": "Inicio",
     "hotels": "Hoteles",
     "favorites": "Favoritos",
+    "myBookings": "Mis reservas",
     "rooms": "Habitaciones",
     "about": "Acerca de",
     "contact": "Contacto",
@@ -76,6 +77,7 @@
     "darkMode": "Modo Oscuro",
     "english": "Inglés",
     "spanish": "Español",
+    "switchTo": "Cambiar a {{language}}",
     "noImages": "No hay imágenes disponibles",
     "hotelInformation": "Información del Hotel",
     "hotelChain": "Cadena Hotelera",
@@ -122,6 +124,10 @@
     "bookingsComingSoon": "El módulo de reservas estará disponible próximamente. Aquí podrás gestionar todas las reservas, ver el estado de las mismas y administrar check-ins y check-outs.",
     "settingsComingSoon": "El módulo de configuración estará disponible próximamente. Aquí podrás configurar parámetros del sistema, gestionar usuarios administradores y personalizar la aplicación.",
     "staffComingSoon": "El módulo de personal estará disponible próximamente. Aquí podrás gestionar empleados, asignar roles y permisos, y administrar horarios de trabajo."
+  },
+  "time": {
+    "minuteAgo": "Hace 1 minuto",
+    "minutesAgo": "Hace {{count}} minutos"
   },
   "deleteConfirmation": {
     "title": "Eliminar Habitación",
@@ -209,7 +215,92 @@
     "noResultsDescription": "Intenta ajustar tus criterios de búsqueda"
   },
   "booking": {
-    "comingSoon": "Funcionalidad de reserva próximamente."
+    "comingSoon": "Funcionalidad de reserva próximamente.",
+    "title": "Tu reserva",
+    "product": "Producto: {{name}}",
+    "sections": {
+      "dates": "Fechas",
+      "user": "Tus datos",
+      "summary": "Resumen"
+    },
+    "form": {
+      "dates": {
+        "empty": "Todavía no seleccionaste un rango de fechas.",
+        "value": "Fechas seleccionadas: {{start}} → {{end}}"
+      },
+      "guests": "Huéspedes",
+      "maxGuests": "Máximo {{count}} huéspedes",
+      "specialRequests": "Peticiones especiales (opcional)",
+      "specialRequestsPlaceholder": "Ej: Llegamos tarde, cama extra, alergias, etc.",
+      "nights": "Noches",
+      "total": "Total"
+    },
+    "actions": {
+      "confirm": "Confirmar reserva",
+      "submitting": "Confirmando..."
+    },
+    "errors": {
+      "missingDates": "Seleccioná un rango de fechas para continuar.",
+      "notAvailable": "El rango seleccionado no está disponible. Elegí otras fechas.",
+      "invalid": "La información ingresada no es válida. Revisá los datos e intentá nuevamente.",
+      "unauthorized": "Tu sesión expiró. Iniciá sesión nuevamente para reservar.",
+      "network": "No se pudo conectar con el servidor. Verificá que el backend esté levantado e intentá nuevamente.",
+      "generic": "No se pudo completar la reserva. Intentá nuevamente."
+    },
+    "success": {
+      "toast": "Reserva creada con éxito",
+      "emailWarning": "La reserva se creó, pero no pudimos enviar el correo de confirmación (SMTP no configurado).",
+      "title": "Reserva confirmada",
+      "subtitle": "Tu reserva se realizó con éxito.",
+      "actions": {
+        "explore": "Explorar más",
+        "home": "Ir al inicio"
+      }
+    },
+    "confirmation": {
+      "product": "Producto",
+      "dates": "Fechas",
+      "guests": "Huéspedes",
+      "status": "Estado",
+      "bookingDate": "Fecha de reserva",
+      "total": "Total",
+      "requests": "Peticiones especiales"
+    },
+    "userHint": "Si querés usar otra cuenta, cerrá sesión e iniciá sesión nuevamente.",
+    "userChange": "Iniciar sesión con otra cuenta"
+  },
+  "myBookings": {
+    "title": "Mis reservas",
+    "empty": "Todavía no tenés reservas.",
+    "sections": {
+      "confirmed": "Activas",
+      "history": "Historial"
+    },
+    "fields": {
+      "dates": "Fechas",
+      "bookingDate": "Fecha de reserva",
+      "guests": "Huéspedes",
+      "total": "Total",
+      "status": "Estado",
+      "requests": "Peticiones especiales"
+    },
+    "actions": {
+      "explore": "Explorar habitaciones",
+      "refresh": "Actualizar",
+      "viewRoom": "Ver habitación",
+      "cancel": "Cancelar",
+      "cancelling": "Cancelando...",
+      "delete": "Eliminar",
+      "deleting": "Eliminando..."
+    },
+    "cancel": {
+      "success": "Reserva cancelada",
+      "error": "No se pudo cancelar la reserva"
+    },
+    "delete": {
+      "success": "Reserva eliminada",
+      "error": "No se pudo eliminar la reserva"
+    }
   },
   "categories": {
     "title": "Categorías",
@@ -244,13 +335,25 @@
     "bookNow": "Reservar Ahora",
     "retry": "Reintentar"
   },
-  "auth": {
-    "loginToBook": "Inicia sesión para reservar"
+  "whatsapp": {
+    "ariaLabel": "Contactar por WhatsApp",
+    "defaultMessage": "Hola, quiero hacer una consulta. Link: {{url}}",
+    "toast": {
+      "opened": "Abrimos WhatsApp para que envíes tu mensaje.",
+      "offline": "Sin conexión a Internet. Verificá tu red e intentá nuevamente.",
+      "popupBlocked": "El navegador bloqueó la ventana. Permití popups e intentá nuevamente.",
+      "genericError": "No se pudo abrir WhatsApp. Intentá nuevamente."
+    }
   },
   "favorites": {
+    "title": "Mis favoritos",
+    "subtitle": "Tus alojamientos guardados para futuros viajes",
     "add": "Agregar a favoritos",
     "remove": "Quitar de favoritos",
-    "loginToFavorite": "Inicia sesión para marcar favoritos"
+    "loginToFavorite": "Inicia sesión para marcar favoritos",
+    "emptyTitle": "Todavía no tenés favoritos",
+    "emptyDescription": "Explorá nuestras habitaciones y guardá tus favoritas para acceder rápido desde acá.",
+    "exploreButton": "Explorar habitaciones"
   },
   "admin": {
     "title": "Administración",
@@ -261,10 +364,20 @@
         "totalBookings": "Reservas Totales",
         "revenue": "Ingresos"
       },
+      "cardStats": {
+        "rooms": "{{count}} habitaciones",
+        "users": "{{count}} usuarios",
+        "occupancy": "{{percent}}% ocupación"
+      },
       "items": {
         "bookings": "Reservas",
         "users": "Usuarios",
         "analytics": "Analíticas"
+      },
+      "activity": {
+        "bookingCreated": "Nueva reserva para la habitación {{roomNumber}}",
+        "roomAvailable": "La habitación {{roomNumber}} está disponible",
+        "userRegistered": "Nuevo usuario registrado"
       }
     },
     "room": {
@@ -699,6 +812,7 @@
   }
   ,
   "auth": {
+    "loginToBook": "Inicia sesión para reservar",
     "login": {
       "title": "Iniciar Sesión",
       "fields": {
@@ -713,6 +827,13 @@
         "submit": "Iniciar Sesión",
         "submitting": "Iniciando...",
         "cancel": "Cancelar"
+      },
+      "required": {
+        "title": "Iniciar sesión es obligatorio",
+        "subtitle": "Para continuar con la reserva, inicia sesión. Si todavía no tenés cuenta, registrate."
+      },
+      "errors": {
+        "invalidCredentials": "Email o contraseña inválidos"
       },
       "legend": {
         "noAccount": "¿No tienes cuenta?",

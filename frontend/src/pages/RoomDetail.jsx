@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRoomDetail } from '../hooks/useRoomDetail';
 import { ImageGallery, AvailabilityCalendar } from '../components/molecules';
@@ -14,7 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { favoriteService } from '../services/favoriteService';
 import { roomService } from '../services/roomService';
 import useToast from '../hooks/useToast';
-import { formatPrice } from '../utils/roomUtils';
+import { formatDateYMD, formatPrice } from '../utils/roomUtils';
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -192,26 +192,31 @@ const RoomDetail = () => {
     }
   };
   
-  const handleDateChange = ({ startDate, endDate }) => {
+  const handleDateChange = useCallback(({ startDate, endDate }) => {
     setSelectedDates({ startDate, endDate });
-  };
+  }, []);
 
-  const handleBookingClick = () => {
-    const checkIn = selectedDates?.startDate ? selectedDates.startDate.toISOString().split('T')[0] : undefined;
-    const checkOut = selectedDates?.endDate ? selectedDates.endDate.toISOString().split('T')[0] : undefined;
+  const bookingTo = useMemo(() => {
+    const checkIn = formatDateYMD(selectedDates?.startDate);
+    const checkOut = formatDateYMD(selectedDates?.endDate);
+    const params = new URLSearchParams();
+    if (checkIn) params.set('checkIn', checkIn);
+    if (checkOut) params.set('checkOut', checkOut);
+    const qs = params.toString();
+    return `/booking/${id}${qs ? `?${qs}` : ''}`;
+  }, [id, selectedDates?.endDate, selectedDates?.startDate]);
 
-    if (!isAuthenticated) {
-      const returnTo = encodeURIComponent(location?.pathname || `/room/${id}`);
-      const params = new URLSearchParams();
-      params.set('returnTo', returnTo);
-      if (checkIn) params.set('checkIn', checkIn);
-      if (checkOut) params.set('checkOut', checkOut);
-      navigate(`/login?${params.toString()}`);
-      return;
-    }
+  const loginTo = useMemo(() => {
+    const checkIn = formatDateYMD(selectedDates?.startDate);
+    const checkOut = formatDateYMD(selectedDates?.endDate);
+    const params = new URLSearchParams();
+    params.set('returnTo', location?.pathname || `/room/${id}`);
+    if (checkIn) params.set('checkIn', checkIn);
+    if (checkOut) params.set('checkOut', checkOut);
+    return `/login?${params.toString()}`;
+  }, [id, location?.pathname, selectedDates?.endDate, selectedDates?.startDate]);
 
-    showNotification('info', t('booking.comingSoon'));
-  };
+  const bookingCtaTo = isAuthenticated ? bookingTo : loginTo;
 
   if (loading) {
     return <LoadingState />;
@@ -555,18 +560,25 @@ const RoomDetail = () => {
                       <AvailabilityCalendar 
                         roomId={room.id} 
                         onDateChange={handleDateChange}
-                        showBookingButton={room.isAvailable}
+                        showBookingButton={false}
                       />
 
                       {room.isAvailable && (
-                        <button
-                          type="button"
-                          onClick={handleBookingClick}
+                        <Link
+                          to={bookingCtaTo}
                           className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                         >
                           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M5 11h14M7 15h10"/></svg>
                           {t('common.bookNow')}
-                        </button>
+                        </Link>
+                      )}
+                      {isAuthenticated && (
+                        <Link
+                          to="/bookings"
+                          className="w-full inline-flex items-center justify-center px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                        >
+                          {t('myBookings.title')}
+                        </Link>
                       )}
                     </div>
                   </div>

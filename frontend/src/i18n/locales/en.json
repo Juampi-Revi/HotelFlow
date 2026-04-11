@@ -7,6 +7,7 @@
     "home": "Home",
     "hotels": "Hotels",
     "favorites": "Favorites",
+    "myBookings": "My bookings",
     "rooms": "Rooms",
     "about": "About",
     "contact": "Contact",
@@ -76,6 +77,7 @@
     "darkMode": "Dark Mode",
     "english": "English",
     "spanish": "Spanish",
+    "switchTo": "Switch to {{language}}",
     "noImages": "No images available",
     "hotelInformation": "Hotel Information",
     "hotelChain": "Hotel Chain",
@@ -120,6 +122,10 @@
     "bookingsComingSoon": "The bookings module will be available soon. Manage all bookings, their statuses, and check-ins/check-outs.",
     "settingsComingSoon": "The settings module will be available soon. Configure system parameters, manage admin users, and customize the application.",
     "staffComingSoon": "The staff module will be available soon. Manage employees, assign roles and permissions, and handle work schedules."
+  },
+  "time": {
+    "minuteAgo": "1 minute ago",
+    "minutesAgo": "{{count}} minutes ago"
   },
   "deleteConfirmation": {
     "title": "Delete Room",
@@ -207,7 +213,92 @@
     "noResultsDescription": "Try adjusting your search criteria"
   },
   "booking": {
-    "comingSoon": "Booking will be available soon."
+    "comingSoon": "Booking will be available soon.",
+    "title": "Your booking",
+    "product": "Product: {{name}}",
+    "sections": {
+      "dates": "Dates",
+      "user": "Your details",
+      "summary": "Summary"
+    },
+    "form": {
+      "dates": {
+        "empty": "You haven't selected a date range yet.",
+        "value": "Selected dates: {{start}} → {{end}}"
+      },
+      "guests": "Guests",
+      "maxGuests": "Max {{count}} guests",
+      "specialRequests": "Special requests (optional)",
+      "specialRequestsPlaceholder": "e.g. Late arrival, extra bed, allergies, etc.",
+      "nights": "Nights",
+      "total": "Total"
+    },
+    "actions": {
+      "confirm": "Confirm booking",
+      "submitting": "Confirming..."
+    },
+    "errors": {
+      "missingDates": "Select a date range to continue.",
+      "notAvailable": "The selected range is not available. Choose different dates.",
+      "invalid": "The information provided is not valid. Please review and try again.",
+      "unauthorized": "Your session expired. Please sign in again to book.",
+      "network": "We couldn't reach the server. Make sure the backend is running and try again.",
+      "generic": "We couldn't complete your booking. Please try again."
+    },
+    "success": {
+      "toast": "Booking created successfully",
+      "emailWarning": "Booking created, but we couldn't send the confirmation email (SMTP not configured).",
+      "title": "Booking confirmed",
+      "subtitle": "Your booking was created successfully.",
+      "actions": {
+        "explore": "Explore more",
+        "home": "Go home"
+      }
+    },
+    "confirmation": {
+      "product": "Product",
+      "dates": "Dates",
+      "guests": "Guests",
+      "status": "Status",
+      "bookingDate": "Booking date",
+      "total": "Total",
+      "requests": "Special requests"
+    },
+    "userHint": "To use another account, log out and sign in again.",
+    "userChange": "Sign in with another account"
+  },
+  "myBookings": {
+    "title": "My bookings",
+    "empty": "You don't have any bookings yet.",
+    "sections": {
+      "confirmed": "Active",
+      "history": "History"
+    },
+    "fields": {
+      "dates": "Dates",
+      "bookingDate": "Booking date",
+      "guests": "Guests",
+      "total": "Total",
+      "status": "Status",
+      "requests": "Special requests"
+    },
+    "actions": {
+      "explore": "Explore rooms",
+      "refresh": "Refresh",
+      "viewRoom": "View room",
+      "cancel": "Cancel",
+      "cancelling": "Cancelling...",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "cancel": {
+      "success": "Booking cancelled",
+      "error": "We couldn't cancel the booking"
+    },
+    "delete": {
+      "success": "Booking deleted",
+      "error": "We couldn't delete the booking"
+    }
   },
   "categories": {
     "title": "Categories",
@@ -242,13 +333,25 @@
     "bookNow": "Book Now",
     "retry": "Retry"
   },
-  "auth": {
-    "loginToBook": "Log in to book"
+  "whatsapp": {
+    "ariaLabel": "Contact via WhatsApp",
+    "defaultMessage": "Hi! I'd like to ask a question. Link: {{url}}",
+    "toast": {
+      "opened": "WhatsApp opened. You can send your message now.",
+      "offline": "No Internet connection. Please check your network and try again.",
+      "popupBlocked": "Your browser blocked the popup. Please allow popups and try again.",
+      "genericError": "We couldn't open WhatsApp. Please try again."
+    }
   },
   "favorites": {
+    "title": "My Favorites",
+    "subtitle": "Your saved accommodations for future trips",
     "add": "Add to favorites",
     "remove": "Remove from favorites",
-    "loginToFavorite": "Log in to mark favorites"
+    "loginToFavorite": "Log in to mark favorites",
+    "emptyTitle": "No favorites yet",
+    "emptyDescription": "Start exploring our amazing rooms and save your favorites here for quick access.",
+    "exploreButton": "Explore rooms"
   },
   "admin": {
     "title": "Administration",
@@ -259,10 +362,20 @@
         "totalBookings": "Total Bookings",
         "revenue": "Revenue"
       },
+      "cardStats": {
+        "rooms": "{{count}} rooms",
+        "users": "{{count}} users",
+        "occupancy": "{{percent}}% occupancy"
+      },
       "items": {
         "bookings": "Bookings",
         "users": "Users",
         "analytics": "Analytics"
+      },
+      "activity": {
+        "bookingCreated": "New booking for room {{roomNumber}}",
+        "roomAvailable": "Room {{roomNumber}} marked as available",
+        "userRegistered": "New user registered"
       }
     },
     "room": {
@@ -723,6 +836,7 @@
   }
   ,
   "auth": {
+    "loginToBook": "Log in to book",
     "login": {
       "title": "Sign In",
       "fields": {
@@ -737,6 +851,13 @@
         "submit": "Sign In",
         "submitting": "Signing in...",
         "cancel": "Cancel"
+      },
+      "required": {
+        "title": "Sign in required",
+        "subtitle": "To continue with your booking, please sign in. If you don't have an account yet, create one."
+      },
+      "errors": {
+        "invalidCredentials": "Invalid email or password"
       },
       "legend": {
         "noAccount": "Don't have an account?",

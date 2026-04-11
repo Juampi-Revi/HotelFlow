@@ -244,7 +244,7 @@ const ProductsPage = () => {
                     </div>
                     <div className="absolute top-3 left-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getRoomTypeColor(room.roomType)}`}>
-                        {room.roomType}
+                        {room.roomType ? t(`room.types.${String(room.roomType).toLowerCase()}`) : ''}
                       </span>
                     </div>
                     <button

@@ -79,10 +79,10 @@ export const SimpleSearchSection = ({ onSearchResults }) => {
     <section className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-          {t('search.title', 'Encuentra tu Hotel Perfecto')}
+          {t('search.title')}
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-          {t('search.description', 'Descubre alojamientos increíbles para tu próxima aventura')}
+          {t('search.description')}
         </p>
         
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 transition-colors duration-200">
@@ -96,8 +96,8 @@ export const SimpleSearchSection = ({ onSearchResults }) => {
                   onChange={handleDestinationChange}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                  placeholder={t('search.destinationPlaceholder', '¿A dónde quieres ir?')}
-                  aria-label={t('search.destinationPlaceholder', '¿A dónde quieres ir?')}
+                  placeholder={t('search.destinationPlaceholder')}
+                  aria-label={t('search.destinationPlaceholder')}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                 />
                 
@@ -128,10 +128,10 @@ export const SimpleSearchSection = ({ onSearchResults }) => {
                   {isSearching ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>{t('search.searching', 'Buscando...')}</span>
+                      <span>{t('search.searching')}</span>
                     </>
                   ) : (
-                    <span>{t('search.searchButton', 'Buscar')}</span>
+                    <span>{t('search.searchButton')}</span>
                   )}
                 </button>
               </div>
