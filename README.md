@@ -176,6 +176,9 @@ cd backend
 
 ## Deploy
 
+**Demo online**
+- Frontend: https://hotelflowdigital.netlify.app/
+
 **Frontend (Recomendado: Vercel o Netlify)**
 - Ambas plataformas son gratuitas y se conectan directamente a tu repositorio de GitHub.
 - Configuración en Vercel/Netlify:
