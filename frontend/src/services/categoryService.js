@@ -1,9 +1,8 @@
-import { apiFetch } from './apiClient';
-const API_BASE_URL = 'http://localhost:8082/api';
+import { apiFetch, API_BASE } from './apiClient';
 
 export const categoryService = {
   async getAllCategories() {
-    const response = await fetch(`${API_BASE_URL}/categories`);
+    const response = await fetch(`${API_BASE}/categories`);
     if (!response.ok) {
       throw new Error('Failed to fetch categories');
     }
@@ -11,7 +10,7 @@ export const categoryService = {
   },
 
   async getCategoryById(id) {
-    const response = await fetch(`${API_BASE_URL}/categories/${id}`);
+    const response = await fetch(`${API_BASE}/categories/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch category by id');
     }
@@ -19,7 +18,7 @@ export const categoryService = {
   },
 
   async getCategoryBySlug(slug) {
-    const response = await fetch(`${API_BASE_URL}/categories/slug/${slug}`);
+    const response = await fetch(`${API_BASE}/categories/slug/${slug}`);
     if (!response.ok) {
       throw new Error('Failed to fetch category by slug');
     }

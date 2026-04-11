@@ -1,8 +1,8 @@
-const API_BASE_URL = 'http://localhost:8082/api';
+import { API_BASE } from './apiClient';
 
 export const authService = {
   async register({ firstName, lastName, email, password }) {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    const response = await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ firstName, lastName, email, password })
@@ -29,7 +29,7 @@ export const authService = {
   }
   ,
   async login({ email, password }) {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    const response = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -56,7 +56,7 @@ export const authService = {
   },
 
   async resendConfirmationEmail(email) {
-    const response = await fetch(`${API_BASE_URL}/email/resend-confirmation?email=${encodeURIComponent(email)}`, {
+    const response = await fetch(`${API_BASE}/email/resend-confirmation?email=${encodeURIComponent(email)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     });

@@ -1,8 +1,8 @@
-const API_BASE_URL = 'http://localhost:8082/api';
+import { API_BASE } from './apiClient';
 
 export const productService = {
   async getAllProducts() {
-    const response = await fetch(`${API_BASE_URL}/products`);
+    const response = await fetch(`${API_BASE}/products`);
     if (!response.ok) {
       throw new Error('Failed to fetch products');
     }
@@ -10,7 +10,7 @@ export const productService = {
   },
 
   async getProductById(id) {
-    const response = await fetch(`${API_BASE_URL}/products/${id}`);
+    const response = await fetch(`${API_BASE}/products/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch product');
     }
@@ -18,7 +18,7 @@ export const productService = {
   },
 
   async getProductsByCategory(category) {
-    const response = await fetch(`${API_BASE_URL}/products/category/${category}`);
+    const response = await fetch(`${API_BASE}/products/category/${category}`);
     if (!response.ok) {
       throw new Error('Failed to fetch products by category');
     }
@@ -26,7 +26,7 @@ export const productService = {
   },
 
   async getAvailableProducts() {
-    const response = await fetch(`${API_BASE_URL}/products/available`);
+    const response = await fetch(`${API_BASE}/products/available`);
     if (!response.ok) {
       throw new Error('Failed to fetch available products');
     }
@@ -34,7 +34,7 @@ export const productService = {
   },
 
   async getRandomProducts(limit = 10) {
-    const response = await fetch(`${API_BASE_URL}/products/random?limit=${limit}`);
+    const response = await fetch(`${API_BASE}/products/random?limit=${limit}`);
     if (!response.ok) {
       throw new Error('Failed to fetch random products');
     }
@@ -42,7 +42,7 @@ export const productService = {
   },
 
   async getProductsForHome() {
-    const response = await fetch(`${API_BASE_URL}/products/home`);
+    const response = await fetch(`${API_BASE}/products/home`);
     if (!response.ok) {
       throw new Error('Failed to fetch products for home');
     }
@@ -50,7 +50,7 @@ export const productService = {
   },
 
   async createProduct(productData) {
-    const response = await fetch(`${API_BASE_URL}/products`, {
+    const response = await fetch(`${API_BASE}/products`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export const productService = {
   },
 
   async updateProduct(id, productData) {
-    const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+    const response = await fetch(`${API_BASE}/products/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export const productService = {
   },
 
   async deleteProduct(id) {
-    const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+    const response = await fetch(`${API_BASE}/products/${id}`, {
       method: 'DELETE',
     });
     
@@ -94,7 +94,7 @@ export const productService = {
   },
 
   async toggleProductAvailability(id) {
-    const response = await fetch(`${API_BASE_URL}/products/${id}/toggle-availability`, {
+    const response = await fetch(`${API_BASE}/products/${id}/toggle-availability`, {
       method: 'PATCH',
     });
     

@@ -1,5 +1,6 @@
 jest.mock('../apiClient', () => ({
-  apiFetch: jest.fn()
+  apiFetch: jest.fn(),
+  API_BASE: 'http://localhost:8082/api'
 }));
 
 import { roomService } from '../roomService';

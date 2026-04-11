@@ -1,10 +1,9 @@
-import { apiFetch } from './apiClient';
+import { apiFetch, API_BASE } from './apiClient';
 import { formatDateYMD } from '../utils/roomUtils';
-const API_BASE_URL = 'http://localhost:8082/api';
 
 export const roomService = {
   async getAllRooms() {
-    const response = await fetch(`${API_BASE_URL}/rooms`);
+    const response = await fetch(`${API_BASE}/rooms`);
     if (!response.ok) {
       throw new Error('Failed to fetch rooms');
     }
@@ -12,7 +11,7 @@ export const roomService = {
   },
 
   async getRoomById(id) {
-    const response = await fetch(`${API_BASE_URL}/rooms/${id}`);
+    const response = await fetch(`${API_BASE}/rooms/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch room');
     }
@@ -44,7 +43,7 @@ export const roomService = {
   },
 
   async getAvailableRooms() {
-    const response = await fetch(`${API_BASE_URL}/rooms/available`);
+    const response = await fetch(`${API_BASE}/rooms/available`);
     if (!response.ok) {
       throw new Error('Failed to fetch available rooms');
     }
@@ -52,7 +51,7 @@ export const roomService = {
   },
 
   async getRoomsByType(roomType) {
-    const response = await fetch(`${API_BASE_URL}/rooms/type/${roomType}`);
+    const response = await fetch(`${API_BASE}/rooms/type/${roomType}`);
     if (!response.ok) {
       throw new Error('Failed to fetch rooms by type');
     }
@@ -60,7 +59,7 @@ export const roomService = {
   },
 
   async getRoomsByCategoryId(categoryId) {
-    const response = await fetch(`${API_BASE_URL}/rooms?categoryId=${encodeURIComponent(categoryId)}`);
+    const response = await fetch(`${API_BASE}/rooms?categoryId=${encodeURIComponent(categoryId)}`);
     if (!response.ok) {
       throw new Error('Failed to fetch rooms by category id');
     }
@@ -68,7 +67,7 @@ export const roomService = {
   },
 
   async getRoomsByCategorySlug(categorySlug) {
-    const response = await fetch(`${API_BASE_URL}/rooms?categorySlug=${encodeURIComponent(categorySlug)}`);
+    const response = await fetch(`${API_BASE}/rooms?categorySlug=${encodeURIComponent(categorySlug)}`);
     if (!response.ok) {
       throw new Error('Failed to fetch rooms by category slug');
     }
@@ -92,7 +91,7 @@ export const roomService = {
       categoryIds.forEach(id => params.append('categoryIds', id));
     }
     
-    const response = await fetch(`${API_BASE_URL}/rooms/paginated?${params}`);
+    const response = await fetch(`${API_BASE}/rooms/paginated?${params}`);
     if (!response.ok) {
       throw new Error('Failed to fetch paginated rooms');
     }
@@ -112,7 +111,7 @@ export const roomService = {
       }
     });
 
-    const response = await fetch(`${API_BASE_URL}/rooms/search?${params}`);
+    const response = await fetch(`${API_BASE}/rooms/search?${params}`);
     if (!response.ok) {
       throw new Error('Failed to search rooms');
     }
@@ -125,7 +124,7 @@ export const roomService = {
     }
     
     const params = new URLSearchParams({ query });
-    const response = await fetch(`${API_BASE_URL}/rooms/suggestions?${params}`);
+    const response = await fetch(`${API_BASE}/rooms/suggestions?${params}`);
     if (!response.ok) {
       throw new Error('Failed to fetch destination suggestions');
     }
@@ -139,7 +138,7 @@ export const roomService = {
       months: months.toString()
     });
     
-    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/availability?${params}`);
+    const response = await fetch(`${API_BASE}/rooms/${roomId}/availability?${params}`);
     if (!response.ok) {
       throw new Error('Failed to fetch room availability');
     }
@@ -152,7 +151,7 @@ export const roomService = {
       checkOutDate
     });
     
-    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/availability/check?${params}`);
+    const response = await fetch(`${API_BASE}/rooms/${roomId}/availability/check?${params}`);
     if (!response.ok) {
       throw new Error('Failed to check room availability');
     }
@@ -165,7 +164,7 @@ export const roomService = {
       endDate
     });
     
-    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/occupied-dates?${params}`);
+    const response = await fetch(`${API_BASE}/rooms/${roomId}/occupied-dates?${params}`);
     if (!response.ok) {
       throw new Error('Failed to fetch occupied dates');
     }
@@ -173,7 +172,7 @@ export const roomService = {
   },
 
   async getRoomReviews(roomId) {
-    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/reviews`);
+    const response = await fetch(`${API_BASE}/rooms/${roomId}/reviews`);
     if (!response.ok) {
       throw new Error('Failed to fetch room reviews');
     }
